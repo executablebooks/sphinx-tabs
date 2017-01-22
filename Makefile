@@ -9,8 +9,8 @@ install:
 
 test:
 	rm -rf out
+	pip install pep8 pylint
 	pep8 sphinx_tabs/tabs.py
-	pip install pylint
 	pylint --rcfile=pylint.cfg sphinx_tabs/tabs.py
 	sphinx-build -E -n -W test test-output
 
