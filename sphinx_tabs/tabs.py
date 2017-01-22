@@ -1,3 +1,5 @@
+""" Tabbed views for Sphinx, with HTML builder """
+
 import os
 from docutils.parsers.rst import Directive
 from docutils import nodes
@@ -11,9 +13,12 @@ FILES = [
 
 
 class TabsDirective(Directive):
+    """ Top-level tabs directive """
+
     has_content = True
 
     def run(self):
+        """ Parse a tabs directive """
         self.assert_has_content()
         env = self.state.document.settings.env
 
@@ -40,9 +45,12 @@ class TabsDirective(Directive):
 
 
 class TabDirective(Directive):
+    """ Tab directive, for adding a tab to a collection of tabs """
+
     has_content = True
 
     def run(self):
+        """ Parse a tab directive """
         env = self.state.document.settings.env
         self.assert_has_content()
         text = '\n'.join(self.content)
@@ -59,6 +67,7 @@ class TabDirective(Directive):
 
 
 def add_assets(app):
+    """ Add CSS and JS asset files """
     for path in FILES:
         if '.css' in path:
             app.add_stylesheet(path)
@@ -67,6 +76,7 @@ def add_assets(app):
 
 
 def copy_assets(app, exception):
+    """ Copy asset files to the output """
     if app.builder.name != 'html' or exception:
         return
     app.info('Copying tabs assets... ', nonl=True)
@@ -78,7 +88,8 @@ def copy_assets(app, exception):
 
 
 def setup(app):
-    app.add_directive('tabs',  TabsDirective)
-    app.add_directive('tab',  TabDirective)
+    """ Set up the plugin """
+    app.add_directive('tabs', TabsDirective)
+    app.add_directive('tab', TabDirective)
     app.connect('builder-inited', add_assets)
     app.connect('build-finished', copy_assets)
