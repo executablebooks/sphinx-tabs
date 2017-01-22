@@ -9,6 +9,7 @@ FILES = [
     'jquery-ui.min.css'
 ]
 
+
 class TabsDirective(Directive):
     has_content = True
 
@@ -64,6 +65,7 @@ def add_assets(app):
         elif '.js' in path:
             app.add_javascript(path)
 
+
 def copy_assets(app, exception):
     if app.builder.name != 'html' or exception:
         return
@@ -73,6 +75,7 @@ def copy_assets(app, exception):
         source = os.path.join(os.path.abspath(os.path.dirname(__file__)), path)
         copyfile(source, dest)
     app.info('done')
+
 
 def setup(app):
     app.add_directive('tabs',  TabsDirective)
