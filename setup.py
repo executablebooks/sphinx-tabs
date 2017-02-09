@@ -10,7 +10,7 @@ setup(
     url = 'https://github.com/djungelorm/sphinx-tabs',
     license = 'MIT',
     description = 'Tab views for Sphinx',
-    install_requires = ['sphinx'],
+    install_requires = ['sphinx>=1.2'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Plugins',

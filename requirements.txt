@@ -1,1 +1,1 @@
-Sphinx
+sphinx>=1.2
