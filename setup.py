@@ -10,17 +10,25 @@ setup(
     url = 'https://github.com/djungelorm/sphinx-tabs',
     license = 'MIT',
     description = 'Tab views for Sphinx',
-    install_requires = ['Sphinx'],
+    install_requires = ['sphinx'],
     classifiers=[
         'Development Status :: 4 - Beta',
+        'Environment :: Plugins',
+        'Environment :: Web Environment',
+        'Framework :: Sphinx :: Extension',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
+        'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-        'Operating System :: OS Independent',
-        'Topic :: Documentation :: Sphinx'
+        'Programming Language :: Python',
+        'Topic :: Documentation :: Sphinx',
+        'Topic :: Documentation',
+        'Topic :: Software Development :: Documentation',
+        'Topic :: Text Processing',
+        'Topic :: Utilities',
     ]
 )
