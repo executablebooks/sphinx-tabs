@@ -198,8 +198,10 @@ def add_assets(app):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
-    if app.builder.name not in ('html', 'readthedocs', 'readthedocssinglehtmllocalmedia'):
-        app.info('Not copying tabs assets! Not compatible with %s builder' % app.builder.name)
+    builders = ('html', 'readthedocs', 'readthedocssinglehtmllocalmedia')
+    if app.builder.name not in builders:
+        app.info('Not copying tabs assets! Not compatible with %s builder' %
+                 app.builder.name)
         return
     if exception:
         app.info('Not copying tabs assets! Error occurred previously')
