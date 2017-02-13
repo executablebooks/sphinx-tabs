@@ -10,23 +10,14 @@ from sphinx.util.osutil import copyfile
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
+
 FILES = [
     'tabs.js',
     'tabs.css',
-]
-
-EXTERNAL_DEPENDENCIES = [
-    'https://cdnjs.cloudflare.com/ajax/libs/'
-    'semantic-ui/2.2.7/components/segment.css',
-
-    'https://cdnjs.cloudflare.com/ajax/libs/'
-    'semantic-ui/2.2.7/components/tab.css',
-
-    'https://cdnjs.cloudflare.com/ajax/libs/'
-    'semantic-ui/2.2.7/components/tab.js',
-
-    'https://cdnjs.cloudflare.com/ajax/libs/'
-    'semantic-ui/2.2.7/components/menu.css',
+    'semantic-ui-2.2.7/segment.min.css',
+    'semantic-ui-2.2.7/menu.min.css',
+    'semantic-ui-2.2.7/tab.min.css',
+    'semantic-ui-2.2.7/tab.min.js',
 ]
 
 
@@ -188,7 +179,7 @@ class CodeTabDirective(Directive):
 
 def add_assets(app):
     """ Add CSS and JS asset files """
-    assets = EXTERNAL_DEPENDENCIES + ['sphinx_tabs/' + f for f in FILES]
+    assets = ['sphinx_tabs/' + f for f in FILES]
     for path in assets:
         if path.endswith('.css'):
             app.add_stylesheet(path)
@@ -209,12 +200,15 @@ def copy_assets(app, exception):
     app.info('Copying tabs assets... ', nonl=True)
 
     installdir = os.path.join(app.builder.outdir, '_static', 'sphinx_tabs')
-    if not os.path.exists(installdir):
-        os.makedirs(installdir)
 
     for path in FILES:
         source = os.path.join(DIR, path)
         dest = os.path.join(installdir, path)
+
+        destdir = os.path.dirname(dest)
+        if not os.path.exists(destdir):
+            os.makedirs(destdir)
+
         copyfile(source, dest)
     app.info('done')
 
