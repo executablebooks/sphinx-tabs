@@ -2,11 +2,17 @@ from setuptools import setup
 
 setup(
     name = 'sphinx-tabs',
-    version = '0.2.1',
+    version = '0.2.2',
     author = 'djungelorm',
     author_email = 'djungelorm@users.noreply.github.com',
     packages = ['sphinx_tabs'],
-    package_data = {'sphinx_tabs': ['tabs.js', 'tabs.css']},
+    package_data = {
+        'sphinx_tabs': [
+            'tabs.js',
+            'tabs.css',
+            'semantic-ui-2.2.7/*',
+        ],
+    },
     url = 'https://github.com/djungelorm/sphinx-tabs',
     license = 'MIT',
     description = 'Tab views for Sphinx',
