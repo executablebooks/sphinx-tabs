@@ -185,7 +185,8 @@ class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
         self._found = False
 
     def unknown_visit(self, node):
-        if not self._found and 'classes' in node:
+        if not self._found and isinstance(node, nodes.container) and \
+           'classes' in node and isinstance(node['classes'], list):
             self._found = 'sphinx-tabs' in node['classes']
 
     @property
