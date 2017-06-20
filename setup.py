@@ -18,7 +18,7 @@ setup(
     description = 'Tab views for Sphinx',
     install_requires = ['sphinx>=1.2'],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
         'Environment :: Web Environment',
         'Framework :: Sphinx :: Extension',
