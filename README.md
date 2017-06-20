@@ -1,9 +1,9 @@
 sphinx-tabs [![Build Status](https://travis-ci.org/djungelorm/sphinx-tabs.svg?branch=master)](https://travis-ci.org/djungelorm/sphinx-tabs)
 ========================================
 
-Create tabbed content when building HTML
+Create tabbed content in [Sphinx documentation](http://www.sphinx-doc.org) when building HTML.
 
-Check the [Raw] code of [test/index.rst](test/index.rst) to see the rst that generated these GIFs.
+For example, see the [Raw] code of [test/index.rst](test/index.rst) which generates the following:
 
 ![Tabs](/images/tabs.gif)
 
@@ -20,10 +20,10 @@ To enable the extension in Sphinx, add the following to your conf.py:
 extensions = ['sphinx_tabs.tabs']
 ```
 
-Tabs
+Basic Tabs
 ----------------------------------------
 
-![Tabs](/images/tabs.gif)
+Basic tabs can be coded as follows:
 
 ```rst
 .. tabs::
@@ -41,10 +41,13 @@ Tabs
       Oranges are orange.
 ```
 
-Group Tabs
+![Tabs](/images/tabs.gif)
+
+Grouped Tabs
 ----------------------------------------
 
-![Group Tabs](/images/groupTabs.gif)
+Tabs can be grouped, so that changing the current tab in one area changes the current tab in the
+another area. For example:
 
 ```rst
 .. tabs::
@@ -60,12 +63,28 @@ Group Tabs
    .. group-tab:: Windows
 
       Windows Line 1
+
+.. tabs::
+
+   .. group-tab:: Linux
+
+      Linux Line 1
+
+   .. group-tab:: Mac OSX
+
+      Mac OSX Line 1
+
+   .. group-tab:: Windows
+
+      Windows Line 1
 ```
+
+![Group Tabs](/images/groupTabs.gif)
 
 Code Tabs
 ----------------------------------------
 
-![Code Tabs](/images/codeTabs.gif)
+Tabs containing code areas with syntax highlighting can be created as follows:
 
 ```rst
 .. tabs::
@@ -104,3 +123,5 @@ Code Tabs
          PROGRAM main
          END PROGRAM main
 ```
+
+![Code Tabs](/images/codeTabs.gif)
