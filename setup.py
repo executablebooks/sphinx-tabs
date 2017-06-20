@@ -10,7 +10,7 @@ setup(
         'sphinx_tabs': [
             'tabs.js',
             'tabs.css',
-            'semantic-ui-2.2.7/*',
+            'semantic-ui-2.2.10/*',
         ],
     },
     url = 'https://github.com/djungelorm/sphinx-tabs',
