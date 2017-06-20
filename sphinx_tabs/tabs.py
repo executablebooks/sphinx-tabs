@@ -1,12 +1,12 @@
 """ Tabbed views for Sphinx, with HTML builder """
 
-import os
 import json
+import posixpath
+import os
 from docutils.parsers.rst import Directive
 from docutils import nodes
 from pygments.lexers import get_all_lexers
 from sphinx.util.osutil import copyfile
-
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -177,14 +177,44 @@ class CodeTabDirective(Directive):
         return node.children
 
 
-def add_assets(app):
+class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
+    """ Visitor pattern than looks for a sphinx tabs
+        directive in a document """
+    def __init__(self, document):
+        nodes.NodeVisitor.__init__(self, document)
+        self._found = False
+
+    def unknown_visit(self, node):
+        if not self._found and 'classes' in node:
+            self._found = 'sphinx-tabs' in node['classes']
+
+    @property
+    def found_tabs_directive(self):
+        """ Return whether a sphinx tabs directive was found """
+        return self._found
+
+
+# pylint: disable=unused-argument
+def add_assets(app, pagename, templatename, context, doctree):
     """ Add CSS and JS asset files """
+    if doctree is None:
+        return
+    visitor = _FindTabsDirectiveVisitor(doctree)
+    doctree.walk(visitor)
     assets = ['sphinx_tabs/' + f for f in FILES]
-    for path in assets:
-        if path.endswith('.css'):
-            app.add_stylesheet(path)
-        elif path.endswith('.js'):
-            app.add_javascript(path)
+    css_files = [posixpath.join('_static', path)
+                 for path in assets if path.endswith('css')]
+    script_files = [posixpath.join('_static', path)
+                    for path in assets if path.endswith('js')]
+    if visitor.found_tabs_directive:
+        context['css_files'].extend(css_files)
+        context['script_files'].extend(script_files)
+    else:
+        for path in css_files:
+            context['css_files'].remove(path)
+        for path in script_files:
+            context['script_files'].remove(path)
+# pylint: enable=unused-argument
 
 
 def copy_assets(app, exception):
@@ -219,5 +249,5 @@ def setup(app):
     app.add_directive('tab', TabDirective)
     app.add_directive('group-tab', GroupTabDirective)
     app.add_directive('code-tab', CodeTabDirective)
-    app.connect('builder-inited', add_assets)
+    app.connect('html-page-context', add_assets)
     app.connect('build-finished', copy_assets)
