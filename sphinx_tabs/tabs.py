@@ -211,9 +211,11 @@ def add_assets(app, pagename, templatename, context, doctree):
         context['script_files'].extend(script_files)
     else:
         for path in css_files:
-            context['css_files'].remove(path)
+            if path in context['css_files']:
+                context['css_files'].remove(path)
         for path in script_files:
-            context['script_files'].remove(path)
+            if path in context['script_files']:
+                context['script_files'].remove(path)
 # pylint: enable=unused-argument
 
 
