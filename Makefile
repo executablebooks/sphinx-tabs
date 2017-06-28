@@ -1,4 +1,4 @@
-.PHONY: dist install test clean
+.PHONY: dist install test clean docs
 
 dist:
 	python setup.py sdist
@@ -13,6 +13,10 @@ test:
 	pep8 sphinx_tabs/tabs.py
 	pylint --rcfile=pylint.cfg sphinx_tabs/tabs.py
 	sphinx-build -E -n -W test test-output
+
+docs:
+	rm -rf docs
+	sphinx-build -E -n -W test docs
 
 clean:
 	rm -rf build dist test-output *.egg-info
