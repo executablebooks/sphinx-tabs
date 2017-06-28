@@ -5,6 +5,8 @@ Create tabbed content in [Sphinx documentation](http://www.sphinx-doc.org) when 
 
 For example, see the [Raw] code of [test/index.rst](test/index.rst) which generates the following:
 
+A live demo can be found here: https://djungelorm.github.io/sphinx-tabs/
+
 ![Tabs](/images/tabs.gif)
 
 Installation
