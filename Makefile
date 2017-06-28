@@ -17,6 +17,7 @@ test:
 docs:
 	rm -rf docs
 	sphinx-build -E -n -W test docs
+	echo "" > docs/.nojekyll
 
 clean:
 	rm -rf build dist test-output *.egg-info
