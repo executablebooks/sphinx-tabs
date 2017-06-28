@@ -3,3 +3,4 @@ dist
 test-output
 *.egg-info
 __pycache__
+docs/.doctrees
