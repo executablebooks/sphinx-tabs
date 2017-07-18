@@ -12,11 +12,11 @@ test:
 	pip install pep8 pylint
 	pep8 sphinx_tabs/tabs.py
 	pylint --rcfile=pylint.cfg sphinx_tabs/tabs.py
-	sphinx-build -E -n -W test test-output
+	test/run.sh
 
 docs:
 	rm -rf docs
-	sphinx-build -E -n -W test docs
+	sphinx-build -E -n -W example docs
 	echo "" > docs/.nojekyll
 
 clean:

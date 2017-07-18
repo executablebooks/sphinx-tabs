@@ -1,6 +1,6 @@
 build
 dist
-test-output
+test-output-*
 *.egg-info
 __pycache__
 docs/.doctrees
