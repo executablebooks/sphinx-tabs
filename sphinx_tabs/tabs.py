@@ -208,14 +208,20 @@ def add_assets(app, pagename, templatename, context, doctree):
     script_files = [posixpath.join('_static', path)
                     for path in assets if path.endswith('js')]
     if visitor.found_tabs_directive:
-        context['css_files'].extend(css_files)
-        context['script_files'].extend(script_files)
+        if 'css_files' not in context:
+            context['css_files'] = css_files
+        else:
+            context['css_files'].extend(css_files)
+        if 'script_files' not in context:
+            context['script_files'] = script_files
+        else:
+            context['script_files'].extend(script_files)
     else:
         for path in css_files:
-            if path in context['css_files']:
+            if 'css_files' in context and path in context['css_files']:
                 context['css_files'].remove(path)
         for path in script_files:
-            if path in context['script_files']:
+            if 'script_files' in context and path in context['script_files']:
                 context['script_files'].remove(path)
 # pylint: enable=unused-argument
 
