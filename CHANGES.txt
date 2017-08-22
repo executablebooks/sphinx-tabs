@@ -1,2 +1,7 @@
+v1.0.2
+ * Fix issue with multiple words in tab titles
+ * Add support for markup in tab titles
+ * Fix graphical glitches caused by illegal characters in group tab ids
+
 v1.0.1
  * Fix possible exception when adding/removing CSS/JS files from the context
