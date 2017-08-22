@@ -20,11 +20,11 @@ Luminaries
 
 .. tabs::
 
-   .. tab:: Sun
+   .. tab:: The Sun
 
       The sun is a star.
 
-   .. tab:: Moon
+   .. tab:: The Moon
 
       The moon is not a star.
 

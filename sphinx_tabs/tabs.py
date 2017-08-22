@@ -75,10 +75,10 @@ class TabDirective(Directive):
         env = self.state.document.settings.env
 
         args = self.content[0].strip()
-        if len(args.split()) == 1:
-            args = {'tab_name': args}
-        else:
+        try:
             args = json.loads(args)
+        except ValueError:
+            args = {'tab_name': args}
 
         if 'tab_id' not in args:
             args['tab_id'] = env.new_serialno('tab_id')
