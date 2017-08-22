@@ -1,5 +1,6 @@
 """ Tabbed views for Sphinx, with HTML builder """
 
+import base64
 import json
 import posixpath
 import os
@@ -125,7 +126,7 @@ class GroupTabDirective(Directive):
             self.content.data[idx] = '   ' + line
 
         tab_args = {
-            'tab_id': '-'.join(group_name.lower().split())
+            'tab_id': base64.b64encode(group_name)
         }
 
         new_content = [

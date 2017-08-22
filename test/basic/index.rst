@@ -123,36 +123,3 @@ Group Tabs
    .. group-tab:: Windows
 
       Windows Line 2
-
-Markup in Tab Titles
-========================================
-
-.. tabs::
-
-   .. tab:: **bold** text
-
-      **bold** text
-
-   .. tab:: *italic* text
-
-      *italic* text
-
-.. tabs::
-
-   .. group-tab:: **bold** text
-
-      **bold** text
-
-   .. group-tab:: *italic* text
-
-      *italic* text
-
-.. tabs::
-
-   .. group-tab:: **bold** text
-
-      **bold** text
-
-   .. group-tab:: *italic* text
-
-      *italic* text
