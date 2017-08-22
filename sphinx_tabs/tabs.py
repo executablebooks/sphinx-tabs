@@ -236,13 +236,14 @@ def add_assets(app, pagename, templatename, context, doctree):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
-    builders = ('html', 'readthedocs', 'readthedocssinglehtmllocalmedia')
+    builders = ('html', 'readthedocs', 'readthedocssinglehtmllocalmedia',
+                'singlehtml')
     if app.builder.name not in builders:
-        app.info('Not copying tabs assets! Not compatible with %s builder' %
+        app.warn('Not copying tabs assets! Not compatible with %s builder' %
                  app.builder.name)
         return
     if exception:
-        app.info('Not copying tabs assets! Error occurred previously')
+        app.warn('Not copying tabs assets! Error occurred previously')
         return
     app.info('Copying tabs assets... ', nonl=True)
 

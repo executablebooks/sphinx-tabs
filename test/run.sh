@@ -2,7 +2,14 @@
 
 set -ev
 
-sphinx-build -E -n -W test/basic test-output-basic
-sphinx-build -E -n -W test/notabs test-output-notabs
-sphinx-build -E -n -W test/conditionalassets test-output-conditionalassets
-sphinx-build -E -n -W test/nestedmarkup test-output-nestedmarkup
+testnames=(basic notabs conditionalassets nestedmarkup)
+builders=(html singlehtml)
+
+mkdir -p test-output
+for builder in "${builders[@]}"
+do
+    for testname in "${testnames[@]}"
+    do
+        sphinx-build -b $builder -E -n -W test/$testname test-output/$builder-$testname
+    done
+done
