@@ -56,7 +56,7 @@ class TabsDirective(Directive):
             tab.tagname = 'a'
             tab['classes'] = ['item'] if idx > 0 else ['active', 'item']
             tab['classes'].append(data_tab)
-            tab += nodes.Text(tab_name)
+            tab += tab_name
             tabs_node += tab
 
         node.children.insert(0, tabs_node)
@@ -77,8 +77,14 @@ class TabDirective(Directive):
         args = self.content[0].strip()
         try:
             args = json.loads(args)
+            self.content.trim_start(1)
         except ValueError:
-            args = {'tab_name': args}
+            args = {}
+
+        tab_name = nodes.container()
+        self.state.nested_parse(
+            self.content[:1], self.content_offset, tab_name)
+        args['tab_name'] = tab_name
 
         if 'tab_id' not in args:
             args['tab_id'] = env.new_serialno('tab_id')
@@ -119,12 +125,12 @@ class GroupTabDirective(Directive):
             self.content.data[idx] = '   ' + line
 
         tab_args = {
-            'tab_id': '-'.join(group_name.lower().split()),
-            'tab_name': group_name,
+            'tab_id': '-'.join(group_name.lower().split())
         }
 
         new_content = [
             '.. tab:: {}'.format(json.dumps(tab_args)),
+            '   {}'.format(group_name),
             '',
         ]
 
@@ -157,12 +163,12 @@ class CodeTabDirective(Directive):
 
         tab_args = {
             'tab_id': '-'.join(tab_name.lower().split()),
-            'tab_name': tab_name,
             'classes': ['code-tab'],
         }
 
         new_content = [
             '.. tab:: {}'.format(json.dumps(tab_args)),
+            '   {}'.format(tab_name),
             '',
             '   .. code-block:: {}'.format(lang),
             '',
