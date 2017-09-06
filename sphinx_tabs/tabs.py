@@ -164,7 +164,8 @@ class CodeTabDirective(Directive):
             self.content.data[idx] = '      ' + line
 
         tab_args = {
-            'tab_id': '-'.join(tab_name.lower().split()),
+            'tab_id': base64.b64encode(
+                tab_name.encode('utf-8')).decode('utf-8'),
             'classes': ['code-tab'],
         }
 
