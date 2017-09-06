@@ -47,6 +47,7 @@ class TabsDirective(Directive):
         classes = 'ui top attached tabular menu sphinx-menu'
         tabs_node['classes'] = classes.split(' ')
 
+        env.temp_data['tab_ids'] = []
         env.temp_data['tab_titles'] = []
         env.temp_data['is_first_tab'] = True
         self.state.nested_parse(self.content, self.content_offset, node)
@@ -89,6 +90,11 @@ class TabDirective(Directive):
 
         if 'tab_id' not in args:
             args['tab_id'] = env.new_serialno('tab_id')
+        i = 1
+        while args['tab_id'] in env.temp_data['tab_ids']:
+            args['tab_id'] = '%s-%d' % (args['tab_id'], i)
+            i += 1
+        env.temp_data['tab_ids'].append(args['tab_id'])
 
         data_tab = "sphinx-data-tab-{}".format(args['tab_id'])
 

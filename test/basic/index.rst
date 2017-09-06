@@ -93,6 +93,34 @@ Code Tabs
          PROGRAM main
          END PROGRAM main
 
+.. tabs::
+
+    .. code-tab:: json 400
+
+        {
+            "message": "Possible issue 1"
+        }
+
+    .. code-tab:: json 400
+
+        {
+            "message": "Possible issue 2"
+        }
+
+.. tabs::
+
+    .. code-tab:: json 400
+
+        {
+            "message": "Possible issue 1"
+        }
+
+    .. code-tab:: json 400
+
+        {
+            "message": "Possible issue 2"
+        }
+
 Group Tabs
 ========================================
 
