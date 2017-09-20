@@ -3,7 +3,7 @@
 set -ev
 
 testnames=(basic notabs conditionalassets nestedmarkup)
-builders=(html singlehtml)
+builders=(html singlehtml dirhtml)
 
 mkdir -p test-output
 for builder in "${builders[@]}"
