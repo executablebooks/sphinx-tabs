@@ -1,7 +1,17 @@
-v1.0.2
+v1.1.2
+ * Add support for dirhtml builder
+
+v1.1.1
+ * Allow multiple group tabs with the same name (the ordering of the tabs is used to determine the group ids)
+ * Use b64 encoding of group id for group tabs to avoid illegal character in CSS class
+
+v1.1.0
  * Fix issue with multiple words in tab titles
  * Add support for markup in tab titles
  * Fix graphical glitches caused by illegal characters in group tab ids
 
 v1.0.1
  * Fix possible exception when adding/removing CSS/JS files from the context
+
+v1.0.0
+ * Initial version
