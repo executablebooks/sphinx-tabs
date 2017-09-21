@@ -210,7 +210,7 @@ class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
         return self._found
 
 
-# pylint: disable=unused-argument
+# pylint: disable=unused-argument,too-many-branches
 def add_assets(app, pagename, templatename, context, doctree):
     """ Add CSS and JS asset files """
     if doctree is None:
@@ -230,7 +230,19 @@ def add_assets(app, pagename, templatename, context, doctree):
         if 'script_files' not in context:
             context['script_files'] = script_files
         else:
-            context['script_files'] = script_files + context['script_files']
+            print context['script_files']
+            # Insert script files after
+            i = 0
+            for path in context['script_files']:
+                i += 1
+                if path.endswith('jquery.js'):
+                    break
+            print i
+            context['script_files'] = \
+                context['script_files'][:i] + \
+                script_files + \
+                context['script_files'][i:]
+            print context['script_files']
     else:
         for path in css_files:
             if 'css_files' in context and path in context['css_files']:
@@ -238,7 +250,7 @@ def add_assets(app, pagename, templatename, context, doctree):
         for path in script_files:
             if 'script_files' in context and path in context['script_files']:
                 context['script_files'].remove(path)
-# pylint: enable=unused-argument
+# pylint: enable=unused-argument,too-many-branches
 
 
 def copy_assets(app, exception):
