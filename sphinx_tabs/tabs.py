@@ -230,19 +230,16 @@ def add_assets(app, pagename, templatename, context, doctree):
         if 'script_files' not in context:
             context['script_files'] = script_files
         else:
-            print context['script_files']
             # Insert script files after
             i = 0
             for path in context['script_files']:
                 i += 1
                 if path.endswith('jquery.js'):
                     break
-            print i
             context['script_files'] = \
                 context['script_files'][:i] + \
                 script_files + \
                 context['script_files'][i:]
-            print context['script_files']
     else:
         for path in css_files:
             if 'css_files' in context and path in context['css_files']:
