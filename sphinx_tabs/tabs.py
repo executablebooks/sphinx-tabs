@@ -226,11 +226,11 @@ def add_assets(app, pagename, templatename, context, doctree):
         if 'css_files' not in context:
             context['css_files'] = css_files
         else:
-            context['css_files'].extend(css_files)
+            context['css_files'] = css_files + context['css_files']
         if 'script_files' not in context:
             context['script_files'] = script_files
         else:
-            context['script_files'].extend(script_files)
+            context['script_files'] = script_files + context['script_files']
     else:
         for path in css_files:
             if 'css_files' in context and path in context['css_files']:
