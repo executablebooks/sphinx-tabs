@@ -5,6 +5,7 @@ dist:
 
 install:
 	pip install -r requirements.txt
+	pip uninstall -y sphinx-tabs
 	python setup.py install
 
 test:
