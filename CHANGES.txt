@@ -1,3 +1,6 @@
+v1.1.5
+ * Add sphinx_tabs_nowarn option to disable warning about incompatible builder. Useful when running sphinx-build with the -W flag
+
 v1.1.4
  * Fix broken javascript file inclusion
 

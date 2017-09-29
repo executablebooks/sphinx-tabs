@@ -255,11 +255,14 @@ def copy_assets(app, exception):
     builders = ('html', 'readthedocs', 'readthedocssinglehtmllocalmedia',
                 'singlehtml', 'dirhtml')
     if app.builder.name not in builders:
-        app.warn('Not copying tabs assets! Not compatible with %s builder' %
-                 app.builder.name)
+        if not app.config['sphinx_tabs_nowarn']:
+            app.warn(
+                'Not copying tabs assets! Not compatible with %s builder' %
+                app.builder.name)
         return
     if exception:
-        app.warn('Not copying tabs assets! Error occurred previously')
+        if not app.config['sphinx_tabs_nowarn']:
+            app.warn('Not copying tabs assets! Error occurred previously')
         return
     app.info('Copying tabs assets... ', nonl=True)
 
@@ -279,6 +282,7 @@ def copy_assets(app, exception):
 
 def setup(app):
     """ Set up the plugin """
+    app.add_config_value('sphinx_tabs_nowarn', False, '')
     app.add_directive('tabs', TabsDirective)
     app.add_directive('tab', TabDirective)
     app.add_directive('group-tab', GroupTabDirective)
