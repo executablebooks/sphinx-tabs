@@ -252,9 +252,10 @@ def add_assets(app, pagename, templatename, context, doctree):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
-    builders = ('html', 'singlehtml', 'dirhtml',
+    builders = ['html', 'singlehtml', 'dirhtml',
                 'readthedocs', 'readthedocsdirhtml',
-                'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia')
+                'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia']
+    builders.extend(app.config['sphinx_tabs_valid_builders'])
     if app.builder.name not in builders:
         if not app.config['sphinx_tabs_nowarn']:
             app.warn(
@@ -284,6 +285,7 @@ def copy_assets(app, exception):
 def setup(app):
     """ Set up the plugin """
     app.add_config_value('sphinx_tabs_nowarn', False, '')
+    app.add_config_value('sphinx_tabs_valid_builders', [], '')
     app.add_directive('tabs', TabsDirective)
     app.add_directive('tab', TabDirective)
     app.add_directive('group-tab', GroupTabDirective)
