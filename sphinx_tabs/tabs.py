@@ -252,8 +252,9 @@ def add_assets(app, pagename, templatename, context, doctree):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
-    builders = ('html', 'readthedocs', 'readthedocssinglehtmllocalmedia',
-                'singlehtml', 'dirhtml')
+    builders = ('html', 'singlehtml', 'dirhtml',
+                'readthedocs', 'readthedocsdirhtml',
+                'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia')
     if app.builder.name not in builders:
         if not app.config['sphinx_tabs_nowarn']:
             app.warn(
