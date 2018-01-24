@@ -1,12 +1,15 @@
 import unittest
 import pkg_resources
-from sphinx_testing import with_app, path
+from sphinx_testing import with_app
 from .testcase import TestCase
 
 
 class ConditionalAssetsTest(TestCase):
-    @with_app(buildername='html', srcdir=pkg_resources.resource_filename(__name__, 'conditionalassets'))
-    def test_build_html(self, app, status, warning):
+    @with_app(
+        buildername='html',
+        srcdir=pkg_resources.resource_filename(__name__, 'conditionalassets'))
+    def test_build_html(
+            self, app, status, warning):  # pylint: disable=unused-argument
         app.builder.build_all()
         for filename in ('index', 'other', 'other2'):
             actual = self.get_result(app, filename)

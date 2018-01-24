@@ -12,8 +12,8 @@ test:
 	rm -rf out
 	python -B setup.py test
 	pip install pep8 pylint
-	pep8 sphinx_tabs/tabs.py
-	pylint --rcfile=pylint.cfg sphinx_tabs/tabs.py
+	find sphinx_tabs -name "*.py" -print0 | xargs -0 pep8
+	pylint --rcfile=pylint.cfg sphinx_tabs
 
 docs:
 	rm -rf docs

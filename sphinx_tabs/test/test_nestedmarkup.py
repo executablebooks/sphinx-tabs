@@ -5,12 +5,16 @@ from .testcase import TestCase
 
 
 class NestedMarkupTest(TestCase):
-    @with_app(buildername='html', srcdir=pkg_resources.resource_filename(__name__, 'nestedmarkup'))
-    def test_build_html(self, app, status, warning):
+    @with_app(
+        buildername='html',
+        srcdir=pkg_resources.resource_filename(__name__, 'nestedmarkup'))
+    def test_build_html(
+            self, app, status, warning):  # pylint: disable=unused-argument
         app.builder.build_all()
         actual = self.get_result(app, 'index')
         expected = self.get_expectation('nestedmarkup', 'index')
-        self.assertHasTabsAssets(actual, filter_scripts=lambda x: 'mathjax' not in x)
+        self.assertHasTabsAssets(
+            actual, filter_scripts=lambda x: 'mathjax' not in x)
         self.assertXMLEqual(expected, actual)
 
 

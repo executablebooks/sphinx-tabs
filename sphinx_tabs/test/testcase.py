@@ -1,10 +1,11 @@
+# pylint: disable=import-error,no-name-in-module
+from distutils.version import StrictVersion
+# pylint: enable=import-error,no-name-in-module
+from io import StringIO
 import unittest
 import re
-from io import StringIO
-from lxml import objectify, etree
-from sphinx_testing import path
 import pkg_resources
-from distutils.version import StrictVersion
+from lxml import etree
 from sphinx import __version__ as __sphinx_version__
 from sphinx.builders.html import StandaloneHTMLBuilder
 
@@ -15,15 +16,15 @@ def _parse(xml):
     return etree.parse(StringIO(xml), parser)
 
 
-def _strip_xmlns(x):
-    return x.replace(' xmlns="http://www.w3.org/1999/xhtml"', '')
+def _strip_xmlns(xml):
+    return xml.replace(' xmlns="http://www.w3.org/1999/xhtml"', '')
 
 
 def get_scripts(xml):
     tree = _parse(xml)
     scripts = tree.findall('.//{*}script')
-    return [x.replace('_static/', '')
-            for x in filter(lambda x: x is not None, [x.get('src') for x in scripts])]
+    scripts = [x.get('src') for x in scripts]
+    return [x.replace('_static/', '') for x in scripts if x is not None]
 
 
 def get_stylesheets(xml):
@@ -40,32 +41,41 @@ def get_body(xml):
 
 def normalize_xml(xml):
     content = re.sub(r'>\s+<', '><', xml)
-    content = etree.tostring(_parse(content), pretty_print=True).decode('utf-8')
+    content = etree.tostring(
+        _parse(content), pretty_print=True).decode('utf-8')
     return content
 
 
 class TestCase(unittest.TestCase):
-    def tearDown(self):
+    def tearDown(self):  # pylint: disable=invalid-name
         # Reset script and css files after test
-        StandaloneHTMLBuilder.script_files = StandaloneHTMLBuilder.script_files[:3]
+        StandaloneHTMLBuilder.script_files = \
+            StandaloneHTMLBuilder.script_files[:3]
         if StrictVersion(__sphinx_version__) > StrictVersion('1.6.0'):
+            # pylint: disable=no-name-in-module
             from sphinx.builders.html import CSSContainer
             StandaloneHTMLBuilder.css_files = CSSContainer()
+            # pylint: enable=no-name-in-module
         else:
             StandaloneHTMLBuilder.css_files = []
 
-    def get_result(self, app, filename):
+    @staticmethod
+    def get_result(app, filename):
         return (app.outdir / (filename+'.html')).read_text(encoding='utf-8')
 
-    def get_expectation(self, dirname, filename):
-        return pkg_resources.resource_string(__name__, '%s/%s.html' % (dirname, filename)).decode('utf-8')
+    @staticmethod
+    def get_expectation(dirname, filename):
+        return pkg_resources.resource_string(
+            __name__, '%s/%s.html' % (dirname, filename)).decode('utf-8')
 
-    def assertXMLEqual(self, expected, actual):
+    def assertXMLEqual(  # pylint: disable=invalid-name
+            self, expected, actual):
         expected = normalize_xml(expected)
         actual = normalize_xml(get_body(actual))
         self.assertEqual(expected, actual)
 
-    def assertHasTabsAssets(self, xml, filter_scripts=None):
+    def assertHasTabsAssets(  # pylint: disable=invalid-name
+            self, xml, filter_scripts=None):
         stylesheets = get_stylesheets(xml)
         scripts = get_scripts(xml)
         if filter_scripts is not None:
@@ -87,7 +97,8 @@ class TestCase(unittest.TestCase):
             'sphinx_tabs/semantic-ui-2.2.10/tab.min.js'
         ])
 
-    def assertDoesNotHaveTabsAssets(self, xml):
+    def assertDoesNotHaveTabsAssets(  # pylint: disable=invalid-name
+            self, xml):
         stylesheets = get_stylesheets(xml)
         scripts = get_scripts(xml)
         self.assertEqual(stylesheets, [
@@ -101,10 +112,12 @@ class TestCase(unittest.TestCase):
             'doctools.js'
         ])
 
-    def assertStylesheetsEqual(self, expected, xml):
+    def assertStylesheetsEqual(  # pylint: disable=invalid-name
+            self, expected, xml):
         actual = get_stylesheets(xml)
         self.assertEqual(expected, actual)
 
-    def assertScriptsEqual(self, expected, xml):
+    def assertScriptsEqual(  # pylint: disable=invalid-name
+            self, expected, xml):
         actual = get_scripts(xml)
         self.assertEqual(expected, actual)
