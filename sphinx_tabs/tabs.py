@@ -210,44 +210,26 @@ class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
         return self._found
 
 
-# pylint: disable=unused-argument,too-many-branches
-def add_assets(app, pagename, templatename, context, doctree):
-    """ Add CSS and JS asset files """
+# pylint: disable=unused-argument
+def update_context(app, pagename, templatename, context, doctree):
+    """ Remove sphinx-tabs CSS and JS asset files if not used in a page """
     if doctree is None:
         return
     visitor = _FindTabsDirectiveVisitor(doctree)
     doctree.walk(visitor)
-    assets = ['sphinx_tabs/' + f for f in FILES]
-    css_files = [posixpath.join('_static', path)
-                 for path in assets if path.endswith('css')]
-    script_files = [posixpath.join('_static', path)
-                    for path in assets if path.endswith('js')]
-    if visitor.found_tabs_directive:
-        if 'css_files' not in context:
-            context['css_files'] = css_files
-        else:
-            context['css_files'] = css_files + context['css_files']
-        if 'script_files' not in context:
-            context['script_files'] = script_files
-        else:
-            # Insert script files after
-            i = 0
-            for path in context['script_files']:
-                i += 1
-                if path.endswith('jquery.js'):
-                    break
-            context['script_files'] = \
-                context['script_files'][:i] + \
-                script_files + \
-                context['script_files'][i:]
-    else:
-        for path in css_files:
-            if 'css_files' in context and path in context['css_files']:
-                context['css_files'].remove(path)
-        for path in script_files:
-            if 'script_files' in context and path in context['script_files']:
-                context['script_files'].remove(path)
-# pylint: enable=unused-argument,too-many-branches
+    if not visitor.found_tabs_directive:
+        paths = [posixpath.join('_static', 'sphinx_tabs/' + f) for f in FILES]
+        if 'css_files' in context:
+            context['css_files'] = context['css_files'][:]
+            for path in paths:
+                if path.endswith('.cs'):
+                    context['css_files'].remove(path)
+        if 'script_files' in context:
+            context['script_files'] = context['script_files'][:]
+            for path in paths:
+                if path.endswith('.js'):
+                    context['script_files'].remove(path)
+# pylint: enable=unused-argument
 
 
 def copy_assets(app, exception):
@@ -288,5 +270,10 @@ def setup(app):
     app.add_directive('tab', TabDirective)
     app.add_directive('group-tab', GroupTabDirective)
     app.add_directive('code-tab', CodeTabDirective)
-    app.connect('html-page-context', add_assets)
+    for path in ['sphinx_tabs/' + f for f in FILES]:
+        if path.endswith('.css'):
+            app.add_stylesheet(path)
+        if path.endswith('.js'):
+            app.add_javascript(path)
+    app.connect('html-page-context', update_context)
     app.connect('build-finished', copy_assets)
