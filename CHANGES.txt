@@ -1,6 +1,7 @@
 v1.1.7
  * Fix css files not being removed when tabs are not used on a page
  * Now require sphinx>=1.4
+ * Fix issues with script and css includes on readthedocs (#17)
 
 v1.1.6
  * Don't emit an additional error in the copy assets handler if the build process fails
