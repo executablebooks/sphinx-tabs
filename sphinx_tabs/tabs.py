@@ -256,15 +256,13 @@ def copy_assets(app, exception):
                 'readthedocs', 'readthedocsdirhtml',
                 'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia']
     builders.extend(app.config['sphinx_tabs_valid_builders'])
+    if exception:
+        return
     if app.builder.name not in builders:
         if not app.config['sphinx_tabs_nowarn']:
             app.warn(
                 'Not copying tabs assets! Not compatible with %s builder' %
                 app.builder.name)
-        return
-    if exception:
-        if not app.config['sphinx_tabs_nowarn']:
-            app.warn('Not copying tabs assets! Error occurred previously')
         return
     app.info('Copying tabs assets... ', nonl=True)
 

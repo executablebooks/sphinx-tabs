@@ -1,3 +1,6 @@
+v1.1.6
+ * Don't emit an additional error in the copy assets handler if the build process fails
+
 v1.1.5
  * Add sphinx_tabs_nowarn option to disable warning about incompatible builder. Useful when running sphinx-build with the -W flag
 
