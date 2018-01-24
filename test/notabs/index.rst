@@ -1,3 +1,0 @@
-There are no tabs here...
-
-sphinx-tabs should not add the css/js assets to the build output.

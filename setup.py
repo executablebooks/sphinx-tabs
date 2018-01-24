@@ -5,7 +5,8 @@ setup(
     version = '1.1.6',
     author = 'djungelorm',
     author_email = 'djungelorm@users.noreply.github.com',
-    packages = ['sphinx_tabs'],
+    packages = ['sphinx_tabs', 'sphinx_tabs.test'],
+    test_suite='sphinx_tabs.test',
     package_data = {
         'sphinx_tabs': [
             'tabs.js',
@@ -17,6 +18,7 @@ setup(
     license = 'MIT',
     description = 'Tab views for Sphinx',
     install_requires = ['sphinx>=1.2'],
+    tests_require = ['sphinx>=1.6', 'docutils', 'pygments', 'sphinx_testing', 'lxml'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
