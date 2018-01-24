@@ -17,8 +17,8 @@ setup(
     url = 'https://github.com/djungelorm/sphinx-tabs',
     license = 'MIT',
     description = 'Tab views for Sphinx',
-    install_requires = ['sphinx>=1.2'],
-    tests_require = ['sphinx>=1.6', 'docutils', 'pygments', 'sphinx_testing', 'lxml'],
+    install_requires = ['sphinx>=1.4'],
+    tests_require = ['sphinx>=1.4', 'docutils', 'pygments', 'sphinx_testing', 'lxml'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',

@@ -4,7 +4,9 @@ from io import StringIO
 from lxml import objectify, etree
 from sphinx_testing import path
 import pkg_resources
-from sphinx.builders.html import StandaloneHTMLBuilder, CSSContainer
+from distutils.version import StrictVersion
+from sphinx import __version__ as __sphinx_version__
+from sphinx.builders.html import StandaloneHTMLBuilder
 
 
 def _parse(xml):
@@ -46,7 +48,11 @@ class TestCase(unittest.TestCase):
     def tearDown(self):
         # Reset script and css files after test
         StandaloneHTMLBuilder.script_files = StandaloneHTMLBuilder.script_files[:3]
-        StandaloneHTMLBuilder.css_files = CSSContainer()
+        if StrictVersion(__sphinx_version__) > StrictVersion('1.6.0'):
+            from sphinx.builders.html import CSSContainer
+            StandaloneHTMLBuilder.css_files = CSSContainer()
+        else:
+            StandaloneHTMLBuilder.css_files = []
 
     def get_result(self, app, filename):
         return (app.outdir / (filename+'.html')).read_text(encoding='utf-8')
@@ -59,11 +65,11 @@ class TestCase(unittest.TestCase):
         actual = normalize_xml(get_body(actual))
         self.assertEqual(expected, actual)
 
-    def assertHasTabsAssets(self, xml, extra_scripts=None):
-        if extra_scripts is None:
-            extra_scripts = []
+    def assertHasTabsAssets(self, xml, filter_scripts=None):
         stylesheets = get_stylesheets(xml)
         scripts = get_scripts(xml)
+        if filter_scripts is not None:
+            scripts = [x for x in scripts if filter_scripts(x)]
         self.assertEqual(stylesheets, [
             'alabaster.css',
             'pygments.css',
@@ -79,7 +85,7 @@ class TestCase(unittest.TestCase):
             'doctools.js',
             'sphinx_tabs/tabs.js',
             'sphinx_tabs/semantic-ui-2.2.10/tab.min.js'
-        ] + extra_scripts)
+        ])
 
     def assertDoesNotHaveTabsAssets(self, xml):
         stylesheets = get_stylesheets(xml)
