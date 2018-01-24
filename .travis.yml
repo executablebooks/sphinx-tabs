@@ -11,7 +11,7 @@ env:
 
 install:
  - pip install "sphinx $SPHINX_VERSION"
- - pip install -r requirements.txt
+ - pip install lxml sphinx_testing
 
 script:
  - python setup.py install
