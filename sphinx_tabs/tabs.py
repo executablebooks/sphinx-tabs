@@ -236,7 +236,8 @@ def copy_assets(app, exception):
     """ Copy asset files to the output """
     builders = ['html', 'singlehtml', 'dirhtml',
                 'readthedocs', 'readthedocsdirhtml',
-                'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia']
+                'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia',
+                'spelling']
     builders.extend(app.config['sphinx_tabs_valid_builders'])
     if exception:
         return
