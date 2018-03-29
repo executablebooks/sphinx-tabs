@@ -117,15 +117,15 @@ class TabDirective(Directive):
         self.state.nested_parse(self.content[2:], self.content_offset, node)
 
         if env.app.builder.name in ['latex', 'latexpdf']:
-            latexNode = nodes.container()
+            latex_node = nodes.container()
             tab = nodes.container()
             tab.tagname = 'a'
             tab['classes'] = ['item']
             tab += tab_name
 
-            latexNode.append(tab)
-            latexNode.append(node)
-            return [latexNode]
+            latex_node.append(tab)
+            latex_node.append(node)
+            return [latex_node]
 
         return [node]
 
