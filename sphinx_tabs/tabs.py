@@ -45,14 +45,14 @@ class TabsDirective(Directive):
         env.temp_data['tab_titles'] = []
         env.temp_data['is_first_tab'] = True
 
+        self.state.nested_parse(self.content, self.content_offset, node)
+
         if env.app.builder.name not in ['latex', 'latexpdf']:
             tabs_node = nodes.container()
             tabs_node.tagname = 'div'
 
             classes = 'ui top attached tabular menu sphinx-menu'
             tabs_node['classes'] = classes.split(' ')
-
-            self.state.nested_parse(self.content, self.content_offset, node)
 
             tab_titles = env.temp_data['tab_titles']
             for idx, [data_tab, tab_name] in enumerate(tab_titles):
@@ -115,18 +115,18 @@ class TabDirective(Directive):
             env.temp_data['is_first_tab'] = False
 
         self.state.nested_parse(self.content[2:], self.content_offset, node)
-		
+
         if env.app.builder.name in ['latex', 'latexpdf']:
             latexNode = nodes.container()
             tab = nodes.container()
             tab.tagname = 'a'
-            tab['classes'] = ['item'] if args['tab_id'] > 0 else ['active', 'item']
+            tab['classes'] = ['item']
             tab += tab_name
 
             latexNode.append(tab)
             latexNode.append(node)
             return [latexNode]
-		
+
         return [node]
 
 
