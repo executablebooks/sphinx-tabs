@@ -4,7 +4,7 @@ import base64
 import json
 import posixpath
 import os
-from docutils.parsers.rst import Directive
+from docutils.parsers.rst import Directive, directives
 from docutils import nodes
 from pygments.lexers import get_all_lexers
 from sphinx.util.osutil import copyfile
@@ -169,6 +169,9 @@ class CodeTabDirective(Directive):
     """ Tab directive with a codeblock as its content"""
 
     has_content = True
+    option_spec = {
+        'linenos': directives.flag
+    }
 
     def run(self):
         """ Parse a tab directive """
@@ -194,8 +197,12 @@ class CodeTabDirective(Directive):
             '   {}'.format(tab_name),
             '',
             '   .. code-block:: {}'.format(lang),
-            '',
         ]
+
+        if 'linenos' in self.options:
+            new_content.append('      :linenos:')
+
+        new_content.append('')
 
         for idx, line in enumerate(new_content):
             self.content.data.insert(idx, line)
