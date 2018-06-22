@@ -14,6 +14,7 @@ setup(
             'semantic-ui-2.2.10/*',
         ],
     },
+    data_files = [("", ["LICENSE"])],
     url = 'https://github.com/djungelorm/sphinx-tabs',
     license = 'MIT',
     description = 'Tab views for Sphinx',
