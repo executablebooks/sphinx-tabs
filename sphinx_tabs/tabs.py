@@ -8,6 +8,8 @@ from docutils.parsers.rst import Directive
 from docutils import nodes
 from pygments.lexers import get_all_lexers
 from sphinx.util.osutil import copyfile
+from sphinx.util import logging
+
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -234,6 +236,7 @@ def update_context(app, pagename, templatename, context, doctree):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
+    logger = logging.getLogger(__name__)
     builders = ['html', 'singlehtml', 'dirhtml',
                 'readthedocs', 'readthedocsdirhtml',
                 'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia',
@@ -247,7 +250,8 @@ def copy_assets(app, exception):
                 'Not copying tabs assets! Not compatible with %s builder' %
                 app.builder.name)
         return
-    app.info('Copying tabs assets... ', nonl=True)
+
+    logger.info('Copying tabs assets')
 
     installdir = os.path.join(app.builder.outdir, '_static', 'sphinx_tabs')
 
@@ -260,7 +264,6 @@ def copy_assets(app, exception):
             os.makedirs(destdir)
 
         copyfile(source, dest)
-    app.info('done')
 
 
 def setup(app):
