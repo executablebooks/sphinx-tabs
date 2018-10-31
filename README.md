@@ -13,7 +13,7 @@ Installation
 ----------------------------------------
 
 ```bash
-pip install sphinx_tabs
+pip install sphinx-tabs
 ```
 
 To enable the extension in Sphinx, add the following to your conf.py:
