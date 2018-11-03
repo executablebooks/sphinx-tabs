@@ -1,7 +1,5 @@
 # pylint: disable=import-error,no-name-in-module
 from distutils.version import StrictVersion
-# pylint: enable=import-error,no-name-in-module
-from io import StringIO
 import unittest
 import re
 import os
@@ -9,6 +7,11 @@ import pkg_resources
 from lxml import etree
 from sphinx import __version__ as __sphinx_version__
 from sphinx.builders.html import StandaloneHTMLBuilder
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 
 def _parse(xml):
