@@ -4,8 +4,7 @@ dist:
 	python setup.py sdist
 
 install:
-	pip install -r requirements.txt
-	pip uninstall -y sphinx-tabs
+	pip install lxml sphinx_testing
 	python -B setup.py install
 
 test:
