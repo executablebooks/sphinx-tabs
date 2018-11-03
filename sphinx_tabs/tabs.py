@@ -276,8 +276,8 @@ def setup(app):
     app.add_directive('code-tab', CodeTabDirective)
     for path in ['sphinx_tabs/' + f for f in FILES]:
         if path.endswith('.css'):
-            app.add_stylesheet(path)
+            app.add_css_file(path)
         if path.endswith('.js'):
-            app.add_javascript(path)
+            app.add_js_file(path)
     app.connect('html-page-context', update_context)
     app.connect('build-finished', copy_assets)

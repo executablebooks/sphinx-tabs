@@ -13,8 +13,7 @@ class NestedMarkupTest(TestCase):
         app.builder.build_all()
         actual = self.get_result(app, 'index')
         expected = self.get_expectation('nestedmarkup', 'index')
-        self.assertHasTabsAssets(
-            actual, filter_scripts=lambda x: 'mathjax' not in x)
+        self.assertHasTabsAssets(actual)
         self.assertXMLEqual(expected, actual)
 
 

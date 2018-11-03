@@ -4,6 +4,7 @@ from distutils.version import StrictVersion
 from io import StringIO
 import unittest
 import re
+import os
 import pkg_resources
 from lxml import etree
 from sphinx import __version__ as __sphinx_version__
@@ -49,37 +50,61 @@ def normalize_xml(xml):
 class TestCase(unittest.TestCase):
     def tearDown(self):  # pylint: disable=invalid-name
         # Reset script and css files after test
-        StandaloneHTMLBuilder.script_files = \
-            StandaloneHTMLBuilder.script_files[:3]
+        if StrictVersion(__sphinx_version__) < StrictVersion('1.8.0'):
+            StandaloneHTMLBuilder.script_files = \
+                StandaloneHTMLBuilder.script_files[:3]
         if StrictVersion(__sphinx_version__) > StrictVersion('1.6.0'):
             # pylint: disable=no-name-in-module
             from sphinx.builders.html import CSSContainer
             StandaloneHTMLBuilder.css_files = CSSContainer()
             # pylint: enable=no-name-in-module
-        else:
+        elif StrictVersion(__sphinx_version__) < StrictVersion('1.8.0'):
             StandaloneHTMLBuilder.css_files = []
 
     @staticmethod
     def get_result(app, filename):
-        return (app.outdir / (filename+'.html')).read_text(encoding='utf-8')
+        path = os.path.join(app.outdir, filename+'.html')
+        with open(path, 'r') as handle:
+            return handle.read()
 
     @staticmethod
     def get_expectation(dirname, filename):
-        return pkg_resources.resource_string(
-            __name__, '%s/%s.html' % (dirname, filename)).decode('utf-8')
+        provider = pkg_resources.get_provider(__name__)
+        resource = '%s/%s.html' % (dirname, filename)
+        if provider.has_resource(resource):
+            return pkg_resources.resource_string(
+                __name__, resource).decode('utf-8')
+        result = []
+        for i in range(10):
+            resource_i = '%s.%d' % (resource, i)
+            if provider.has_resource(resource_i):
+                result.append(pkg_resources.resource_string(
+                    __name__, resource_i).decode('utf-8'))
+        return result
 
     def assertXMLEqual(  # pylint: disable=invalid-name
             self, expected, actual):
-        expected = normalize_xml(expected)
-        actual = normalize_xml(get_body(actual))
-        self.assertEqual(expected, actual)
+        if isinstance(expected, list):
+            actual = normalize_xml(get_body(actual))
+            for expected_candidate in expected:
+                expected_candidate = normalize_xml(expected_candidate)
+                if expected_candidate == actual:
+                    return
+            self.fail('XML does not match')
+        else:
+            expected = normalize_xml(expected)
+            actual = normalize_xml(get_body(actual))
+            self.assertEqual(expected, actual)
 
     def assertHasTabsAssets(  # pylint: disable=invalid-name
-            self, xml, filter_scripts=None):
+            self, xml):
         stylesheets = get_stylesheets(xml)
         scripts = get_scripts(xml)
-        if filter_scripts is not None:
-            scripts = [x for x in scripts if filter_scripts(x)]
+
+        def filter_scripts(x):
+            return x != 'documentation_options.js' and 'mathjax' not in x
+
+        scripts = [x for x in scripts if filter_scripts(x)]
         self.assertEqual(stylesheets, [
             'alabaster.css',
             'pygments.css',
@@ -101,16 +126,10 @@ class TestCase(unittest.TestCase):
             self, xml):
         stylesheets = get_stylesheets(xml)
         scripts = get_scripts(xml)
-        self.assertEqual(stylesheets, [
-            'alabaster.css',
-            'pygments.css',
-            'custom.css'
-        ])
-        self.assertEqual(scripts, [
-            'jquery.js',
-            'underscore.js',
-            'doctools.js'
-        ])
+        for stylesheet in stylesheets:
+            self.assertTrue('sphinx_tabs' not in stylesheet)
+        for script in scripts:
+            self.assertTrue('sphinx_tabs' not in script)
 
     def assertStylesheetsEqual(  # pylint: disable=invalid-name
             self, expected, xml):
