@@ -30,6 +30,15 @@ for lexer in get_all_lexers():
         LEXER_MAP[short_name] = lexer[0]
 
 
+def get_compatible_builders(app):
+    builders = ['html', 'singlehtml', 'dirhtml',
+                'readthedocs', 'readthedocsdirhtml',
+                'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia',
+                'spelling']
+    builders.extend(app.config['sphinx_tabs_valid_builders'])
+    return builders
+
+
 class TabsDirective(Directive):
     """ Top-level tabs directive """
 
@@ -49,7 +58,7 @@ class TabsDirective(Directive):
 
         self.state.nested_parse(self.content, self.content_offset, node)
 
-        if env.app.builder.name not in ['latex', 'latexpdf']:
+        if env.app.builder.name in get_compatible_builders(env.app):
             tabs_node = nodes.container()
             tabs_node.tagname = 'div'
 
@@ -118,16 +127,16 @@ class TabDirective(Directive):
 
         self.state.nested_parse(self.content[2:], self.content_offset, node)
 
-        if env.app.builder.name in ['latex', 'latexpdf']:
-            latex_node = nodes.container()
+        if env.app.builder.name not in get_compatible_builders(env.app):
+            outer_node = nodes.container()
             tab = nodes.container()
             tab.tagname = 'a'
             tab['classes'] = ['item']
             tab += tab_name
 
-            latex_node.append(tab)
-            latex_node.append(node)
-            return [latex_node]
+            outer_node.append(tab)
+            outer_node.append(node)
+            return [outer_node]
 
         return [node]
 
@@ -261,11 +270,7 @@ def copy_assets(app, exception):
         log = logging.getLogger(__name__).info  # pylint: disable=no-member
     else:
         log = app.info
-    builders = ['html', 'singlehtml', 'dirhtml',
-                'readthedocs', 'readthedocsdirhtml',
-                'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia',
-                'spelling']
-    builders.extend(app.config['sphinx_tabs_valid_builders'])
+    builders = get_compatible_builders(app)
     if exception:
         return
     if app.builder.name not in builders:
