@@ -1,4 +1,6 @@
 v1.1.8
+ * Add support for :linenos: to code tabs (#22)
+ * Improve fallback for non-HTML builders (#19)
  * Add spelling builder to list of builders (#20)
 
 v1.1.7
