@@ -2,6 +2,7 @@ v1.1.8
  * Add support for :linenos: to code tabs (#22)
  * Improve fallback for non-HTML builders (#19)
  * Add spelling builder to list of builders (#20)
+ * Fix naming a tab as a number (#24)
 
 v1.1.7
  * Fix css files not being removed when tabs are not used on a page

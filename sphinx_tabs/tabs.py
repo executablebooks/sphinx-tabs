@@ -90,10 +90,13 @@ class TabDirective(Directive):
         env = self.state.document.settings.env
 
         args = self.content[0].strip()
-        try:
-            args = json.loads(args)
-            self.content.trim_start(1)
-        except ValueError:
+        if args.startswith('{'):
+            try:
+                args = json.loads(args)
+                self.content.trim_start(1)
+            except ValueError:
+                args = {}
+        else:
             args = {}
 
         tab_name = nodes.container()

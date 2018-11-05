@@ -11,3 +11,7 @@
    .. tab:: Oranges
 
       Oranges are orange.
+
+   .. tab:: 404
+
+      A number in the name.
