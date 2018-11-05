@@ -10,8 +10,8 @@ install:
 test:
 	rm -rf out
 	python -B setup.py test
-	pip install pep8 pylint
-	find sphinx_tabs -name "*.py" -print0 | xargs -0 pep8
+	pip install pycodestyle pylint
+	find sphinx_tabs -name "*.py" -print0 | xargs -0 pycodestyle
 	pylint --rcfile=pylint.cfg sphinx_tabs
 
 docs:
