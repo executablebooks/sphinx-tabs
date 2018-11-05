@@ -4,9 +4,9 @@ import unittest
 import re
 import os
 import pkg_resources
-from lxml import etree
 from sphinx import __version__ as __sphinx_version__
 from sphinx.builders.html import StandaloneHTMLBuilder
+from lxml import etree
 
 try:
     from StringIO import StringIO
