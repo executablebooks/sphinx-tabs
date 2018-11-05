@@ -236,7 +236,10 @@ def update_context(app, pagename, templatename, context, doctree):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
-    logger = logging.getLogger(__name__)
+    if 'getLogger' in dir(logging):
+        log = logging.getLogger(__name__).info  # pylint: disable=no-member
+    else:
+        log = app.info
     builders = ['html', 'singlehtml', 'dirhtml',
                 'readthedocs', 'readthedocsdirhtml',
                 'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia',
@@ -251,7 +254,7 @@ def copy_assets(app, exception):
                 app.builder.name)
         return
 
-    logger.info('Copying tabs assets')
+    log('Copying tabs assets')
 
     installdir = os.path.join(app.builder.outdir, '_static', 'sphinx_tabs')
 
