@@ -4,7 +4,7 @@ import base64
 import json
 import posixpath
 import os
-from docutils.parsers.rst import Directive
+from docutils.parsers.rst import Directive, directives
 from docutils import nodes
 from pygments.lexers import get_all_lexers
 from sphinx.util.osutil import copyfile
@@ -43,27 +43,29 @@ class TabsDirective(Directive):
         node = nodes.container()
         node['classes'] = ['sphinx-tabs']
 
-        tabs_node = nodes.container()
-        tabs_node.tagname = 'div'
-
-        classes = 'ui top attached tabular menu sphinx-menu'
-        tabs_node['classes'] = classes.split(' ')
-
         env.temp_data['tab_ids'] = []
         env.temp_data['tab_titles'] = []
         env.temp_data['is_first_tab'] = True
+
         self.state.nested_parse(self.content, self.content_offset, node)
 
-        tab_titles = env.temp_data['tab_titles']
-        for idx, [data_tab, tab_name] in enumerate(tab_titles):
-            tab = nodes.container()
-            tab.tagname = 'a'
-            tab['classes'] = ['item'] if idx > 0 else ['active', 'item']
-            tab['classes'].append(data_tab)
-            tab += tab_name
-            tabs_node += tab
+        if env.app.builder.name not in ['latex', 'latexpdf']:
+            tabs_node = nodes.container()
+            tabs_node.tagname = 'div'
 
-        node.children.insert(0, tabs_node)
+            classes = 'ui top attached tabular menu sphinx-menu'
+            tabs_node['classes'] = classes.split(' ')
+
+            tab_titles = env.temp_data['tab_titles']
+            for idx, [data_tab, tab_name] in enumerate(tab_titles):
+                tab = nodes.container()
+                tab.tagname = 'a'
+                tab['classes'] = ['item'] if idx > 0 else ['active', 'item']
+                tab['classes'].append(data_tab)
+                tab += tab_name
+                tabs_node += tab
+
+            node.children.insert(0, tabs_node)
 
         return [node]
 
@@ -115,6 +117,18 @@ class TabDirective(Directive):
             env.temp_data['is_first_tab'] = False
 
         self.state.nested_parse(self.content[2:], self.content_offset, node)
+
+        if env.app.builder.name in ['latex', 'latexpdf']:
+            latex_node = nodes.container()
+            tab = nodes.container()
+            tab.tagname = 'a'
+            tab['classes'] = ['item']
+            tab += tab_name
+
+            latex_node.append(tab)
+            latex_node.append(node)
+            return [latex_node]
+
         return [node]
 
 
@@ -157,6 +171,9 @@ class CodeTabDirective(Directive):
     """ Tab directive with a codeblock as its content"""
 
     has_content = True
+    option_spec = {
+        'linenos': directives.flag
+    }
 
     def run(self):
         """ Parse a tab directive """
@@ -182,8 +199,12 @@ class CodeTabDirective(Directive):
             '   {}'.format(tab_name),
             '',
             '   .. code-block:: {}'.format(lang),
-            '',
         ]
+
+        if 'linenos' in self.options:
+            new_content.append('      :linenos:')
+
+        new_content.append('')
 
         for idx, line in enumerate(new_content):
             self.content.data.insert(idx, line)
