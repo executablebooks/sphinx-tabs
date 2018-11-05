@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'sphinx-tabs',
-    version = '1.1.7',
+    version = '1.1.8',
     author = 'djungelorm',
     author_email = 'djungelorm@users.noreply.github.com',
     packages = ['sphinx_tabs', 'sphinx_tabs.test'],
