@@ -1,6 +1,7 @@
 v1.1.9
  * Fix copying of tab assets (JS and CSS) when module is installed as a python egg
- * Make tabs wrap on narrow screens
+ * Make tabs wrap on narrow screens (#30)
+ * Add support for nested tabs (#29)
 
 v1.1.8
  * Add support for :linenos: to code tabs (#22)

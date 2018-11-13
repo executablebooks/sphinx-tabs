@@ -50,9 +50,20 @@ class TabsDirective(Directive):
         node = nodes.container()
         node['classes'] = ['sphinx-tabs']
 
-        env.temp_data['tab_ids'] = []
-        env.temp_data['tab_titles'] = []
-        env.temp_data['is_first_tab'] = True
+        if 'next_tabs_id' not in env.temp_data:
+            env.temp_data['next_tabs_id'] = 0
+        if 'tabs_stack' not in env.temp_data:
+            env.temp_data['tabs_stack'] = []
+
+        tabs_id = env.temp_data['next_tabs_id']
+        tabs_key = 'tabs_%d' % tabs_id
+        env.temp_data['next_tabs_id'] += 1
+        env.temp_data['tabs_stack'].append(tabs_id)
+
+        env.temp_data[tabs_key] = {}
+        env.temp_data[tabs_key]['tab_ids'] = []
+        env.temp_data[tabs_key]['tab_titles'] = []
+        env.temp_data[tabs_key]['is_first_tab'] = True
 
         self.state.nested_parse(self.content, self.content_offset, node)
 
@@ -63,7 +74,7 @@ class TabsDirective(Directive):
             classes = 'ui top attached tabular menu sphinx-menu'
             tabs_node['classes'] = classes.split(' ')
 
-            tab_titles = env.temp_data['tab_titles']
+            tab_titles = env.temp_data[tabs_key]['tab_titles']
             for idx, [data_tab, tab_name] in enumerate(tab_titles):
                 tab = nodes.container()
                 tab.tagname = 'a'
@@ -74,6 +85,7 @@ class TabsDirective(Directive):
 
             node.children.insert(0, tabs_node)
 
+        env.temp_data['tabs_stack'].pop()
         return [node]
 
 
@@ -86,6 +98,9 @@ class TabDirective(Directive):
         """ Parse a tab directive """
         self.assert_has_content()
         env = self.state.document.settings.env
+
+        tabs_id = env.temp_data['tabs_stack'][-1]
+        tabs_key = 'tabs_%d' % tabs_id
 
         args = self.content[0].strip()
         if args.startswith('{'):
@@ -103,16 +118,17 @@ class TabDirective(Directive):
         args['tab_name'] = tab_name
 
         if 'tab_id' not in args:
-            args['tab_id'] = env.new_serialno('tab_id')
+            args['tab_id'] = env.new_serialno(tabs_key)
         i = 1
-        while args['tab_id'] in env.temp_data['tab_ids']:
+        while args['tab_id'] in env.temp_data[tabs_key]['tab_ids']:
             args['tab_id'] = '%s-%d' % (args['tab_id'], i)
             i += 1
-        env.temp_data['tab_ids'].append(args['tab_id'])
+        env.temp_data[tabs_key]['tab_ids'].append(args['tab_id'])
 
-        data_tab = "sphinx-data-tab-{}".format(args['tab_id'])
+        data_tab = "sphinx-data-tab-{}-{}".format(tabs_id, args['tab_id'])
 
-        env.temp_data['tab_titles'].append((data_tab, args['tab_name']))
+        env.temp_data[tabs_key]['tab_titles'].append(
+            (data_tab, args['tab_name']))
 
         text = '\n'.join(self.content)
         node = nodes.container(text)
@@ -122,9 +138,9 @@ class TabDirective(Directive):
         node['classes'].extend(args.get('classes', []))
         node['classes'].append(data_tab)
 
-        if env.temp_data['is_first_tab']:
+        if env.temp_data[tabs_key]['is_first_tab']:
             node['classes'].append('active')
-            env.temp_data['is_first_tab'] = False
+            env.temp_data[tabs_key]['is_first_tab'] = False
 
         self.state.nested_parse(self.content[2:], self.content_offset, node)
 
