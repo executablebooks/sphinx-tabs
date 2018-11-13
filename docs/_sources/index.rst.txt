@@ -1,4 +1,4 @@
-Fruits
+Simple Tabs
 ========================================
 
 .. tabs::
@@ -15,18 +15,38 @@ Fruits
 
       Oranges are orange.
 
-Luminaries
+Nested Tabs
 ========================================
 
 .. tabs::
 
-   .. tab:: Sun
+   .. tab:: Stars
 
-      The sun is a star.
+      .. tabs::
 
-   .. tab:: Moon
+         .. tab:: The Sun
 
-      The moon is not a star.
+            The closest star to us.
+
+         .. tab:: Proxima Centauri
+
+            The second closest star to us.
+
+         .. tab:: Polaris
+
+            The North Star.
+
+   .. tab:: Moons
+
+      .. tabs::
+
+         .. tab:: The Moon
+
+            Orbits the Earth
+
+         .. tab:: Titan
+
+            Orbits Jupiter
 
 Code Tabs
 ========================================

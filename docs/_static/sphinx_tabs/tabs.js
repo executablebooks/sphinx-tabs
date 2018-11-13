@@ -51,16 +51,22 @@ $(function() {
       // Find offset in view
       const offset = (this1.offset().top - $(window).scrollTop());
 
-      $('[data-tab]').each(function() {
+      // Toggle active stack for tab buttons
+      this1.parent().children('[data-tab]').each(function() {
         var this2 = $(this);
-        // Remove 'active' class from tabs that aren't the same
         if (this2.attr('data-tab') !== data_tab) {
-          // Keep 'active' if there isn't a tab with the same data-tab value
-          if (0 < this2.parent().find('[data-tab="' + data_tab + '"]').length) {
-            this2.removeClass('active');
-          }
+          this2.removeClass('active');
         } else {
-          // Add 'active' if data-tab value is the same
+          this2.addClass('active');
+        }
+      });
+
+      // Toggle active state for tab content
+      this1.parent().parent().children('[data-tab]').each(function() {
+        var this2 = $(this);
+        if (this2.attr('data-tab') !== data_tab) {
+          this2.removeClass('active');
+        } else {
           this2.addClass('active');
         }
       });
