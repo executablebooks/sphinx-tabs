@@ -4,14 +4,12 @@ import base64
 import json
 import posixpath
 import os
-from docutils.parsers.rst import Directive, directives
 from docutils import nodes
+from docutils.parsers.rst import Directive, directives
+from pkg_resources import resource_filename
 from pygments.lexers import get_all_lexers
 from sphinx.util.osutil import copyfile
 from sphinx.util import logging
-
-
-DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 FILES = [
@@ -288,7 +286,7 @@ def copy_assets(app, exception):
     installdir = os.path.join(app.builder.outdir, '_static', 'sphinx_tabs')
 
     for path in FILES:
-        source = os.path.join(DIR, path)
+        source = resource_filename('sphinx_tabs', path)
         dest = os.path.join(installdir, path)
 
         destdir = os.path.dirname(dest)
