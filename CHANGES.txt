@@ -1,3 +1,6 @@
+v1.1.10
+ * Fix group tabs behaviour (#31)
+
 v1.1.9
  * Fix copying of tab assets (JS and CSS) when module is installed as a python egg
  * Make tabs wrap on narrow screens (#30)
