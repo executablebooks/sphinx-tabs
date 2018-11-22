@@ -51,23 +51,30 @@ $(function() {
       // Find offset in view
       const offset = (this1.offset().top - $(window).scrollTop());
 
-      // Toggle active stack for tab buttons
-      this1.parent().children('[data-tab]').each(function() {
-        var this2 = $(this);
-        if (this2.attr('data-tab') !== data_tab) {
-          this2.removeClass('active');
-        } else {
-          this2.addClass('active');
-        }
-      });
+      // Enable all tabs with this id
 
-      // Toggle active state for tab content
-      this1.parent().parent().children('[data-tab]').each(function() {
+      // For each tab group
+      $('.sphinx-tabs').each(function() {
         var this2 = $(this);
-        if (this2.attr('data-tab') !== data_tab) {
-          this2.removeClass('active');
-        } else {
-          this2.addClass('active');
+
+        // Check if tab group has a tab matching the clicked tab
+        var has_tab = false;
+        this2.children().eq(0).children().each(function() {
+          has_tab |= $(this).attr('data-tab') === data_tab;
+        });
+
+        if (has_tab) {
+          // Enable just the matching tab
+          var toggle = function() {
+            var this3 = $(this);
+            if (this3.attr('data-tab') === data_tab) {
+              this3.addClass('active');
+            } else {
+              this3.removeClass('active');
+            }
+          };
+          this2.children().eq(0).children('[data-tab]').each(toggle);
+          this2.children('[data-tab]').each(toggle);
         }
       });
 

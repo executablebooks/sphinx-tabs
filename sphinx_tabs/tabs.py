@@ -117,15 +117,20 @@ class TabDirective(Directive):
             self.content[:1], self.content_offset, tab_name)
         args['tab_name'] = tab_name
 
+        include_tabs_id_in_data_tab = False
         if 'tab_id' not in args:
             args['tab_id'] = env.new_serialno(tabs_key)
+            include_tabs_id_in_data_tab = True
         i = 1
         while args['tab_id'] in env.temp_data[tabs_key]['tab_ids']:
             args['tab_id'] = '%s-%d' % (args['tab_id'], i)
             i += 1
         env.temp_data[tabs_key]['tab_ids'].append(args['tab_id'])
 
-        data_tab = "sphinx-data-tab-{}-{}".format(tabs_id, args['tab_id'])
+        data_tab = str(args['tab_id'])
+        if include_tabs_id_in_data_tab:
+            data_tab = '%d-%s' % (tabs_id, data_tab)
+        data_tab = "sphinx-data-tab-{}".format(data_tab)
 
         env.temp_data[tabs_key]['tab_titles'].append(
             (data_tab, args['tab_name']))
@@ -175,7 +180,8 @@ class GroupTabDirective(Directive):
 
         tab_args = {
             'tab_id': base64.b64encode(
-                group_name.encode('utf-8')).decode('utf-8')
+                group_name.encode('utf-8')).decode('utf-8'),
+            'group_tab': True
         }
 
         new_content = [
