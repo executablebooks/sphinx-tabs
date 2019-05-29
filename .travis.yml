@@ -13,6 +13,13 @@ env:
   - SPHINX_VERSION=">=1.6, <1.7"
   - SPHINX_VERSION=">=1.7, <1.8"
   - SPHINX_VERSION=">=1.8, <1.9"
+  - SPHINX_VERSION=">=1.9, <2.1"
+matrix:
+  exclude:
+  - python: "2.7"
+    SPHINX_VERSION=">=1.9, <2.1"
+  - python: "3.4"
+    SPHINX_VERSION=">=1.9, <2.1"
 
 install:
  - pip install "sphinx $SPHINX_VERSION"
