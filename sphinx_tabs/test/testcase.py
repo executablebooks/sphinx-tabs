@@ -56,7 +56,8 @@ class TestCase(unittest.TestCase):
         if StrictVersion(__sphinx_version__) < StrictVersion('1.8.0'):
             StandaloneHTMLBuilder.script_files = \
                 StandaloneHTMLBuilder.script_files[:3]
-        if StrictVersion(__sphinx_version__) > StrictVersion('1.6.0'):
+        if StrictVersion(__sphinx_version__) > StrictVersion('1.6.0') and \
+           StrictVersion(__sphinx_version__) < StrictVersion('1.8.0'):
             # pylint: disable=no-name-in-module
             from sphinx.builders.html import CSSContainer
             StandaloneHTMLBuilder.css_files = CSSContainer()
