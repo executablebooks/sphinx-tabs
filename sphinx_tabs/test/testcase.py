@@ -105,7 +105,9 @@ class TestCase(unittest.TestCase):
         scripts = get_scripts(xml)
 
         def filter_scripts(x):
-            return x != 'documentation_options.js' and 'mathjax' not in x
+            return (x != 'documentation_options.js' and
+                    'mathjax' not in x and
+                    x != 'language_data.js')
 
         scripts = [x for x in scripts if filter_scripts(x)]
         self.assertEqual(stylesheets, [
