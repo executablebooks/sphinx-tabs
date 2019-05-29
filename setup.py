@@ -11,7 +11,7 @@ setup(
         'sphinx_tabs': [
             'tabs.js',
             'tabs.css',
-            'semantic-ui-2.2.10/*',
+            'semantic-ui-2.4.1/*',
         ],
     },
     data_files = [("", ["LICENSE"])],
