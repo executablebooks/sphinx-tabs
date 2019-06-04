@@ -114,18 +114,18 @@ class TestCase(unittest.TestCase):
         self.assertEqual(stylesheets, [
             'alabaster.css',
             'pygments.css',
-            'sphinx_tabs/tabs.css',
             'sphinx_tabs/semantic-ui-2.4.1/segment.min.css',
             'sphinx_tabs/semantic-ui-2.4.1/menu.min.css',
             'sphinx_tabs/semantic-ui-2.4.1/tab.min.css',
+            'sphinx_tabs/tabs.css',
             'custom.css'
         ])
         self.assertEqual(scripts, [
             'jquery.js',
             'underscore.js',
             'doctools.js',
-            'sphinx_tabs/tabs.js',
-            'sphinx_tabs/semantic-ui-2.4.1/tab.min.js'
+            'sphinx_tabs/semantic-ui-2.4.1/tab.min.js',
+            'sphinx_tabs/tabs.js'
         ])
 
     def assertDoesNotHaveTabsAssets(  # pylint: disable=invalid-name

@@ -13,12 +13,12 @@ from sphinx.util import logging
 
 
 FILES = [
-    'tabs.js',
-    'tabs.css',
     'semantic-ui-2.4.1/segment.min.css',
     'semantic-ui-2.4.1/menu.min.css',
     'semantic-ui-2.4.1/tab.min.css',
     'semantic-ui-2.4.1/tab.min.js',
+    'tabs.js',
+    'tabs.css'
 ]
 
 
