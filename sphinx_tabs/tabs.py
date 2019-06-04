@@ -277,12 +277,12 @@ def update_context(app, pagename, templatename, context, doctree):
         if 'css_files' in context:
             context['css_files'] = context['css_files'][:]
             for path in paths:
-                if path.endswith('.css'):
+                if path.endswith('.css') and path in context['css_files']:
                     context['css_files'].remove(path)
         if 'script_files' in context:
             context['script_files'] = context['script_files'][:]
             for path in paths:
-                if path.endswith('.js'):
+                if path.endswith('.js') and path in context['script_files']:
                     context['script_files'].remove(path)
 # pylint: enable=unused-argument
 
