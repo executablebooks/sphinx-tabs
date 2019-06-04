@@ -22,6 +22,13 @@ To enable the extension in Sphinx, add the following to your conf.py:
 extensions = ['sphinx_tabs.tabs']
 ```
 
+If you are using [Read The Docs](https://readthedocs.org/) for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
+```
+https://github.com/djungelorm/sphinx-tabs/releases/download/v1.1.7/sphinx-tabs-1.1.7.tar.gz
+``` 
+
+An example of this can be found [here](https://github.com/djungelorm/sphinx-tabs-rtd-test/blob/master/requirements.txt).
+
 Basic Tabs
 ----------------------------------------
 
