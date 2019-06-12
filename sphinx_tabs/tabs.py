@@ -291,7 +291,7 @@ def copy_assets(app, exception):
     """ Copy asset files to the output """
     if 'getLogger' in dir(logging):
         log = logging.getLogger(__name__).info  # pylint: disable=no-member
-        warn = logging.getLogger(__name__).warn  # pylint: disable=no-member
+        warn = logging.getLogger(__name__).warning  # pylint: disable=no-member
     else:
         log = app.info
         warn = app.warning
