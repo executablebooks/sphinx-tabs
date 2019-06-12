@@ -24,7 +24,7 @@ extensions = ['sphinx_tabs.tabs']
 
 If you are using [Read The Docs](https://readthedocs.org/) for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
 ```
-https://github.com/djungelorm/sphinx-tabs/releases/download/v1.1.10/sphinx-tabs-1.1.10.tar.gz
+https://github.com/djungelorm/sphinx-tabs/releases/download/v1.1.11/sphinx-tabs-1.1.11.tar.gz
 ``` 
 
 An example of this can be found [here](https://github.com/djungelorm/sphinx-tabs-rtd-test/blob/master/requirements.txt).
