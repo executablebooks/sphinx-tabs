@@ -1,5 +1,6 @@
 v1.1.12
  * Fix bug in Internet Explorer (#33)
+ * Drop support for Python 3.4 (as lxml no longer supports it)
 
 v1.1.11
  * Support for Sphinx 2
