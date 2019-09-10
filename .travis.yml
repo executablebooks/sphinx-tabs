@@ -12,11 +12,21 @@ env:
   - SPHINX_VERSION=">=1.6, <1.7"
   - SPHINX_VERSION=">=1.7, <1.8"
   - SPHINX_VERSION=">=1.8, <1.9"
-  - SPHINX_VERSION=">=1.9, <2.1"
+  - SPHINX_VERSION=">=1.9, <2.0"
+  - SPHINX_VERSION=">=2.0, <2.1"
+  - SPHINX_VERSION=">=2.1, <2.2"
+  - SPHINX_VERSION=">=2.2, <2.3"
+
 matrix:
   exclude:
   - python: "2.7"
-    env: SPHINX_VERSION=">=1.9, <2.1"
+    env: SPHINX_VERSION=">=1.9, <2.0"
+  - python: "2.7"
+    env: SPHINX_VERSION=">=2.0, <2.1"
+  - python: "2.7"
+    env: SPHINX_VERSION=">=2.1, <2.2"
+  - python: "2.7"
+    env: SPHINX_VERSION=">=2.2, <2.3"
 
 install:
  - pip install "sphinx $SPHINX_VERSION"
