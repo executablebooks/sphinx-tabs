@@ -3,7 +3,7 @@ sphinx-tabs [![Build Status](https://travis-ci.org/djungelorm/sphinx-tabs.svg?br
 
 Create tabbed content in [Sphinx documentation](http://www.sphinx-doc.org) when building HTML.
 
-For example, see the [Raw] code of [test/index.rst](test/index.rst) which generates the following:
+For example, see the [Raw] code of [example/index.rst](example/index.rst) which generates the following:
 
 A live demo can be found here: https://djungelorm.github.io/sphinx-tabs/
 
