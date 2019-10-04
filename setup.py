@@ -1,4 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from setuptools import setup
+
+
+with open('README.md') as readme:
+    long_description = readme.read()
+long_description += '\n\n'
+with open('CHANGES.txt') as changes:
+    long_description += changes.read()
+
 
 setup(
     name = 'sphinx-tabs',
@@ -18,8 +29,11 @@ setup(
     url = 'https://github.com/djungelorm/sphinx-tabs',
     license = 'MIT',
     description = 'Tab views for Sphinx',
+    long_description = long_description,
+    long_description_content_type = 'text/markdown',
     install_requires = ['sphinx>=1.4'],
     tests_require = ['sphinx>=1.4', 'docutils', 'pygments', 'sphinx_testing', 'lxml'],
+    python_requires = '>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
