@@ -32,7 +32,7 @@ def get_compatible_builders(app):
     builders = ['html', 'singlehtml', 'dirhtml',
                 'readthedocs', 'readthedocsdirhtml',
                 'readthedocssinglehtml', 'readthedocssinglehtmllocalmedia',
-                'spelling']
+                'spelling', 'man']
     builders.extend(app.config['sphinx_tabs_valid_builders'])
     return builders
 
