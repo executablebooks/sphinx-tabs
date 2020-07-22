@@ -76,7 +76,7 @@ $(function() {
           // Enable just the matching tab
           var toggle = function() {
             var this3 = $(this);
-            if (this3.attr('data-tab') === data_tab) {
+            if (this3.attr('data-tab') === data_tab && !this3.hasClass('active')) {
               this3.addClass('active');
             } else {
               this3.removeClass('active');
