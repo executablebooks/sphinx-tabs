@@ -174,7 +174,7 @@ class GroupTabDirective(TabDirective):
         group_name = self.content[0]
         self.tab_id = base64.b64encode(group_name.encode('utf-8')).decode('utf-8')
 
-        return super().run()
+        return super(GroupTabDirective, self).run()
 
 
 class CodeTabDirective(CodeBlock):
@@ -193,7 +193,7 @@ class CodeTabDirective(CodeBlock):
         tab_name = self.arguments[1] if len(self.arguments) > 1 else LEXER_MAP[self.arguments[0]]
         self.tab_id = base64.b64encode(tab_name.encode('utf-8')).decode('utf-8')
 
-        code_block = super().run()[0]
+        code_block = super(CodeTabDirective, self).run()[0]
 
         self.content.data = [tab_name, ""]
         self.content.items = [(None, 0), (None, 1)]
