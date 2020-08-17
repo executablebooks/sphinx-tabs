@@ -1,5 +1,9 @@
 # sphinx-tabs
 
+[![Github-CI][github-ci]][github-link]
+[![Coverage Status][codecov-badge]][codecov-link]
+[![PyPI][pypi-badge]][pypi-link]
+
 Create tabbed content in [Sphinx documentation](http://www.sphinx-doc.org) when building HTML.
 
 For example, see the [Raw] code of [docs/index.rst](docs/index.rst) which generates the following:
@@ -143,3 +147,10 @@ Tabs containing code areas with syntax highlighting can be created as follows:
 ```
 
 ![Code Tabs](/images/codeTabs.gif)
+
+[github-ci]: https://github.com/executablebooks/sphinx-tabs/workflows/continuous-integration/badge.svg?branch=master
+[github-link]: https://github.com/executablebooks/sphinx-tabs
+[pypi-badge]: https://img.shields.io/pypi/v/sphinx-tabs.svg
+[pypi-link]: https://pypi.org/project/sphinx-tabs
+[codecov-badge]: https://codecov.io/gh/executablebooks/sphinx-tabs/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/executablebooks/sphinx-tabs

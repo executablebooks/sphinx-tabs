@@ -14,10 +14,5 @@ test:
 	find sphinx_tabs -name "*.py" -print0 | xargs -0 pycodestyle
 	pylint --rcfile=pylint.cfg sphinx_tabs
 
-docs:
-	rm -rf docs
-	sphinx-build -E -n -W example docs
-	echo "" > docs/.nojekyll
-
 clean:
 	rm -rf build dist test-output *.egg-info
