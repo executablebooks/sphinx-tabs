@@ -1,0 +1,25 @@
+repos:
+
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
+    hooks:
+    - id: check-json
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: pylint-2.4.2
+    hooks:
+    - id: pylint
+      args:
+        - --disable=missing-docstring,similarities,fixme
+      additional_dependencies:
+        - sphinx
+        - docutils
+        - pygments
+      exclude: >
+        (?x)^(
+          test/.*|
+          example/.*
+        )$

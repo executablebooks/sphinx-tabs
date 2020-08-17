@@ -5,7 +5,7 @@ Create tabbed content in [Sphinx documentation](http://www.sphinx-doc.org) when 
 
 For example, see the [Raw] code of [example/index.rst](example/index.rst) which generates the following:
 
-A live demo can be found here: https://djungelorm.github.io/sphinx-tabs/
+A live demo can be found here: <https://executablebooks.github.io/sphinx-tabs/>
 
 ![Tabs](/images/tabs.gif)
 
@@ -24,10 +24,10 @@ extensions = ['sphinx_tabs.tabs']
 
 If you are using [Read The Docs](https://readthedocs.org/) for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
 ```
-https://github.com/djungelorm/sphinx-tabs/releases/download/v1.1.12/sphinx-tabs-1.1.13.tar.gz
-``` 
+https://github.com/executablebooks/sphinx-tabs/releases/download/v1.1.12/sphinx-tabs-1.1.13.tar.gz
+```
 
-An example of this can be found [here](https://github.com/djungelorm/sphinx-tabs-rtd-test/blob/master/requirements.txt).
+An example of this can be found [here](https://github.com/executablebooks/sphinx-tabs-rtd-test/blob/master/requirements.txt).
 
 Basic Tabs
 ----------------------------------------
