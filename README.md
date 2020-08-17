@@ -1,11 +1,11 @@
-sphinx-tabs [![Build Status](https://travis-ci.org/djungelorm/sphinx-tabs.svg?branch=master)](https://travis-ci.org/djungelorm/sphinx-tabs)
-========================================
+sphinx-tabs
+===========
 
 Create tabbed content in [Sphinx documentation](http://www.sphinx-doc.org) when building HTML.
 
 For example, see the [Raw] code of [example/index.rst](example/index.rst) which generates the following:
 
-A live demo can be found here: <https://executablebooks.github.io/sphinx-tabs/>
+A live demo can be found here: <https://sphinx-tabs.readthedocs.io>
 
 ![Tabs](/images/tabs.gif)
 
