@@ -1,16 +1,14 @@
-sphinx-tabs
-===========
+# sphinx-tabs
 
 Create tabbed content in [Sphinx documentation](http://www.sphinx-doc.org) when building HTML.
 
-For example, see the [Raw] code of [example/index.rst](example/index.rst) which generates the following:
+For example, see the [Raw] code of [docs/index.rst](docs/index.rst) which generates the following:
 
 A live demo can be found here: <https://sphinx-tabs.readthedocs.io>
 
 ![Tabs](/images/tabs.gif)
 
-Installation
-----------------------------------------
+## Installation
 
 ```bash
 pip install sphinx-tabs
@@ -23,14 +21,27 @@ extensions = ['sphinx_tabs.tabs']
 ```
 
 If you are using [Read The Docs](https://readthedocs.org/) for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
+
 ```
 sphinx-tabs==1.1.13
 ```
 
-An example of this can be found [here](https://github.com/executablebooks/sphinx-tabs-rtd-test/blob/master/requirements.txt).
+## Contributing
 
-Basic Tabs
-----------------------------------------
+We welcome all contributions!
+See the [EBP Contributing Guide](https://executablebooks.org/en/latest/contributing.html) for general details.
+
+The simplest way to run tests is to install [pre-commit](https://pre-commit.com/) for linting and [tox](https://tox.readthedocs.io) for unit tests and documentation build:
+
+```console
+$ pre-commit run --all
+```
+
+```console
+$ tox -p
+```
+
+## Basic Tabs
 
 Basic tabs can be coded as follows:
 
@@ -52,8 +63,7 @@ Basic tabs can be coded as follows:
 
 ![Tabs](/images/tabs.gif)
 
-Grouped Tabs
-----------------------------------------
+## Grouped Tabs
 
 Tabs can be grouped, so that changing the current tab in one area changes the current tab in the
 another area. For example:
@@ -90,8 +100,7 @@ another area. For example:
 
 ![Group Tabs](/images/groupTabs.gif)
 
-Code Tabs
-----------------------------------------
+## Code Tabs
 
 Tabs containing code areas with syntax highlighting can be created as follows:
 

@@ -1,5 +1,5 @@
 Simple Tabs
-========================================
+===========
 
 .. tabs::
 
@@ -16,7 +16,7 @@ Simple Tabs
       Oranges are orange.
 
 Nested Tabs
-========================================
+===========
 
 .. tabs::
 
@@ -49,7 +49,7 @@ Nested Tabs
             Orbits Jupiter
 
 Code Tabs
-========================================
+=========
 
 .. tabs::
 
@@ -114,7 +114,7 @@ Code Tabs
          END PROGRAM main
 
 Group Tabs
-========================================
+==========
 
 .. tabs::
 
