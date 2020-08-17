@@ -7,9 +7,15 @@ def get_version():
     match = re.compile(r"^__version__\s*\=\s*[\"\']([^\s\'\"]+)", re.M).search(text)
     return match.group(1)
 
+with open('README.md') as readme:
+    long_description = readme.read()
+
 setup(
     name="sphinx-tabs",
     version=get_version(),
+    description="Tabbed views for Sphinx",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
     author="djungelorm",
     author_email="djungelorm@users.noreply.github.com",
     packages=["sphinx_tabs"],
@@ -17,7 +23,6 @@ setup(
     data_files=[("", ["LICENSE"])],
     url="https://github.com/executablebooks/sphinx-tabs",
     license="MIT",
-    description="Tab views for Sphinx",
     python_requires="~=3.6",
     install_requires=["sphinx>=2,<4", "pygments"],
     extras_require={
