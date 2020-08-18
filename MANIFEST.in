@@ -13,7 +13,7 @@ exclude codecov.yml
 
 include LICENSE
 include README.md
-include CHANGES.txt
+include CHANGELOG.md
 
 include sphinx_tabs/tabs.js
 include sphinx_tabs/tabs.css
