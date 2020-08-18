@@ -1,5 +1,11 @@
 build
+_build
 dist
 test-output
 *.egg*
 docs/.doctrees
+.tox/
+.vscode/
+__pycache__
+*.pyc
+.DS_Store

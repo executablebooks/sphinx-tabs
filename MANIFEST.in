@@ -1,0 +1,20 @@
+exclude docs
+recursive-exclude docs *
+exclude test
+recursive-exclude test *
+exclude images
+recursive-exclude images *
+
+exclude .pre-commit-config.yaml
+exclude .readthedocs.yml
+exclude pylint.cfg
+exclude tox.ini
+exclude codecov.yml
+
+include LICENSE
+include README.md
+include CHANGELOG.md
+
+include sphinx_tabs/tabs.js
+include sphinx_tabs/tabs.css
+recursive-include sphinx_tabs/semantic-ui-2.4.1 *
