@@ -24,6 +24,12 @@ To enable the extension in Sphinx, add the following to your conf.py:
 extensions = ['sphinx_tabs.tabs']
 ```
 
+If needed, there is a configuration option to allow additional builders to be considered compatible. For example, to add the `linkcheck` builder, add the following to your conf.py:
+
+```python
+sphinx_tabs_valid_builders = ['linkcheck']
+```
+
 If you are using [Read The Docs](https://readthedocs.org/) for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
 
 ```
