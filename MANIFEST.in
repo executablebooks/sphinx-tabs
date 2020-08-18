@@ -9,6 +9,7 @@ exclude .pre-commit-config.yaml
 exclude .readthedocs.yml
 exclude pylint.cfg
 exclude tox.ini
+exclude codecov.yml
 
 include LICENSE
 include README.md
