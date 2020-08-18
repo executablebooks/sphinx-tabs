@@ -2,12 +2,14 @@ from os import path
 import re
 from setuptools import setup
 
+
 def get_version():
     text = open(path.join(path.dirname(__file__), "sphinx_tabs", "__init__.py")).read()
     match = re.compile(r"^__version__\s*\=\s*[\"\']([^\s\'\"]+)", re.M).search(text)
     return match.group(1)
 
-with open('README.md') as readme:
+
+with open("README.md") as readme:
     long_description = readme.read()
 
 setup(
