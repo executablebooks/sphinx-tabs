@@ -27,7 +27,7 @@ extensions = ['sphinx_tabs.tabs']
 If you are using [Read The Docs](https://readthedocs.org/) for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
 
 ```
-sphinx-tabs==1.1.13
+sphinx-tabs==1.2.0
 ```
 
 ## Contributing
