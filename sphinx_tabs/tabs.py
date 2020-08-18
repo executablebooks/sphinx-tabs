@@ -4,6 +4,7 @@ import base64
 import json
 import os
 import posixpath
+import sphinx
 from docutils import nodes
 from docutils.parsers.rst import Directive, directives
 from pkg_resources import resource_filename
@@ -346,7 +347,11 @@ def setup(app):
             if "add_script_file" in dir(app):
                 app.add_script_file(path)
             else:
-                app.add_javascript(path)
+                # check sphinx version for backward compatibility
+                if sphinx.version_info >= (3, 0):
+                    app.add_js_file(path)
+                else:
+                    app.add_javascript(path)
     app.connect("html-page-context", update_context)
     app.connect("build-finished", copy_assets)
 
