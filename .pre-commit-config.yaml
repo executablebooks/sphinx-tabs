@@ -13,12 +13,17 @@ repos:
     hooks:
     - id: check-manifest
 
+  - repo: https://github.com/psf/black
+    rev: stable
+    hooks:
+    - id: black
+
   - repo: https://github.com/PyCQA/pylint
     rev: pylint-2.4.2
     hooks:
     - id: pylint
       args:
-        - --disable=missing-docstring,similarities,fixme
+        - --disable=missing-docstring,similarities,fixme,bad-continuation
       additional_dependencies:
         - sphinx
         - docutils
