@@ -347,11 +347,7 @@ def setup(app):
             if "add_script_file" in dir(app):
                 app.add_script_file(path)
             else:
-                # check sphinx version for backward compatibility
-                if sphinx.version_info >= (3, 0):
-                    app.add_js_file(path)
-                else:
-                    app.add_javascript(path)
+                app.add_js_file(path)
     app.connect("html-page-context", update_context)
     app.connect("build-finished", copy_assets)
 
