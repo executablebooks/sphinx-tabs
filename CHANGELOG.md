@@ -1,5 +1,9 @@
 # Change Log
 
+## v1.2.1
+
+🐛 FIX: Remove `app.add_javascript` use for sphinx v2
+
 ## v1.2.0
 
 `sphinx-tabs` has now moved to the [EBP organisation](https://executablebooks.org) 🎉
