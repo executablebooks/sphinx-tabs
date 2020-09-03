@@ -190,15 +190,17 @@ class CodeTabDirective(TabDirective):
         if hasattr(self.env, "tab_classes"):
             self.env.tab_classes.append("code-tab")
 
+        # All content should be parsed as code
         code_block = CodeBlock.run(self)[0]
-
+        
+        # Reset to generate tab node
         self.content.data = [tab_name, ""]
         self.content.items = [(None, 0), (None, 1)]
 
-        node = super().run()[0]
-        node.append(code_block)
+        node = super().run()
+        node[0].append(code_block)
 
-        return [node]
+        return node
 
 
 class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
