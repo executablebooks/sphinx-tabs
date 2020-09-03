@@ -1,0 +1,36 @@
+repos:
+
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
+    hooks:
+    - id: check-json
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+
+  - repo: https://github.com/mgedmin/check-manifest
+    rev: "0.39"
+    hooks:
+    - id: check-manifest
+
+  - repo: https://github.com/psf/black
+    rev: stable
+    hooks:
+    - id: black
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: pylint-2.4.2
+    hooks:
+    - id: pylint
+      args:
+        - --disable=missing-docstring,similarities,fixme,bad-continuation
+      additional_dependencies:
+        - sphinx
+        - docutils
+        - pygments
+      exclude: >
+        (?x)^(
+          setup.py|
+          test/.*|
+          docs/.*
+        )$
