@@ -97,7 +97,7 @@ class TestCase(unittest.TestCase):
         else:
             expected = normalize_xml(expected)
             actual = normalize_xml(get_body(actual))
-            assert expected == actual
+            self.assertEqual(expected, actual)
 
     def assertHasTabsAssets(self, xml):  # pylint: disable=invalid-name
         stylesheets = get_stylesheets(xml)
@@ -111,7 +111,8 @@ class TestCase(unittest.TestCase):
             )
 
         scripts = [x for x in scripts if filter_scripts(x)]
-        assert stylesheets ==
+        self.assertEqual(
+            stylesheets,
             [
                 "alabaster.css",
                 "pygments.css",
@@ -120,28 +121,31 @@ class TestCase(unittest.TestCase):
                 "sphinx_tabs/semantic-ui-2.4.1/tab.min.css",
                 "sphinx_tabs/tabs.css",
                 "custom.css",
-            ]
-        assert scripts ==
+            ],
+        )
+        self.assertEqual(
+            scripts,
             [
                 "jquery.js",
                 "underscore.js",
                 "doctools.js",
                 "sphinx_tabs/semantic-ui-2.4.1/tab.min.js",
                 "sphinx_tabs/tabs.js",
-            ]
+            ],
+        )
 
     def assertDoesNotHaveTabsAssets(self, xml):  # pylint: disable=invalid-name
         stylesheets = get_stylesheets(xml)
         scripts = get_scripts(xml)
         for stylesheet in stylesheets:
-            assert "sphinx_tabs" not in stylesheet
+            self.assertTrue("sphinx_tabs" not in stylesheet)
         for script in scripts:
-            assert "sphinx_tabs" not in script
+            self.assertTrue("sphinx_tabs" not in script)
 
     def assertStylesheetsEqual(self, expected, xml):  # pylint: disable=invalid-name
         actual = get_stylesheets(xml)
-        assert expected == actual
+        self.assertEqual(expected, actual)
 
     def assertScriptsEqual(self, expected, xml):  # pylint: disable=invalid-name
         actual = get_scripts(xml)
-        assert expected == actual
+        self.assertEqual(expected, actual)
