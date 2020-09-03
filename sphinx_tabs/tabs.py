@@ -26,11 +26,7 @@ FILES = [
 LEXER_MAP = {}
 for lexer in get_all_lexers():
     for short_name in lexer[1]:
-        if short_name == "r":
-            # S by default
-            LEXER_MAP[short_name] = "R"
-        else:
-            LEXER_MAP[short_name] = lexer[0]
+        LEXER_MAP[short_name] = lexer[0]
 
 
 def get_compatible_builders(app):
