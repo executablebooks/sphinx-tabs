@@ -1,16 +1,15 @@
 """ Tabbed views for Sphinx, with HTML builder """
 
 import base64
-import json
 import os
 import posixpath
 
 from docutils import nodes
-from docutils.parsers.rst import Directive, directives
 from pkg_resources import resource_filename
 from pygments.lexers import get_all_lexers
 from sphinx.util.osutil import copyfile
 from sphinx.util import logging
+from sphinx.util.docutils import SphinxDirective
 from sphinx.directives.code import CodeBlock
 
 
@@ -45,7 +44,7 @@ def get_compatible_builders(app):
     return builders
 
 
-class TabsDirective(Directive):
+class TabsDirective(SphinxDirective):
     """ Top-level tabs directive """
 
     has_content = True
@@ -53,36 +52,35 @@ class TabsDirective(Directive):
     def run(self):
         """ Parse a tabs directive """
         self.assert_has_content()
-        env = self.state.document.settings.env
 
         node = nodes.container()
         node["classes"] = ["sphinx-tabs"]
 
-        if "next_tabs_id" not in env.temp_data:
-            env.temp_data["next_tabs_id"] = 0
-        if "tabs_stack" not in env.temp_data:
-            env.temp_data["tabs_stack"] = []
+        if "next_tabs_id" not in self.env.temp_data:
+            self.env.temp_data["next_tabs_id"] = 0
+        if "tabs_stack" not in self.env.temp_data:
+            self.env.temp_data["tabs_stack"] = []
 
-        tabs_id = env.temp_data["next_tabs_id"]
+        tabs_id = self.env.temp_data["next_tabs_id"]
         tabs_key = "tabs_%d" % tabs_id
-        env.temp_data["next_tabs_id"] += 1
-        env.temp_data["tabs_stack"].append(tabs_id)
+        self.env.temp_data["next_tabs_id"] += 1
+        self.env.temp_data["tabs_stack"].append(tabs_id)
 
-        env.temp_data[tabs_key] = {}
-        env.temp_data[tabs_key]["tab_ids"] = []
-        env.temp_data[tabs_key]["tab_titles"] = []
-        env.temp_data[tabs_key]["is_first_tab"] = True
+        self.env.temp_data[tabs_key] = {}
+        self.env.temp_data[tabs_key]["tab_ids"] = []
+        self.env.temp_data[tabs_key]["tab_titles"] = []
+        self.env.temp_data[tabs_key]["is_first_tab"] = True
 
         self.state.nested_parse(self.content, self.content_offset, node)
 
-        if env.app.builder.name in get_compatible_builders(env.app):
+        if self.env.app.builder.name in get_compatible_builders(self.env.app):
             tabs_node = nodes.container()
             tabs_node.tagname = "div"
 
             classes = "ui top attached tabular menu sphinx-menu"
             tabs_node["classes"] = classes.split(" ")
 
-            tab_titles = env.temp_data[tabs_key]["tab_titles"]
+            tab_titles = self.env.temp_data[tabs_key]["tab_titles"]
             for idx, [data_tab, tab_name] in enumerate(tab_titles):
                 tab = nodes.container()
                 tab.tagname = "a"
@@ -93,11 +91,11 @@ class TabsDirective(Directive):
 
             node.children.insert(0, tabs_node)
 
-        env.temp_data["tabs_stack"].pop()
+        self.env.temp_data["tabs_stack"].pop()
         return [node]
 
 
-class TabDirective(Directive):
+class TabDirective(SphinxDirective):
     """ Tab directive, for adding a tab to a collection of tabs """
 
     has_content = True
@@ -105,53 +103,47 @@ class TabDirective(Directive):
     def run(self):
         """ Parse a tab directive """
         self.assert_has_content()
-        env = self.state.document.settings.env
 
-        tabs_id = env.temp_data["tabs_stack"][-1]
+        tabs_id = self.env.temp_data["tabs_stack"][-1]
         tabs_key = "tabs_%d" % tabs_id
 
-        if hasattr(self, "tab_id"):
-            tab_id = self.tab_id
-            del self.tab_id
-            include_tabs_id_in_data_tab = False
-        else:
-            tab_id = env.new_serialno(tabs_key)
+        include_tabs_id_in_data_tab = False
+        if not hasattr(self.env, "tab_id"):
+            self.env.tab_id = self.env.new_serialno(tabs_key)
             include_tabs_id_in_data_tab = True
 
         tab_name = nodes.container()
         self.state.nested_parse(self.content[:1], self.content_offset, tab_name)
 
         i = 1
-        while tab_id in env.temp_data[tabs_key]['tab_ids']:
-            tab_id = '%s-%d' % (tab_id, i)
+        while self.env.tab_id in self.env.temp_data[tabs_key]["tab_ids"]:
+            self.env.tab_id = "%s-%d" % (self.env.tab_id, i)
             i += 1
-        env.temp_data[tabs_key]['tab_ids'].append(tab_id)
+        self.env.temp_data[tabs_key]["tab_ids"].append(self.env.tab_id)
 
-        data_tab = str(tab_id)
+        data_tab = str(self.env.tab_id)
         if include_tabs_id_in_data_tab:
             data_tab = "%d-%s" % (tabs_id, data_tab)
         data_tab = "sphinx-data-tab-{}".format(data_tab)
 
-        env.temp_data[tabs_key]['tab_titles'].append(
-            (data_tab, tab_name))
+        self.env.temp_data[tabs_key]["tab_titles"].append((data_tab, tab_name))
 
         text = "\n".join(self.content)
         node = nodes.container(text)
 
-        classes = 'ui bottom attached sphinx-tab tab segment'
-        node['classes'] = classes.split(' ')
-        if hasattr(self, "tab_classes"):
-            node['classes'].extend(self.tab_classes)
-            del self.tab_classes
-        node['classes'].append(data_tab)
+        classes = "ui bottom attached sphinx-tab tab segment"
+        node["classes"] = classes.split(" ")
+        if hasattr(self.env, "tab_classes"):
+            node["classes"].extend(self.env.tab_classes)
+        node["classes"].append(data_tab)
 
-        if env.temp_data[tabs_key]["is_first_tab"]:
+        if self.env.temp_data[tabs_key]["is_first_tab"]:
             node["classes"].append("active")
-            env.temp_data[tabs_key]["is_first_tab"] = False
+            self.env.temp_data[tabs_key]["is_first_tab"] = False
 
         self.state.nested_parse(self.content[2:], self.content_offset, node)
 
-        if env.app.builder.name not in get_compatible_builders(env.app):
+        if self.env.app.builder.name not in get_compatible_builders(self.env.app):
             outer_node = nodes.container()
             tab = nodes.container()
             tab.tagname = "a"
@@ -171,16 +163,13 @@ class GroupTabDirective(TabDirective):
     has_content = True
 
     def run(self):
-        """ Parse a tab directive """
         self.assert_has_content()
-
         group_name = self.content[0]
-        self.tab_id = base64.b64encode(group_name.encode('utf-8')).decode('utf-8')
+        self.env.tab_id = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
+        return super().run()
 
-        return super(GroupTabDirective, self).run()
 
-
-class CodeTabDirective(CodeBlock):
+class CodeTabDirective(TabDirective):
     """ Tab directive with a codeblock as its content"""
 
     has_content = True
@@ -191,26 +180,30 @@ class CodeTabDirective(CodeBlock):
     def run(self):
         """ Parse a code-tab directive"""
         self.assert_has_content()
-        
-        self.tab_classes = ["code-tab"]
-        tab_name = self.arguments[1] if len(self.arguments) > 1 else LEXER_MAP[self.arguments[0]]
-        self.tab_id = base64.b64encode(tab_name.encode('utf-8')).decode('utf-8')
 
-        code_block = super(CodeTabDirective, self).run()[0]
+        tab_name = (
+            self.arguments[1]
+            if len(self.arguments) > 1
+            else LEXER_MAP[self.arguments[0]]
+        )
+        self.env.tab_id = base64.b64encode(tab_name.encode("utf-8")).decode("utf-8")
+        if hasattr(self.env, "tab_classes"):
+            self.env.tab_classes.append("code-tab")
+
+        code_block = CodeBlock.run(self)[0]
 
         self.content.data = [tab_name, ""]
         self.content.items = [(None, 0), (None, 1)]
 
-        # All Directive methods are named run, so couldn't super both
-        node = TabDirective.run(self)[0]
+        node = super().run()[0]
         node.append(code_block)
 
         return [node]
 
 
 class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
-    """ Visitor pattern than looks for a sphinx tabs
-        directive in a document """
+    """Visitor pattern than looks for a sphinx tabs
+    directive in a document"""
 
     def __init__(self, document):
         nodes.NodeVisitor.__init__(self, document)
