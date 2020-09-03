@@ -27,11 +27,7 @@ FILES = [
 LEXER_MAP = {}
 for lexer in get_all_lexers():
     for short_name in lexer[1]:
-        if short_name == "r":
-            # S by default
-            LEXER_MAP[short_name] = "R"
-        else:
-            LEXER_MAP[short_name] = lexer[0]
+        LEXER_MAP[short_name] = lexer[0]
 
 
 def get_compatible_builders(app):
@@ -114,27 +110,16 @@ class TabDirective(Directive):
         tabs_id = env.temp_data["tabs_stack"][-1]
         tabs_key = "tabs_%d" % tabs_id
 
-<<<<<<< HEAD
         if hasattr(self, "tab_id"):
             tab_id = self.tab_id
             del self.tab_id
             include_tabs_id_in_data_tab = False
-=======
-        args = self.content[0].strip()
-        if args.startswith("{"):
-            try:
-                args = json.loads(args)
-                self.content.trim_start(1)
-            except ValueError:
-                args = {}
->>>>>>> master
         else:
             tab_id = env.new_serialno(tabs_key)
             include_tabs_id_in_data_tab = True
 
         tab_name = nodes.container()
         self.state.nested_parse(self.content[:1], self.content_offset, tab_name)
-<<<<<<< HEAD
 
         i = 1
         while tab_id in env.temp_data[tabs_key]['tab_ids']:
@@ -143,48 +128,22 @@ class TabDirective(Directive):
         env.temp_data[tabs_key]['tab_ids'].append(tab_id)
 
         data_tab = str(tab_id)
-=======
-        args["tab_name"] = tab_name
-
-        include_tabs_id_in_data_tab = False
-        if "tab_id" not in args:
-            args["tab_id"] = env.new_serialno(tabs_key)
-            include_tabs_id_in_data_tab = True
-        i = 1
-        while args["tab_id"] in env.temp_data[tabs_key]["tab_ids"]:
-            args["tab_id"] = "%s-%d" % (args["tab_id"], i)
-            i += 1
-        env.temp_data[tabs_key]["tab_ids"].append(args["tab_id"])
-
-        data_tab = str(args["tab_id"])
->>>>>>> master
         if include_tabs_id_in_data_tab:
             data_tab = "%d-%s" % (tabs_id, data_tab)
         data_tab = "sphinx-data-tab-{}".format(data_tab)
 
-<<<<<<< HEAD
         env.temp_data[tabs_key]['tab_titles'].append(
             (data_tab, tab_name))
-=======
-        env.temp_data[tabs_key]["tab_titles"].append((data_tab, args["tab_name"]))
->>>>>>> master
 
         text = "\n".join(self.content)
         node = nodes.container(text)
 
-<<<<<<< HEAD
         classes = 'ui bottom attached sphinx-tab tab segment'
         node['classes'] = classes.split(' ')
         if hasattr(self, "tab_classes"):
             node['classes'].extend(self.tab_classes)
             del self.tab_classes
         node['classes'].append(data_tab)
-=======
-        classes = "ui bottom attached sphinx-tab tab segment"
-        node["classes"] = classes.split(" ")
-        node["classes"].extend(args.get("classes", []))
-        node["classes"].append(data_tab)
->>>>>>> master
 
         if env.temp_data[tabs_key]["is_first_tab"]:
             node["classes"].append("active")
@@ -216,40 +175,18 @@ class GroupTabDirective(TabDirective):
         self.assert_has_content()
 
         group_name = self.content[0]
-<<<<<<< HEAD
         self.tab_id = base64.b64encode(group_name.encode('utf-8')).decode('utf-8')
 
         return super(GroupTabDirective, self).run()
-=======
-        self.content.trim_start(2)
-
-        for idx, line in enumerate(self.content.data):
-            self.content.data[idx] = "   " + line
-
-        tab_args = {
-            "tab_id": base64.b64encode(group_name.encode("utf-8")).decode("utf-8"),
-            "group_tab": True,
-        }
-
-        new_content = [
-            ".. tab:: {}".format(json.dumps(tab_args)),
-            "   {}".format(group_name),
-            "",
-        ]
->>>>>>> master
 
 
 class CodeTabDirective(CodeBlock):
     """ Tab directive with a codeblock as its content"""
 
     has_content = True
-<<<<<<< HEAD
     required_arguments = 1
     optional_arguments = 1
     final_argument_whitespace = True
-=======
-    option_spec = {"linenos": directives.flag}
->>>>>>> master
 
     def run(self):
         """ Parse a code-tab directive"""
@@ -259,7 +196,6 @@ class CodeTabDirective(CodeBlock):
         tab_name = self.arguments[1] if len(self.arguments) > 1 else LEXER_MAP[self.arguments[0]]
         self.tab_id = base64.b64encode(tab_name.encode('utf-8')).decode('utf-8')
 
-<<<<<<< HEAD
         code_block = super(CodeTabDirective, self).run()[0]
 
         self.content.data = [tab_name, ""]
@@ -268,33 +204,6 @@ class CodeTabDirective(CodeBlock):
         # All Directive methods are named run, so couldn't super both
         node = TabDirective.run(self)[0]
         node.append(code_block)
-=======
-        args = self.content[0].strip().split()
-        self.content.trim_start(2)
-
-        lang = args[0]
-        tab_name = " ".join(args[1:]) if len(args) > 1 else LEXER_MAP[lang]
-
-        for idx, line in enumerate(self.content.data):
-            self.content.data[idx] = "      " + line
-
-        tab_args = {
-            "tab_id": base64.b64encode(tab_name.encode("utf-8")).decode("utf-8"),
-            "classes": ["code-tab"],
-        }
-
-        new_content = [
-            ".. tab:: {}".format(json.dumps(tab_args)),
-            "   {}".format(tab_name),
-            "",
-            "   .. code-block:: {}".format(lang),
-        ]
-
-        if "linenos" in self.options:
-            new_content.append("      :linenos:")
-
-        new_content.append("")
->>>>>>> master
 
         return [node]
 
