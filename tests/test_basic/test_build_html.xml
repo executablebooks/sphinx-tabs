@@ -1,0 +1,31 @@
+<document source="index.rst">
+    <container classes="sphinx-tabs">
+        <div classes="ui top attached tabular menu sphinx-menu">
+            <a classes="active item sphinx-data-tab-0-0">
+                <container>
+                    <paragraph>
+                        Apples
+            <a classes="item sphinx-data-tab-0-1">
+                <container>
+                    <paragraph>
+                        Pears
+            <a classes="item sphinx-data-tab-0-2">
+                <container>
+                    <paragraph>
+                        Oranges
+            <a classes="item sphinx-data-tab-0-3">
+                <container>
+                    <paragraph>
+                        404
+        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-0 active">
+            <paragraph>
+                Apples are green, or sometimes red.
+        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1">
+            <paragraph>
+                Pears are green.
+        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-2">
+            <paragraph>
+                Oranges are orange.
+        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-3">
+            <paragraph>
+                A number in the name.
