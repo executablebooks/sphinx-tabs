@@ -20,30 +20,36 @@ def check_build_success():
 
     return check
     
-
 @pytest.fixture
 def get_sphinx_app_output(file_regression):
     def read(
         app,
         buildername="html",
-        files=["index.html"],
+        filename="index.html",
         encoding="utf-8",
-        regress=False
+        regress=False,
+        replace=None,
     ):
-        contents = []
+        outpath = path(os.path.join(str(app.srcdir), "_build", buildername, filename))
+        if not outpath.exists():
+            raise IOError("no output file exists: {}".format(outpath))
 
-        for filename in files:
-            outpath = path(os.path.join(str(app.srcdir), "_build", buildername, filename))
-            if not outpath.exists():
-                raise IOError("no output file exists: {}".format(outpath))
-            header = "-"*len(filename) + "\n"
-            title = header + f"{filename}\n" + header + "\n"
-            doc = title + outpath.read_text(encoding=encoding)
-            contents.append(doc)
+        try:
+            # introduced in sphinx 3.0
+            content = outpath.read_text(encoding=encoding)
+        except AttributeError:
+            content = outpath.text(encoding=encoding)
 
         if regress:
-            content = "\n".join(contents)
-            file_regression.check(content, extension=".html")
+            # only regress the inner body, since other sections are non-deterministic
+            from bs4 import BeautifulSoup
+
+            soup = BeautifulSoup(content, "html.parser")
+            doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
+            text = doc_div.prettify()
+            for find, rep in (replace or {}).items():
+                text = text.replace(find, rep)
+            file_regression.check(text, extension=".html", encoding="utf8")
 
         return content
 
@@ -52,7 +58,7 @@ def get_sphinx_app_output(file_regression):
 
 @pytest.fixture
 def get_sphinx_app_doctree(file_regression):
-    def read(app, docname="index", resolve=False, regress=False):
+    def read(app, docname="index", resolve=False, regress=False, replace=None):
         if resolve:
             doctree = app.env.get_and_resolve_doctree(docname, app.builder)
             extension = ".resolved.xml"
@@ -65,7 +71,10 @@ def get_sphinx_app_doctree(file_regression):
             node["source"] = Path(node["source"]).name
 
         if regress:
-            file_regression.check(doctree.pformat(), extension=extension)
+            text = doctree.pformat()  # type: str
+            for find, rep in (replace or {}).items():
+                text = text.replace(find, rep)
+            file_regression.check(text, extension=extension)
 
         return doctree
 
