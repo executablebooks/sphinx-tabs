@@ -34,6 +34,7 @@ setup(
             "pytest-regressions",
             "pygments",
             "sphinx_testing",
+            "bs4",
         ],
         "code_style": ["pre-commit==2.6"],
     },
