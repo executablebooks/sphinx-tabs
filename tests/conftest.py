@@ -4,6 +4,7 @@ from pathlib import Path
 from sphinx.testing.path import path
 
 from lxml import etree
+
 try:
     from StringIO import StringIO
 except ImportError:
@@ -11,16 +12,18 @@ except ImportError:
 
 from sphinx_tabs.tabs import FILES
 
-pytest_plugins = 'sphinx.testing.fixtures'
+pytest_plugins = "sphinx.testing.fixtures"
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def rootdir():
-    return path(__file__).parent.abspath() / 'roots'
+    return path(__file__).parent.abspath() / "roots"
 
 
 @pytest.fixture
 def check_build_success():
+    """Check build is successful and there are no warnings."""
+
     def check(status, warning):
         assert "build succeeded" in status.getvalue()
         warnings = warning.getvalue().strip()
@@ -31,6 +34,8 @@ def check_build_success():
 
 @pytest.fixture
 def get_sphinx_app_output(file_regression):
+    """Get sphinx HTML output and optionally regress."""
+
     def read(
         app,
         buildername="html",
@@ -42,7 +47,7 @@ def get_sphinx_app_output(file_regression):
         outpath = Path(app.srcdir) / "_build" / buildername / filename
         if not outpath.exists():
             raise IOError("No output file exists: {}".format(outpath.as_posix()))
-        
+
         content = outpath.read_text(encoding=encoding)
 
         if regress:
@@ -63,6 +68,8 @@ def get_sphinx_app_output(file_regression):
 
 @pytest.fixture
 def get_sphinx_app_doctree(file_regression):
+    """Get sphinx doctree and optionally regress."""
+
     def read(app, docname="index", resolve=False, regress=False, replace=None):
         if resolve:
             doctree = app.env.get_and_resolve_doctree(docname, app.builder)
@@ -92,26 +99,23 @@ def check_asset_links():
     Check if all stylesheets and scripts (.js) have been referenced in HTML.
     Specify whether checking if assets are ``present`` or not ``present``.
     """
+
     def check(
-        app,
-        buildername="html",
-        filename="index.html",
-        encoding="utf-8",
-        present=True
+        app, buildername="html", filename="index.html", encoding="utf-8", present=True
     ):
         outpath = Path(app.srcdir) / "_build" / buildername / filename
         if not outpath.exists():
             raise IOError("No output file exists: {}".format(outpath.as_posix()))
-        
+
         content = outpath.read_text(encoding=encoding)
-        
+
         from bs4 import BeautifulSoup
 
         css_assets = [f for f in FILES if f.endswith(".css")]
         js_assets = [f for f in FILES if f.endswith(".js")]
 
         soup = BeautifulSoup(content, "html.parser")
-        stylesheets = soup.find_all("link", {"rel":"stylesheet"}, href=True)
+        stylesheets = soup.find_all("link", {"rel": "stylesheet"}, href=True)
         css_refs = [s["href"] for s in stylesheets]
 
         scripts = soup.find_all("script", src=True)
@@ -126,5 +130,5 @@ def check_asset_links():
             assert js_present
         else:
             assert not "sphinx_tabs" in css_refs + js_refs
-    
+
     return check

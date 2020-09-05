@@ -248,8 +248,8 @@ class CodeTabDirective(Directive):
 
 
 class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
-    """ Visitor pattern than looks for a sphinx tabs
-        directive in a document """
+    """Visitor pattern than looks for a sphinx tabs
+    directive in a document"""
 
     def __init__(self, document):
         nodes.NodeVisitor.__init__(self, document)

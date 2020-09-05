@@ -1,6 +1,7 @@
 import pytest
 
-@pytest.mark.sphinx(testroot='linenos')
+
+@pytest.mark.sphinx(testroot="linenos")
 def test_build_html(
     app,
     status,
@@ -9,7 +10,7 @@ def test_build_html(
     get_sphinx_app_output,
     get_sphinx_app_doctree,
     check_asset_links,
-    ):
+):
     app.build()
     check_build_success(status, warning)
     get_sphinx_app_doctree(app, regress=True)

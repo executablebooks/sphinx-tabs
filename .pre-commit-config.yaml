@@ -31,6 +31,6 @@ repos:
       exclude: >
         (?x)^(
           setup.py|
-          test/.*|
+          tests/.*|
           docs/.*
         )$
