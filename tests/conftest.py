@@ -3,6 +3,14 @@ import pytest
 from pathlib import Path
 from sphinx.testing.path import path
 
+from lxml import etree
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
+from sphinx_tabs.tabs import FILES
+
 pytest_plugins = 'sphinx.testing.fixtures'
 
 
@@ -19,7 +27,8 @@ def check_build_success():
         assert warnings == ""
 
     return check
-    
+
+
 @pytest.fixture
 def get_sphinx_app_output(file_regression):
     def read(
@@ -30,15 +39,11 @@ def get_sphinx_app_output(file_regression):
         regress=False,
         replace=None,
     ):
-        outpath = path(os.path.join(str(app.srcdir), "_build", buildername, filename))
+        outpath = Path(app.srcdir) / "_build" / buildername / filename
         if not outpath.exists():
-            raise IOError("no output file exists: {}".format(outpath))
-
-        try:
-            # introduced in sphinx 3.0
-            content = outpath.read_text(encoding=encoding)
-        except AttributeError:
-            content = outpath.text(encoding=encoding)
+            raise IOError("No output file exists: {}".format(outpath.as_posix()))
+        
+        content = outpath.read_text(encoding=encoding)
 
         if regress:
             # only regress the inner body, since other sections are non-deterministic
@@ -79,3 +84,39 @@ def get_sphinx_app_doctree(file_regression):
         return doctree
 
     return read
+
+
+@pytest.fixture
+def check_asset_links():
+    """
+    Check if stylesheets and scripts (.js) have been referenced in HTML.
+    Specify whether checking if assets are ``present`` or not ``present``.
+    """
+    def check(
+        app,
+        docname,
+        buildername="html",
+        filename="index.html",
+        encoding="utf-8",
+        present=True
+    ):
+        outpath = Path(app.srcdir) / "_build" / buildername / filename
+        if not outpath.exists():
+            raise IOError("No output file exists: {}".format(outpath.as_posix()))
+        
+        content = outpath.read_text(encoding=encoding)
+        
+        from bs4 import BeautifulSoup
+
+        soup = BeautifulSoup(content, "html.parser")
+        stylesheets = soup.find_all("link", {"rel":"stylesheet"})
+        scripts = soup.find_all("script", {"type":"text/javascript"})
+        assets = stylesheets + scripts
+        print(assets)
+
+        if present:
+            return all(f in assets for f in FILES)
+        else:
+            return not any(f in assets for f in FILES)
+    
+    return check

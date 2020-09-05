@@ -7,7 +7,7 @@ def test_build_html(
     warning,
     check_build_success,
     get_sphinx_app_output,
-    get_sphinx_app_doctree
+    get_sphinx_app_doctree,
     ):
     app.build()
     check_build_success(status, warning)

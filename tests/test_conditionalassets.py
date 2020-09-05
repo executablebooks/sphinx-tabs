@@ -1,20 +1,23 @@
-import unittest
-import pkg_resources
-from sphinx_testing import with_app
-from .testcase import TestCase
+import pytest
 
-@with_app(buildername="html",srcdir=pkg_resources.resource_filename(__name__,"conditionalassets"),)
-def test_build_html(self,app,status,warning):
-    app.builder.build_all()
-    for filename in ("index", "other", "other2"):
-        actual = self.get_result(app, filename)
-        expected = self.get_expectation("conditionalassets", filename)
-        self.assertXMLEqual(expected, actual)
-        if filename.startswith("other"):
-            self.assertDoesNotHaveTabsAssets(actual)
-            else:
-            self.assertHasTabsAssets(actual)
+@pytest.mark.parametrize("docname", ["index", "other", "other2"])
+@pytest.mark.sphinx(testroot='conditionalassets')
+def test_build_html(
+    app,
+    status,
+    warning,
+    docname,
+    check_build_success,
+    get_sphinx_app_output,
+    get_sphinx_app_doctree,
+    check_asset_links,
+    ):
+    app.build()
+    check_build_success(status, warning)
+    get_sphinx_app_doctree(app, docname=docname, regress=True)
+    get_sphinx_app_output(app, filename=docname + ".html", regress=True)
 
-
-if __name__ == "__main__":
-    unittest.main()
+    if docname == "index":
+        assert check_asset_links(app, docname)
+    else:
+        assert check_asset_links(app, docname, present=False)
