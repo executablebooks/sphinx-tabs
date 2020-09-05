@@ -3,13 +3,6 @@ import pytest
 from pathlib import Path
 from sphinx.testing.path import path
 
-from lxml import etree
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-
 from sphinx_tabs.tabs import FILES
 
 pytest_plugins = "sphinx.testing.fixtures"
