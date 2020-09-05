@@ -90,13 +90,13 @@
                              tab
             <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-3-0 active">
                 <paragraph>
-                    Variables are equal
+                    Variables are equal 
                     <math>
                         x = y
                     .
             <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-3-1">
                 <paragraph>
-                    Variables are not equal
+                    Variables are not equal 
                     <math>
                         x \neq y
                     .
@@ -116,13 +116,13 @@
                              group tab
             <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI= active">
                 <paragraph>
-                    Variables are equal
+                    Variables are equal 
                     <math>
                         x = y
                     .
             <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
                 <paragraph>
-                    Variables are not equal
+                    Variables are not equal 
                     <math>
                         x \neq y
                     .
@@ -142,13 +142,13 @@
                              group tab
             <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI= active">
                 <paragraph>
-                    Variables are equal
+                    Variables are equal 
                     <math>
                         x = y
                     .
             <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
                 <paragraph>
-                    Variables are not equal
+                    Variables are not equal 
                     <math>
                         x \neq y
                     .
