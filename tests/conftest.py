@@ -89,7 +89,7 @@ def get_sphinx_app_doctree(file_regression):
 @pytest.fixture
 def check_asset_links():
     """
-    Check if stylesheets and scripts (.js) have been referenced in HTML.
+    Check if all stylesheets and scripts (.js) have been referenced in HTML.
     Specify whether checking if assets are ``present`` or not ``present``.
     """
     def check(
@@ -108,15 +108,24 @@ def check_asset_links():
         
         from bs4 import BeautifulSoup
 
+        css_assets = [f for f in FILES if f.endswith(".css")]
+        js_assets = [f for f in FILES if f.endswith(".js")]
+
         soup = BeautifulSoup(content, "html.parser")
-        stylesheets = soup.find_all("link", {"rel":"stylesheet"})
-        scripts = soup.find_all("script", {"type":"text/javascript"})
-        assets = stylesheets + scripts
-        print(assets)
+        stylesheets = soup.find_all("link", {"rel":"stylesheet"}, href=True)
+        css_refs = [s["href"] for s in stylesheets]
+
+        scripts = soup.find_all("script", src=True)
+        js_refs = [s["src"] for s in scripts]
+
+        all_refs = css_refs + js_refs
 
         if present:
-            return all(f in assets for f in FILES)
+            css_present = all(any(a in ref for ref in all_refs) for a in css_assets)
+            js_present = all(any(a in ref for ref in js_refs) for a in js_assets)
+            assert css_present
+            assert js_present
         else:
-            return not any(f in assets for f in FILES)
+            assert not "sphinx_tabs" in css_refs + js_refs
     
     return check

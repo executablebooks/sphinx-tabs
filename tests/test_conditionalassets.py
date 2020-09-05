@@ -18,6 +18,6 @@ def test_build_html(
     get_sphinx_app_output(app, filename=docname + ".html", regress=True)
 
     if docname == "index":
-        assert check_asset_links(app, docname)
+        check_asset_links(app, docname)
     else:
-        assert check_asset_links(app, docname, present=False)
+        check_asset_links(app, docname, present=False)
