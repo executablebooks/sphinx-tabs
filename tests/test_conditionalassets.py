@@ -1,6 +1,6 @@
 import pytest
 
-@pytest.mark.parametrize("docname", ["index", "other", "other2"])
+@pytest.mark.parametrize("docname", ["index", "no_tabs1", "no_tabs2"])
 @pytest.mark.sphinx(testroot='conditionalassets')
 def test_build_html(
     app,
@@ -18,6 +18,6 @@ def test_build_html(
     get_sphinx_app_output(app, filename=docname + ".html", regress=True)
 
     if docname == "index":
-        check_asset_links(app, docname)
+        check_asset_links(app)
     else:
-        check_asset_links(app, docname, present=False)
+        check_asset_links(app, filename=docname + ".html", present=False)

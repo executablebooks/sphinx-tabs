@@ -282,7 +282,7 @@ def update_context(app, pagename, templatename, context, doctree):
         if "css_files" in context:
             context["css_files"] = context["css_files"][:]
             for path in paths:
-                if path.endswith(".css") and path in context["css_files"]:
+                if path.suffix == ".css" and path in context["css_files"]:
                     context["css_files"].remove(path.as_posix())
         if "script_files" in context:
             context["script_files"] = context["script_files"][:]

@@ -1,16 +1,17 @@
-import unittest
-import pkg_resources
-from sphinx_testing import with_app
-from .testcase import TestCase
+import pytest
 
-@with_app(buildername="html",srcdir=pkg_resources.resource_filename(__name__,"notabs"))
-def test_build_html(self,app,status,warning):
-    app.builder.build_all()
-    actual = self.get_result(app, "index")
-    expected = self.get_expectation("notabs", "index")
-    self.assertDoesNotHaveTabsAssets(actual)
-    self.assertXMLEqual(expected, actual)
-
-
-if __name__ == "__main__":
-    unittest.main()
+@pytest.mark.sphinx(testroot='notabs')
+def test_build_html(
+    app,
+    status,
+    warning,
+    check_build_success,
+    get_sphinx_app_output,
+    get_sphinx_app_doctree,
+    check_asset_links,
+    ):
+    app.build()
+    check_build_success(status, warning)
+    get_sphinx_app_doctree(app, regress=True)
+    get_sphinx_app_output(app, regress=True)
+    check_asset_links(app, present=False)

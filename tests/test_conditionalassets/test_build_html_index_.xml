@@ -1,6 +1,6 @@
 <document source="index.rst">
     <compound classes="toctree-wrapper">
-        <toctree caption="True" entries="(None,\ 'other') (None,\ 'other2')" glob="False" hidden="False" includefiles="other other2" includehidden="False" maxdepth="-1" numbered="0" parent="index" rawentries="" titlesonly="False">
+        <toctree caption="True" entries="(None,\ 'no_tabs1') (None,\ 'no_tabs2')" glob="False" hidden="False" includefiles="no_tabs1 no_tabs2" includehidden="False" maxdepth="-1" numbered="0" parent="index" rawentries="" titlesonly="False">
     <section ids="fruits" names="fruits">
         <title>
             Fruits

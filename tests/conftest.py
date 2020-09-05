@@ -94,7 +94,6 @@ def check_asset_links():
     """
     def check(
         app,
-        docname,
         buildername="html",
         filename="index.html",
         encoding="utf-8",
