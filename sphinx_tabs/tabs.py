@@ -108,20 +108,20 @@ class TabDirective(SphinxDirective):
         tabs_key = "tabs_%d" % tabs_id
 
         include_tabs_id_in_data_tab = False
-        if not hasattr(self.env, "tab_id"):
-            self.env.tab_id = self.env.new_serialno(tabs_key)
+        if not hasattr(self.env.temp_data, "tab_id"):
+            self.env.temp_data["tab_id"] = self.env.new_serialno(tabs_key)
             include_tabs_id_in_data_tab = True
 
         tab_name = nodes.container()
         self.state.nested_parse(self.content[:1], self.content_offset, tab_name)
 
         i = 1
-        while self.env.tab_id in self.env.temp_data[tabs_key]["tab_ids"]:
-            self.env.tab_id = "%s-%d" % (self.env.tab_id, i)
+        while self.env.temp_data["tab_id"] in self.env.temp_data[tabs_key]["tab_ids"]:
+            self.env.temp_data["tab_id"] = "%s-%d" % (self.env.temp_data["tab_id"], i)
             i += 1
-        self.env.temp_data[tabs_key]["tab_ids"].append(self.env.tab_id)
+        self.env.temp_data[tabs_key]["tab_ids"].append(self.env.temp_data["tab_id"])
 
-        data_tab = str(self.env.tab_id)
+        data_tab = str(self.env.temp_data["tab_id"])
         if include_tabs_id_in_data_tab:
             data_tab = "%d-%s" % (tabs_id, data_tab)
         data_tab = "sphinx-data-tab-{}".format(data_tab)
@@ -133,8 +133,8 @@ class TabDirective(SphinxDirective):
 
         classes = "ui bottom attached sphinx-tab tab segment"
         node["classes"] = classes.split(" ")
-        if hasattr(self.env, "tab_classes"):
-            node["classes"].extend(self.env.tab_classes)
+        if hasattr(self.env.temp_data, "tab_classes"):
+            node["classes"].extend(self.env.temp_data["tab_classes"])
         node["classes"].append(data_tab)
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
@@ -165,7 +165,7 @@ class GroupTabDirective(TabDirective):
     def run(self):
         self.assert_has_content()
         group_name = self.content[0]
-        self.env.tab_id = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
+        self.env.temp_data["tab_id"] = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
         return super().run()
 
 
@@ -186,9 +186,11 @@ class CodeTabDirective(TabDirective):
             if len(self.arguments) > 1
             else LEXER_MAP[self.arguments[0]]
         )
-        self.env.tab_id = base64.b64encode(tab_name.encode("utf-8")).decode("utf-8")
-        if hasattr(self.env, "tab_classes"):
-            self.env.tab_classes.append("code-tab")
+        self.env.temp_data["tab_id"] = base64.b64encode(tab_name.encode("utf-8")).decode("utf-8")
+        if hasattr(self.env.temp_data, "tab_classes"):
+            self.env.temp_data["tab_classes"].append("code-tab")
+        else:
+            self.env.temp_data["tab_classes"] = ["code-tab"]
 
         # All content should be parsed as code
         code_block = CodeBlock.run(self)[0]
