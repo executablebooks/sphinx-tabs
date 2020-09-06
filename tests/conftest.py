@@ -13,6 +13,25 @@ def rootdir():
     return path(__file__).parent.abspath() / "roots"
 
 
+@pytest.fixture(scope="function", autouse=True)
+def build_and_check(
+    app,
+    status,
+    warning,
+    check_build_success,
+    get_sphinx_app_doctree,
+    get_sphinx_app_output,
+):
+    """
+    Build and check build success and  output regressions.
+    Currently all tests start with this.
+    """
+    app.build()
+    check_build_success(status, warning)
+    get_sphinx_app_doctree(app, regress=True)
+    get_sphinx_app_output(app, regress=True)
+
+
 @pytest.fixture
 def check_build_success():
     """Check build is successful and there are no warnings."""
