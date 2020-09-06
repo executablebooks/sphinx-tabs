@@ -105,7 +105,6 @@ class TabDirective(SphinxDirective):
         self.tab_id = None
         self.tab_classes = set()
         super().__init__(*args, **kwargs)
-    
 
     def run(self):
         """ Parse a tab directive """
@@ -142,8 +141,7 @@ class TabDirective(SphinxDirective):
 
         classes = "ui bottom attached sphinx-tab tab segment"
         node["classes"] = classes.split(" ")
-        if len(self.tab_classes):
-            node["classes"].extend(self.tab_classes)
+        node["classes"].extend(self.tab_classes)
         node["classes"].append(data_tab)
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
@@ -162,7 +160,7 @@ class TabDirective(SphinxDirective):
             outer_node.append(tab)
             outer_node.append(node)
             return [outer_node]
-                
+
         return [node]
 
 
