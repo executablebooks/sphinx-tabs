@@ -5,14 +5,13 @@ import os
 import posixpath
 
 from docutils import nodes
+from docutils.parsers.rst import directives
 from pkg_resources import resource_filename
 from pygments.lexers import get_all_lexers
 from sphinx.util.osutil import copyfile
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
 from sphinx.directives.code import CodeBlock
-from docutils.parsers.rst import directives
-
 
 
 FILES = [
@@ -102,7 +101,13 @@ class TabDirective(SphinxDirective):
 
     has_content = True
 
-    def run(self, tab_id=None, tab_classes=[]):
+    def __init__(self, *args, **kwargs):
+        self.tab_id = None
+        self.tab_classes = set()
+        super().__init__(*args, **kwargs)
+    
+
+    def run(self):
         """ Parse a tab directive """
         self.assert_has_content()
 
@@ -110,9 +115,11 @@ class TabDirective(SphinxDirective):
         tabs_key = "tabs_%d" % tabs_id
 
         include_tabs_id_in_data_tab = False
-        if tab_id is None:
+        if self.tab_id is None:
             tab_id = self.env.new_serialno(tabs_key)
             include_tabs_id_in_data_tab = True
+        else:
+            tab_id = self.tab_id
 
         tab_name = nodes.container()
         self.state.nested_parse(self.content[:1], self.content_offset, tab_name)
@@ -135,7 +142,8 @@ class TabDirective(SphinxDirective):
 
         classes = "ui bottom attached sphinx-tab tab segment"
         node["classes"] = classes.split(" ")
-        node["classes"].extend(tab_classes)
+        if len(self.tab_classes) != 0:
+            node["classes"].extend(self.tab_classes)
         node["classes"].append(data_tab)
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
@@ -154,7 +162,7 @@ class TabDirective(SphinxDirective):
             outer_node.append(tab)
             outer_node.append(node)
             return [outer_node]
-
+                
         return [node]
 
 
@@ -163,12 +171,12 @@ class GroupTabDirective(TabDirective):
 
     has_content = True
 
-    def run(self, tab_id=None, tab_classes=[]):
+    def run(self):
         self.assert_has_content()
         group_name = self.content[0]
-        if tab_id is None:
-            tab_id = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
-        return super().run(tab_id, tab_classes)
+        if self.tab_id is None:
+            self.tab_id = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
+        return super().run()
 
 
 class CodeTabDirective(GroupTabDirective):
@@ -179,14 +187,14 @@ class CodeTabDirective(GroupTabDirective):
     optional_arguments = 1  # Custom label
     final_argument_whitespace = True
     option_spec = {  # From sphinx CodeBlock
-        'force': directives.flag,
-        'linenos': directives.flag,
-        'dedent': int,
-        'lineno-start': int,
-        'emphasize-lines': directives.unchanged_required,
-        'caption': directives.unchanged_required,
-        'class': directives.class_option,
-        'name': directives.unchanged,
+        "force": directives.flag,
+        "linenos": directives.flag,
+        "dedent": int,
+        "lineno-start": int,
+        "emphasize-lines": directives.unchanged_required,
+        "caption": directives.unchanged_required,
+        "class": directives.class_option,
+        "name": directives.unchanged,
     }
 
     def run(self):
@@ -198,15 +206,16 @@ class CodeTabDirective(GroupTabDirective):
             if len(self.arguments) > 1
             else LEXER_MAP[self.arguments[0]]
         )
+        self.tab_classes.add("code-tab")
 
         # All content should be parsed as code
         code_block = CodeBlock.run(self)
-        
+
         # Reset to generate tab node
         self.content.data = [tab_name, ""]
         self.content.items = [(None, 0), (None, 1)]
 
-        node = super().run(tab_classes=["code-tab"])
+        node = super().run()
         node[0].extend(code_block)
 
         return node
