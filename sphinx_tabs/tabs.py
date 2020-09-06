@@ -142,7 +142,7 @@ class TabDirective(SphinxDirective):
 
         classes = "ui bottom attached sphinx-tab tab segment"
         node["classes"] = classes.split(" ")
-        if len(self.tab_classes) != 0:
+        if len(self.tab_classes):
             node["classes"].extend(self.tab_classes)
         node["classes"].append(data_tab)
 
