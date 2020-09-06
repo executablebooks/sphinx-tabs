@@ -169,7 +169,7 @@ class GroupTabDirective(TabDirective):
         return super().run()
 
 
-class CodeTabDirective(TabDirective):
+class CodeTabDirective(GroupTabDirective):
     """ Tab directive with a codeblock as its content"""
 
     has_content = True
@@ -186,7 +186,6 @@ class CodeTabDirective(TabDirective):
             if len(self.arguments) > 1
             else LEXER_MAP[self.arguments[0]]
         )
-        self.env.temp_data["tab_id"] = base64.b64encode(tab_name.encode("utf-8")).decode("utf-8")
         if hasattr(self.env.temp_data, "tab_classes"):
             self.env.temp_data["tab_classes"].append("code-tab")
         else:
