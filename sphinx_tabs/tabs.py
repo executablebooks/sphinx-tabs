@@ -11,6 +11,8 @@ from sphinx.util.osutil import copyfile
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
 from sphinx.directives.code import CodeBlock
+from docutils.parsers.rst import directives
+
 
 
 FILES = [
@@ -100,7 +102,7 @@ class TabDirective(SphinxDirective):
 
     has_content = True
 
-    def run(self):
+    def run(self, tab_id=None, tab_classes=[]):
         """ Parse a tab directive """
         self.assert_has_content()
 
@@ -108,20 +110,20 @@ class TabDirective(SphinxDirective):
         tabs_key = "tabs_%d" % tabs_id
 
         include_tabs_id_in_data_tab = False
-        if not hasattr(self.env.temp_data, "tab_id"):
-            self.env.temp_data["tab_id"] = self.env.new_serialno(tabs_key)
+        if tab_id is None:
+            tab_id = self.env.new_serialno(tabs_key)
             include_tabs_id_in_data_tab = True
 
         tab_name = nodes.container()
         self.state.nested_parse(self.content[:1], self.content_offset, tab_name)
 
         i = 1
-        while self.env.temp_data["tab_id"] in self.env.temp_data[tabs_key]["tab_ids"]:
-            self.env.temp_data["tab_id"] = "%s-%d" % (self.env.temp_data["tab_id"], i)
+        while tab_id in self.env.temp_data[tabs_key]["tab_ids"]:
+            tab_id = "%s-%d" % (tab_id, i)
             i += 1
-        self.env.temp_data[tabs_key]["tab_ids"].append(self.env.temp_data["tab_id"])
+        self.env.temp_data[tabs_key]["tab_ids"].append(tab_id)
 
-        data_tab = str(self.env.temp_data["tab_id"])
+        data_tab = str(tab_id)
         if include_tabs_id_in_data_tab:
             data_tab = "%d-%s" % (tabs_id, data_tab)
         data_tab = "sphinx-data-tab-{}".format(data_tab)
@@ -133,8 +135,7 @@ class TabDirective(SphinxDirective):
 
         classes = "ui bottom attached sphinx-tab tab segment"
         node["classes"] = classes.split(" ")
-        if hasattr(self.env.temp_data, "tab_classes"):
-            node["classes"].extend(self.env.temp_data["tab_classes"])
+        node["classes"].extend(tab_classes)
         node["classes"].append(data_tab)
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
@@ -162,20 +163,31 @@ class GroupTabDirective(TabDirective):
 
     has_content = True
 
-    def run(self):
+    def run(self, tab_id=None, tab_classes=[]):
         self.assert_has_content()
         group_name = self.content[0]
-        self.env.temp_data["tab_id"] = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
-        return super().run()
+        if tab_id is None:
+            tab_id = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
+        return super().run(tab_id, tab_classes)
 
 
 class CodeTabDirective(GroupTabDirective):
     """ Tab directive with a codeblock as its content"""
 
     has_content = True
-    required_arguments = 1
-    optional_arguments = 1
+    required_arguments = 1  # Lexer name
+    optional_arguments = 1  # Custom label
     final_argument_whitespace = True
+    option_spec = {  # From sphinx CodeBlock
+        'force': directives.flag,
+        'linenos': directives.flag,
+        'dedent': int,
+        'lineno-start': int,
+        'emphasize-lines': directives.unchanged_required,
+        'caption': directives.unchanged_required,
+        'class': directives.class_option,
+        'name': directives.unchanged,
+    }
 
     def run(self):
         """ Parse a code-tab directive"""
@@ -186,20 +198,16 @@ class CodeTabDirective(GroupTabDirective):
             if len(self.arguments) > 1
             else LEXER_MAP[self.arguments[0]]
         )
-        if hasattr(self.env.temp_data, "tab_classes"):
-            self.env.temp_data["tab_classes"].append("code-tab")
-        else:
-            self.env.temp_data["tab_classes"] = ["code-tab"]
 
         # All content should be parsed as code
-        code_block = CodeBlock.run(self)[0]
+        code_block = CodeBlock.run(self)
         
         # Reset to generate tab node
         self.content.data = [tab_name, ""]
         self.content.items = [(None, 0), (None, 1)]
 
-        node = super().run()
-        node[0].append(code_block)
+        node = super().run(tab_classes=["code-tab"])
+        node[0].extend(code_block)
 
         return node
 
