@@ -112,7 +112,7 @@ another area. For example:
 
 ## Code Tabs
 
-Tabs containing code areas with syntax highlighting can be created as follows:
+Grouped tabs containing code areas with syntax highlighting can be created as follows:
 
 ```rst
 .. tabs::
@@ -151,6 +151,27 @@ Tabs containing code areas with syntax highlighting can be created as follows:
          PROGRAM main
          END PROGRAM main
 ```
+
+Code tabs also support custom lexers (added via sphinx `conf.py`).
+
+By default, code tabs are labelled with the language name, though can be provided with custom labels like so:
+
+```rst
+.. tabs::
+
+   .. code-tab:: c I love C
+
+         int main(const int argc, const char **argv) {
+           return 0;
+         }
+
+   .. code-tab:: py I love Python more
+
+         def main():
+             return
+
+```
+
 
 ![Code Tabs](/images/codeTabs.gif)
 
