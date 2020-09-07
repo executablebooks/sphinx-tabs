@@ -1,7 +1,7 @@
 .. toctree::
 
-   other
-   other2
+   no_tabs1
+   no_tabs2
 
 Fruits
 ========================================

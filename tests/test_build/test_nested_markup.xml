@@ -1,0 +1,154 @@
+<document source="index.rst">
+    <section ids="markup-in-tab-titles" names="markup\ in\ tab\ titles">
+        <title>
+            Markup in Tab Titles
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-0-0">
+                    <container>
+                        <paragraph>
+                            <strong>
+                                bold
+                             tab
+                <a classes="item sphinx-data-tab-0-1">
+                    <container>
+                        <paragraph>
+                            <emphasis>
+                                italic
+                             tab
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-0 active">
+                <paragraph>
+                    <strong>
+                        bold
+                     text
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1">
+                <paragraph>
+                    <emphasis>
+                        italic
+                     text
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi">
+                    <container>
+                        <paragraph>
+                            <strong>
+                                bold
+                             group tab
+                <a classes="item sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
+                    <container>
+                        <paragraph>
+                            <emphasis>
+                                italic
+                             group tab
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi active">
+                <paragraph>
+                    <strong>
+                        bold
+                     text
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
+                <paragraph>
+                    <emphasis>
+                        italic
+                     text
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi">
+                    <container>
+                        <paragraph>
+                            <strong>
+                                bold
+                             group tab
+                <a classes="item sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
+                    <container>
+                        <paragraph>
+                            <emphasis>
+                                italic
+                             group tab
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi active">
+                <paragraph>
+                    <strong>
+                        bold
+                     text
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
+                <paragraph>
+                    <emphasis>
+                        italic
+                     text
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-3-0">
+                    <container>
+                        <paragraph>
+                            <math>
+                                x = y
+                             tab
+                <a classes="item sphinx-data-tab-3-1">
+                    <container>
+                        <paragraph>
+                            <math>
+                                x \neq y
+                             tab
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-3-0 active">
+                <paragraph>
+                    Variables are equal 
+                    <math>
+                        x = y
+                    .
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-3-1">
+                <paragraph>
+                    Variables are not equal 
+                    <math>
+                        x \neq y
+                    .
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=">
+                    <container>
+                        <paragraph>
+                            <math>
+                                x = y
+                             group tab
+                <a classes="item sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
+                    <container>
+                        <paragraph>
+                            <math>
+                                x \neq y
+                             group tab
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI= active">
+                <paragraph>
+                    Variables are equal 
+                    <math>
+                        x = y
+                    .
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
+                <paragraph>
+                    Variables are not equal 
+                    <math>
+                        x \neq y
+                    .
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=">
+                    <container>
+                        <paragraph>
+                            <math>
+                                x = y
+                             group tab
+                <a classes="item sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
+                    <container>
+                        <paragraph>
+                            <math>
+                                x \neq y
+                             group tab
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI= active">
+                <paragraph>
+                    Variables are equal 
+                    <math>
+                        x = y
+                    .
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
+                <paragraph>
+                    Variables are not equal 
+                    <math>
+                        x \neq y
+                    .

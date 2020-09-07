@@ -1,0 +1,198 @@
+<document source="index.rst">
+    <compound classes="toctree-wrapper">
+        <toctree caption="True" entries="(None,\ 'no_tabs1') (None,\ 'no_tabs2')" glob="False" hidden="False" includefiles="no_tabs1 no_tabs2" includehidden="False" maxdepth="-1" numbered="0" parent="index" rawentries="" titlesonly="False">
+    <section ids="fruits" names="fruits">
+        <title>
+            Fruits
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-0-0">
+                    <container>
+                        <paragraph>
+                            Apples
+                <a classes="item sphinx-data-tab-0-1">
+                    <container>
+                        <paragraph>
+                            Pears
+                <a classes="item sphinx-data-tab-0-2">
+                    <container>
+                        <paragraph>
+                            Oranges
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-0 active">
+                <paragraph>
+                    Apples are green, or sometimes red.
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1">
+                <paragraph>
+                    Pears are green.
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-2">
+                <paragraph>
+                    Oranges are orange.
+    <section ids="luminaries" names="luminaries">
+        <title>
+            Luminaries
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-1-0">
+                    <container>
+                        <paragraph>
+                            Sun
+                <a classes="item sphinx-data-tab-1-1">
+                    <container>
+                        <paragraph>
+                            Moon
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-1-0 active">
+                <paragraph>
+                    The sun is a star.
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-1-1">
+                <paragraph>
+                    The moon is not a star.
+    <section ids="code-tabs" names="code\ tabs">
+        <title>
+            Code Tabs
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-Qw==">
+                    <container>
+                        <paragraph>
+                            C
+                <a classes="item sphinx-data-tab-Qysr">
+                    <container>
+                        <paragraph>
+                            C++
+                <a classes="item sphinx-data-tab-UHl0aG9u">
+                    <container>
+                        <paragraph>
+                            Python
+                <a classes="item sphinx-data-tab-SmF2YQ==">
+                    <container>
+                        <paragraph>
+                            Java
+                <a classes="item sphinx-data-tab-SnVsaWE=">
+                    <container>
+                        <paragraph>
+                            Julia
+                <a classes="item sphinx-data-tab-Rm9ydHJhbg==">
+                    <container>
+                        <paragraph>
+                            Fortran
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Qw== active">
+                <literal_block force="False" highlight_args="{}" language="c" xml:space="preserve">
+                    C Main Function
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Qysr">
+                <literal_block force="False" highlight_args="{}" language="c++" xml:space="preserve">
+                    C++ Main Function
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-UHl0aG9u">
+                <literal_block force="False" highlight_args="{}" language="py" xml:space="preserve">
+                    Python Main Function
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-SmF2YQ==">
+                <literal_block force="False" highlight_args="{}" language="java" xml:space="preserve">
+                    Java Main Function
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-SnVsaWE=">
+                <literal_block force="False" highlight_args="{}" language="julia" xml:space="preserve">
+                    Julia Main Function
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Rm9ydHJhbg==">
+                <literal_block force="False" highlight_args="{}" language="fortran" xml:space="preserve">
+                    Fortran Main Function
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-Qw==">
+                    <container>
+                        <paragraph>
+                            C
+                <a classes="item sphinx-data-tab-Qysr">
+                    <container>
+                        <paragraph>
+                            C++
+                <a classes="item sphinx-data-tab-UHl0aG9u">
+                    <container>
+                        <paragraph>
+                            Python
+                <a classes="item sphinx-data-tab-SmF2YQ==">
+                    <container>
+                        <paragraph>
+                            Java
+                <a classes="item sphinx-data-tab-SnVsaWE=">
+                    <container>
+                        <paragraph>
+                            Julia
+                <a classes="item sphinx-data-tab-Rm9ydHJhbg==">
+                    <container>
+                        <paragraph>
+                            Fortran
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Qw== active">
+                <literal_block force="False" highlight_args="{}" language="c" xml:space="preserve">
+                    int main(const int argc, const char **argv) {
+                      return 0;
+                    }
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Qysr">
+                <literal_block force="False" highlight_args="{}" language="c++" xml:space="preserve">
+                    int main(const int argc, const char **argv) {
+                      return 0;
+                    }
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-UHl0aG9u">
+                <literal_block force="False" highlight_args="{}" language="py" xml:space="preserve">
+                    def main():
+                        return
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-SmF2YQ==">
+                <literal_block force="False" highlight_args="{}" language="java" xml:space="preserve">
+                    class Main {
+                        public static void main(String[] args) {
+                        }
+                    }
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-SnVsaWE=">
+                <literal_block force="False" highlight_args="{}" language="julia" xml:space="preserve">
+                    function main()
+                    end
+            <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Rm9ydHJhbg==">
+                <literal_block force="False" highlight_args="{}" language="fortran" xml:space="preserve">
+                    PROGRAM main
+                    END PROGRAM main
+    <section ids="group-tabs" names="group\ tabs">
+        <title>
+            Group Tabs
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-TGludXg=">
+                    <container>
+                        <paragraph>
+                            Linux
+                <a classes="item sphinx-data-tab-TWFjIE9TWA==">
+                    <container>
+                        <paragraph>
+                            Mac OSX
+                <a classes="item sphinx-data-tab-V2luZG93cw==">
+                    <container>
+                        <paragraph>
+                            Windows
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TGludXg= active">
+                <paragraph>
+                    Linux Line 1
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TWFjIE9TWA==">
+                <paragraph>
+                    Mac OSX Line 1
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-V2luZG93cw==">
+                <paragraph>
+                    Windows Line 1
+        <container classes="sphinx-tabs">
+            <div classes="ui top attached tabular menu sphinx-menu">
+                <a classes="active item sphinx-data-tab-TGludXg=">
+                    <container>
+                        <paragraph>
+                            Linux
+                <a classes="item sphinx-data-tab-TWFjIE9TWA==">
+                    <container>
+                        <paragraph>
+                            Mac OSX
+                <a classes="item sphinx-data-tab-V2luZG93cw==">
+                    <container>
+                        <paragraph>
+                            Windows
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TGludXg= active">
+                <paragraph>
+                    Linux Line 2
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-TWFjIE9TWA==">
+                <paragraph>
+                    Mac OSX Line 2
+            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-V2luZG93cw==">
+                <paragraph>
+                    Windows Line 2
