@@ -28,3 +28,8 @@ def test_other_with_assets(app, check_asset_links):
 @pytest.mark.sphinx(testroot="nestedmarkup")
 def test_nested_markup(app, check_asset_links):
     check_asset_links(app)
+
+
+@pytest.mark.sphinx(testroot="customlexer")
+def test_custom_lexer(app, check_asset_links):
+    check_asset_links(app)

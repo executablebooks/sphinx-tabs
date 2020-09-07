@@ -2,11 +2,13 @@
 
 import base64
 from pathlib import Path
+from functools import partial
 
 from docutils import nodes
 from docutils.parsers.rst import directives
 from pkg_resources import resource_filename
 from pygments.lexers import get_all_lexers
+from sphinx.highlighting import lexer_classes
 from sphinx.util.osutil import copyfile
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
@@ -198,11 +200,18 @@ class CodeTabDirective(GroupTabDirective):
         """ Parse a code-tab directive"""
         self.assert_has_content()
 
-        tab_name = (
-            self.arguments[1]
-            if len(self.arguments) > 1
-            else LEXER_MAP[self.arguments[0]]
-        )
+        if len(self.arguments) > 1:
+            tab_name = self.arguments[1]
+        elif self.arguments[0] in lexer_classes and not isinstance(
+            lexer_classes[self.arguments[0]], partial
+        ):
+            tab_name = lexer_classes[self.arguments[0]].name
+        else:
+            try:
+                tab_name = LEXER_MAP[self.arguments[0]]
+            except:
+                raise ValueError("Lexer not implemented: {}".format(self.arguments[0]))
+
         self.tab_classes.add("code-tab")
 
         # All content should be parsed as code

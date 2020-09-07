@@ -15,8 +15,31 @@ def rootdir():
     return path(__file__).parent.abspath() / "roots"
 
 
-@pytest.fixture(scope="function", autouse=True)
-def build_and_check(
+@pytest.fixture(autouse=True)
+def auto_build_and_check(
+    app,
+    status,
+    warning,
+    check_build_success,
+    get_sphinx_app_doctree,
+    regress_sphinx_app_output,
+    request,
+):
+    """
+    Build and check build success and  output regressions.
+    Currently all tests start with this.
+    Disable using a `noautobuild` mark.
+    """
+    if "noautobuild" in request.keywords:
+        return
+    app.build()
+    check_build_success(status, warning)
+    get_sphinx_app_doctree(app, regress=True)
+    regress_sphinx_app_output(app)
+
+
+@pytest.fixture()
+def manual_build_and_check(
     app,
     status,
     warning,
@@ -25,8 +48,7 @@ def build_and_check(
     regress_sphinx_app_output,
 ):
     """
-    Build and check build success and  output regressions.
-    Currently all tests start with this.
+    For manually triggering app build and check.
     """
     app.build()
     check_build_success(status, warning)
