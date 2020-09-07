@@ -1,13 +1,7 @@
 """ Tabbed views for Sphinx, with HTML builder """
 
 import base64
-<<<<<<< HEAD
-import os
-import posixpath
-=======
-import json
 from pathlib import Path
->>>>>>> upstream/master
 
 from docutils import nodes
 from docutils.parsers.rst import directives
