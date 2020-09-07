@@ -1,6 +1,7 @@
 import os
 import pytest
 from pathlib import Path
+from bs4 import BeautifulSoup
 from sphinx.testing.path import path
 
 from sphinx_tabs.tabs import FILES
@@ -10,7 +11,27 @@ pytest_plugins = "sphinx.testing.fixtures"
 
 @pytest.fixture(scope="session")
 def rootdir():
+    """Pytest uses this to find test documents."""
     return path(__file__).parent.abspath() / "roots"
+
+
+@pytest.fixture(scope="function", autouse=True)
+def build_and_check(
+    app,
+    status,
+    warning,
+    check_build_success,
+    get_sphinx_app_doctree,
+    regress_sphinx_app_output,
+):
+    """
+    Build and check build success and  output regressions.
+    Currently all tests start with this.
+    """
+    app.build()
+    check_build_success(status, warning)
+    get_sphinx_app_doctree(app, regress=True)
+    regress_sphinx_app_output(app)
 
 
 @pytest.fixture
@@ -26,35 +47,23 @@ def check_build_success():
 
 
 @pytest.fixture
-def get_sphinx_app_output(file_regression):
-    """Get sphinx HTML output and optionally regress."""
+def regress_sphinx_app_output(file_regression, get_sphinx_app_output):
+    """
+    Get sphinx HTML output and regress inner body (other sections are
+    non-deterministic).
+    """
 
     def read(
-        app,
-        buildername="html",
-        filename="index.html",
-        encoding="utf-8",
-        regress=False,
-        replace=None,
+        app, buildername="html", filename="index.html", encoding="utf-8", replace=None
     ):
-        outpath = Path(app.srcdir) / "_build" / buildername / filename
-        if not outpath.exists():
-            raise IOError("No output file exists: {}".format(outpath.as_posix()))
+        content = get_sphinx_app_output(app, buildername, filename, encoding)
 
-        content = outpath.read_text(encoding=encoding)
-
-        if regress:
-            # only regress the inner body, since other sections are non-deterministic
-            from bs4 import BeautifulSoup
-
-            soup = BeautifulSoup(content, "html.parser")
-            doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
-            text = doc_div.prettify()
-            for find, rep in (replace or {}).items():
-                text = text.replace(find, rep)
-            file_regression.check(text, extension=".html", encoding="utf8")
-
-        return content
+        soup = BeautifulSoup(content, "html.parser")
+        doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
+        text = doc_div.prettify()
+        for find, rep in (replace or {}).items():
+            text = text.replace(find, rep)
+        file_regression.check(text, extension=".html", encoding="utf8")
 
     return read
 
@@ -87,7 +96,7 @@ def get_sphinx_app_doctree(file_regression):
 
 
 @pytest.fixture
-def check_asset_links():
+def check_asset_links(get_sphinx_app_output):
     """
     Check if all stylesheets and scripts (.js) have been referenced in HTML.
     Specify whether checking if assets are ``present`` or not ``present``.
@@ -96,13 +105,7 @@ def check_asset_links():
     def check(
         app, buildername="html", filename="index.html", encoding="utf-8", present=True
     ):
-        outpath = Path(app.srcdir) / "_build" / buildername / filename
-        if not outpath.exists():
-            raise IOError("No output file exists: {}".format(outpath.as_posix()))
-
-        content = outpath.read_text(encoding=encoding)
-
-        from bs4 import BeautifulSoup
+        content = get_sphinx_app_output(app, buildername, filename, encoding)
 
         css_assets = [f for f in FILES if f.endswith(".css")]
         js_assets = [f for f in FILES if f.endswith(".js")]
@@ -125,3 +128,17 @@ def check_asset_links():
             assert not "sphinx_tabs" in css_refs + js_refs
 
     return check
+
+
+@pytest.fixture()
+def get_sphinx_app_output():
+    """Get content of a sphinx app output file."""
+
+    def get(app, buildername="html", filename="index.html", encoding="utf-8"):
+        outpath = Path(app.srcdir) / "_build" / buildername / filename
+        if not outpath.exists():
+            raise IOError("No output file exists: {}".format(outpath.as_posix()))
+
+        return outpath.read_text(encoding=encoding)
+
+    return get

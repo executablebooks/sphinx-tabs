@@ -1,8 +1,13 @@
 """ Tabbed views for Sphinx, with HTML builder """
 
 import base64
+<<<<<<< HEAD
 import os
 import posixpath
+=======
+import json
+from pathlib import Path
+>>>>>>> upstream/master
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -250,17 +255,17 @@ def update_context(app, pagename, templatename, context, doctree):
     visitor = _FindTabsDirectiveVisitor(doctree)
     doctree.walk(visitor)
     if not visitor.found_tabs_directive:
-        paths = [posixpath.join("_static", "sphinx_tabs/" + f) for f in FILES]
+        paths = [Path("_static") / "sphinx_tabs" / f for f in FILES]
         if "css_files" in context:
             context["css_files"] = context["css_files"][:]
             for path in paths:
-                if path.endswith(".css") and path in context["css_files"]:
-                    context["css_files"].remove(path)
+                if path.suffix == ".css" and path in context["css_files"]:
+                    context["css_files"].remove(path.as_posix())
         if "script_files" in context:
             context["script_files"] = context["script_files"][:]
             for path in paths:
-                if path.endswith(".js") and path in context["script_files"]:
-                    context["script_files"].remove(path)
+                if path.suffix == ".js" and path.as_posix() in context["script_files"]:
+                    context["script_files"].remove(path.as_posix())
 
 
 # pylint: enable=unused-argument
@@ -287,15 +292,15 @@ def copy_assets(app, exception):
 
     log("Copying tabs assets")
 
-    installdir = os.path.join(app.builder.outdir, "_static", "sphinx_tabs")
+    installdir = Path(app.builder.outdir) / "_static" / "sphinx_tabs"
 
     for path in FILES:
         source = resource_filename("sphinx_tabs", path)
-        dest = os.path.join(installdir, path)
+        dest = installdir / path
 
-        destdir = os.path.dirname(dest)
-        if not os.path.exists(destdir):
-            os.makedirs(destdir)
+        destdir = dest.parent
+        if not destdir.exists():
+            destdir.mkdir(parents=True)
 
         copyfile(source, dest)
 
@@ -308,17 +313,17 @@ def setup(app):
     app.add_directive("tab", TabDirective)
     app.add_directive("group-tab", GroupTabDirective)
     app.add_directive("code-tab", CodeTabDirective)
-    for path in ["sphinx_tabs/" + f for f in FILES]:
-        if path.endswith(".css"):
+    for path in [Path("sphinx_tabs") / f for f in FILES]:
+        if path.suffix == ".css":
             if "add_css_file" in dir(app):
-                app.add_css_file(path)
+                app.add_css_file(path.as_posix())
             else:
-                app.add_stylesheet(path)
-        if path.endswith(".js"):
+                app.add_stylesheet(path.as_posix())
+        if path.suffix == ".js":
             if "add_script_file" in dir(app):
-                app.add_script_file(path)
+                app.add_script_file(path.as_posix())
             else:
-                app.add_js_file(path)
+                app.add_js_file(path.as_posix())
     app.connect("html-page-context", update_context)
     app.connect("build-finished", copy_assets)
 
