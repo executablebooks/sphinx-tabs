@@ -1,10 +1,26 @@
 # Change Log
 
-## v1.2.1
+## 1.3.0 - 2020-09-08
+
+♻️ Major refactor of tabs, group-tabs and code-tabs (thanks to [@foster999](https://github.com/foster999)):
+
+* Removes hard-coded reStructuredText for group and code tabs, so that this works with other parsers (inc `MyST Markdown`)
+* group-tab directive now subclasses `TabDirective` to remove duplicated run code
+* likewise, `code-tab` now subclasses `group-tab`
+* `TabDirective` and `TabsDirective` now subclass `SphinxDirective` for easier access to directive `env`
+
+🧪 testing infrastructure has now fully moved from unittest to pytest
+
+✨ New features:
+
+* Can now pass `code-tabs` with a second argument (allowing whitespace) to provide an alternative tab label
+* `code-tabs` can now use custom lexers, which are added to the sphinx app in `conf.py`
+
+## v1.2.1 - 2020-08-20
 
 🐛 FIX: Remove `app.add_javascript` use for sphinx v2
 
-## v1.2.0
+## v1.2.0 - 2020-08-18
 
 `sphinx-tabs` has now moved to the [EBP organisation](https://executablebooks.org) 🎉
 
