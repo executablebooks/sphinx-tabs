@@ -12,14 +12,12 @@ from sphinx.highlighting import lexer_classes
 from sphinx.util.osutil import copyfile
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
+from sphinx.transforms.post_transforms import SphinxPostTransform
+from sphinx.util.nodes import NodeMatcher
 from sphinx.directives.code import CodeBlock
 
 
 FILES = [
-    "semantic-ui-2.4.1/segment.min.css",
-    "semantic-ui-2.4.1/menu.min.css",
-    "semantic-ui-2.4.1/tab.min.css",
-    "semantic-ui-2.4.1/tab.min.js",
     "tabs.js",
     "tabs.css",
 ]
@@ -29,6 +27,14 @@ LEXER_MAP = {}
 for lexer in get_all_lexers():
     for short_name in lexer[1]:
         LEXER_MAP[short_name] = lexer[0]
+
+
+if "getLogger" in dir(logging):
+    log = logging.getLogger(__name__).info  # pylint: disable=no-member
+    warn = logging.getLogger(__name__).warning  # pylint: disable=no-member
+else:
+    log = app.info
+    warn = app.warning
 
 
 def get_compatible_builders(app):
@@ -46,6 +52,68 @@ def get_compatible_builders(app):
     return builders
 
 
+class tablist_div(nodes.Element, nodes.General):
+    pass
+
+class tab_button(nodes.Element, nodes.General):
+    pass
+
+class panel_div(nodes.Element, nodes.General):
+    pass
+
+
+def visit_tablist_div(self, node):
+    self.body.append(self.starttag(node, "div", role="tablist"))
+
+
+def depart_tablist_div(self, node):
+    self.body.append("</div>")
+
+
+def visit_tab_button(self, node):
+    attrs = clean_attrs(node)
+    first_tab = "first-tab" in node.get("classes", [])
+    attrs["tabindex"] = "0" if first_tab else "-1"
+    attrs["aria-selected"] = "true" if first_tab else "false"
+    attrs["aria-controls"] = attrs["ids"][0].replace("tab-", "panel-")
+    del attrs["ids"]
+
+    self.body.append(
+        self.starttag(node, "button", role="tab", **attrs)
+        )
+
+
+def depart_tab_button(self, node):
+    self.body.append("</button>")
+
+
+def visit_panel_div(self, node):
+    attrs = clean_attrs(node)
+    attrs["aria-labelledby"] = attrs["ids"][0].replace("panel-", "tab-")
+    del attrs["ids"]
+
+    if "first-panel" in node.get("classes", []):
+        self.body.append(
+            self.starttag(node, "div", role="tabpanel", tabindex=0, **attrs)
+            )
+    else:
+        self.body.append(
+        self.starttag(
+            node, "div", role="tabpanel", tabindex=0, hidden="true", **attrs)
+        )
+        
+
+def depart_panel_div(self, node):
+    self.body.append("</div>")
+
+
+def clean_attrs(node):
+    attrs = {key: val for key, val in node.attributes.items() if val}
+    del attrs["classes"]
+    attrs["name"] = attrs.pop("names")
+    return attrs
+
+
 class TabsDirective(SphinxDirective):
     """ Top-level tabs directive """
 
@@ -56,7 +124,7 @@ class TabsDirective(SphinxDirective):
         self.assert_has_content()
 
         node = nodes.container()
-        node["classes"] = ["sphinx-tabs"]
+        node.set_class("sphinx-tabs")
 
         if "next_tabs_id" not in self.env.temp_data:
             self.env.temp_data["next_tabs_id"] = 0
@@ -76,22 +144,17 @@ class TabsDirective(SphinxDirective):
         self.state.nested_parse(self.content, self.content_offset, node)
 
         if self.env.app.builder.name in get_compatible_builders(self.env.app):
-            tabs_node = nodes.container()
-            tabs_node.tagname = "div"
-
-            classes = "ui top attached tabular menu sphinx-menu"
-            tabs_node["classes"] = classes.split(" ")
+            tabs_node = nodes.container(type="tablist")
 
             tab_titles = self.env.temp_data[tabs_key]["tab_titles"]
-            for idx, [data_tab, tab_name] in enumerate(tab_titles):
-                tab = nodes.container()
-                tab.tagname = "a"
-                tab["classes"] = ["item"] if idx > 0 else ["active", "item"]
-                tab["classes"].append(data_tab)
-                tab += tab_name
-                tabs_node += tab
+            for idx, [data_tab, tab_name] in enumerate(tab_titles):              
+                tab_name.update_basic_atts({
+                    "ids": [f"tab-{tabs_id}-{data_tab}"],
+                    "names": [data_tab],
+                    })
+                tabs_node += tab_name
 
-            node.children.insert(0, tabs_node)
+            node.insert(0, tabs_node)
 
         self.env.temp_data["tabs_stack"].pop()
         return [node]
@@ -121,7 +184,10 @@ class TabDirective(SphinxDirective):
         else:
             tab_id = self.tab_id
 
-        tab_name = nodes.container()
+        tab_name = nodes.container(type="tab")
+        tab_name.set_class("sphinx-tabs-tab")
+        tab_name["classes"].extend(self.tab_classes)
+
         self.state.nested_parse(self.content[:1], self.content_offset, tab_name)
 
         i = 1
@@ -133,33 +199,31 @@ class TabDirective(SphinxDirective):
         data_tab = str(tab_id)
         if include_tabs_id_in_data_tab:
             data_tab = "%d-%s" % (tabs_id, data_tab)
-        data_tab = "sphinx-data-tab-{}".format(data_tab)
 
         self.env.temp_data[tabs_key]["tab_titles"].append((data_tab, tab_name))
 
         text = "\n".join(self.content)
-        node = nodes.container(text)
-
-        classes = "ui bottom attached sphinx-tab tab segment"
-        node["classes"] = classes.split(" ")
-        node["classes"].extend(self.tab_classes)
-        node["classes"].append(data_tab)
+        node = nodes.container(text, type="panel")
+        node.set_class("sphinx-tabs-panel")
+        node.update_all_atts({
+            "ids": [f"panel-{tabs_id}-{data_tab}"],
+            "names": [data_tab],
+            })
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
-            node["classes"].append("active")
+            tab_name.set_class("first-tab")
+            node.set_class("first-panel")
             self.env.temp_data[tabs_key]["is_first_tab"] = False
 
         self.state.nested_parse(self.content[2:], self.content_offset, node)
 
         if self.env.app.builder.name not in get_compatible_builders(self.env.app):
             outer_node = nodes.container()
-            tab = nodes.container()
-            tab.tagname = "a"
-            tab["classes"] = ["item"]
-            tab += tab_name
+            panel = nodes.container()
+            panel += tab_name
 
-            outer_node.append(tab)
-            outer_node.append(node)
+            outer_node += tab
+            outer_node += node
             return [outer_node]
 
         return [node]
@@ -172,10 +236,13 @@ class GroupTabDirective(TabDirective):
 
     def run(self):
         self.assert_has_content()
+        self.tab_classes.add("group-tab")
         group_name = self.content[0]
         if self.tab_id is None:
             self.tab_id = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
-        return super().run()
+        
+        node = super().run()
+        return node
 
 
 class CodeTabDirective(GroupTabDirective):
@@ -211,13 +278,13 @@ class CodeTabDirective(GroupTabDirective):
                 tab_name = LEXER_MAP[self.arguments[0]]
             except:
                 raise ValueError("Lexer not implemented: {}".format(self.arguments[0]))
-
+        
         self.tab_classes.add("code-tab")
 
-        # All content should be parsed as code
+        # All content parsed as code
         code_block = CodeBlock.run(self)
 
-        # Reset to generate tab node
+        # Reset to generate panel
         self.content.data = [tab_name, ""]
         self.content.items = [(None, 0), (None, 1)]
 
@@ -225,6 +292,24 @@ class CodeTabDirective(GroupTabDirective):
         node[0].extend(code_block)
 
         return node
+
+
+class TabsHtmlTransform(SphinxPostTransform):
+    default_priority = 200
+    builders = ("html", "dirhtml", "singlehtml", "readthedocs")
+
+    def run(self):
+        node_types = {
+        "tablist": tablist_div,
+        "tab": tab_button,
+        "panel": panel_div
+        }
+        
+        for node_type, node_cls in node_types.items():
+            matcher = NodeMatcher(nodes.container, type=node_type)
+            for node in self.document.traverse(matcher):
+                newnode = node_cls("", *node.children)
+                node.replace_self(newnode)
 
 
 class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
@@ -276,12 +361,6 @@ def update_context(app, pagename, templatename, context, doctree):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
-    if "getLogger" in dir(logging):
-        log = logging.getLogger(__name__).info  # pylint: disable=no-member
-        warn = logging.getLogger(__name__).warning  # pylint: disable=no-member
-    else:
-        log = app.info
-        warn = app.warning
     builders = get_compatible_builders(app)
     if exception:
         return
@@ -312,10 +391,14 @@ def setup(app):
     """ Set up the plugin """
     app.add_config_value("sphinx_tabs_nowarn", False, "")
     app.add_config_value("sphinx_tabs_valid_builders", [], "")
+    app.add_node(tablist_div, html=(visit_tablist_div, depart_tablist_div))
+    app.add_node(tab_button, html=(visit_tab_button, depart_tab_button))
+    app.add_node(panel_div, html=(visit_panel_div, depart_panel_div))
     app.add_directive("tabs", TabsDirective)
     app.add_directive("tab", TabDirective)
     app.add_directive("group-tab", GroupTabDirective)
     app.add_directive("code-tab", CodeTabDirective)
+    app.add_post_transform(TabsHtmlTransform)
     for path in [Path("sphinx_tabs") / f for f in FILES]:
         if path.suffix == ".css":
             if "add_css_file" in dir(app):
