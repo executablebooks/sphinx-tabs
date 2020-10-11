@@ -1,44 +1,52 @@
-.sphinx-tabs {
-    margin-bottom: 2em;
+
+/* Hides panel top border where selected tab is */
+[role="tablist"] {
+  margin-bottom: -1px;
 }
 
-.sphinx-tabs:last-child {
-    margin-bottom: 1em;
+.sphinx-tabs-tab {
+  position: relative;
+  z-index: 1;
+  background: white;
+  border-radius: 5px 5px 0 0;
+  border: 0;
+  padding: 1rem 1.5rem;
 }
 
-.sphinx-tabs .sphinx-menu .item p {
-    margin: 0;
+.sphinx-tabs-tab[aria-selected="true"] {
+  font-weight: 700;
+  z-index: 3;
+  border: 1px solid #a0b3bf;
+  border-bottom: 0;
 }
 
-.sphinx-tabs .sphinx-menu a.item {
-    color: #1D5C87 !important;
+.sphinx-tabs-tab:focus {
+  z-index: 3;
 }
 
-.sphinx-tabs .sphinx-menu {
-    border-bottom-color: #a0b3bf !important;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.sphinx-tabs-tab p {
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  color: #1D5C87;
+  line-height: 24px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
 }
 
-.sphinx-tabs .sphinx-menu a.active.item {
-    border-color: #a0b3bf !important;
+.sphinx-tabs-tab[aria-selected="true"] p {
+  font-weight: 700;
 }
 
-.sphinx-tab {
-    border-color: #a0b3bf !important;
-    box-sizing: border-box;
+.sphinx-tabs-panel {
+  position: relative;
+  padding: 0 0.5rem;
+  border: 1px solid #a0b3bf;
+  border-radius: 0 0 5px 5px;
+  background: white;
+  z-index: 2;
 }
 
-.sphinx-tab.tab.active {
-    margin-bottom: 0;
-}
-
-/* Code tabs don't need the code-block border */
-.code-tab.tab {
-    padding: 0.4em !important;
-}
-
-.code-tab.tab div[class^='highlight'] {
-    border: none;
+.sphinx-tabs-panel:focus {
+  border-color: orange;
+  outline: 1px solid orange;
 }
