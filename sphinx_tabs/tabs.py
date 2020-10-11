@@ -184,11 +184,9 @@ class TabDirective(SphinxDirective):
         else:
             tab_id = self.tab_id
 
-        tab_name = nodes.container(type="tab")
+        tab_name = nodes.paragraph(text=self.content[0], type="tab")
         tab_name.set_class("sphinx-tabs-tab")
         tab_name["classes"].extend(self.tab_classes)
-
-        self.state.nested_parse(self.content[:1], self.content_offset, tab_name)
 
         i = 1
         while tab_id in self.env.temp_data[tabs_key]["tab_ids"]:
@@ -222,7 +220,7 @@ class TabDirective(SphinxDirective):
             panel = nodes.container()
             panel += tab_name
 
-            outer_node += tab
+            outer_node += panel
             outer_node += node
             return [outer_node]
 
@@ -300,15 +298,15 @@ class TabsHtmlTransform(SphinxPostTransform):
 
     def run(self):
         node_types = {
-        "tablist": tablist_div,
-        "tab": tab_button,
-        "panel": panel_div
+        "tablist": (nodes.container, tablist_div),
+        "tab": (nodes.paragraph, tab_button),
+        "panel": (nodes.container, panel_div)
         }
         
-        for node_type, node_cls in node_types.items():
-            matcher = NodeMatcher(nodes.container, type=node_type)
+        for node_type, [oldnode_cls, newnode_cls] in node_types.items():
+            matcher = NodeMatcher(oldnode_cls, type=node_type)
             for node in self.document.traverse(matcher):
-                newnode = node_cls("", *node.children)
+                newnode = newnode_cls("", *node.children)
                 node.replace_self(newnode)
 
 
