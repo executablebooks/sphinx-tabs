@@ -9,21 +9,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Enable arrow navigation between tabs in the tab list
   let tabFocus = 0;
-
   tabLists.addEventListener("keydown", e => {
-    // Move right
     if (e.keyCode === 39 || e.keyCode === 37) {
       tabs[tabFocus].setAttribute("tabindex", -1);
+      // Move right
       if (e.keyCode === 39) {
         tabFocus++;
-        // If we're at the end, go to the start
         if (tabFocus >= tabs.length) {
           tabFocus = 0;
         }
-        // Move left
+      // Move left
       } else if (e.keyCode === 37) {
         tabFocus--;
-        // If we're at the start, move to the end
         if (tabFocus < 0) {
           tabFocus = tabs.length - 1;
         }
@@ -45,7 +42,7 @@ function changeTabs(e) {
 
   if (!selected) {
     const name = target.getAttribute("name");
-    // selectGroupedTabs(name, target.id);
+    selectGroupedTabs(name, target.id);
 
     if (target.classList.contains("group-tab")) {
       // Persist during session
@@ -56,32 +53,30 @@ function changeTabs(e) {
 }
 
 function selectTab(target) {
-  // Select tab
   target.setAttribute("aria-selected", true);
 
   // Show the associated panel
-  console.log(target.id)
-  console.log(target.tagName);
   document
     .getElementById(target.getAttribute("aria-controls"))
     .removeAttribute("hidden");
 }
 
-function selectGroupedTabs(name, notId=null) {
+function selectGroupedTabs(name, clickedId=null) {
   const groupedTabs = document.querySelectorAll(`.sphinx-tabs-tab[name="${name}"]`);
-  console.log(groupedTabs);
-  const tabLists = groupedTabs.forEach(tab => tab.parentNode);
-  console.log(tabLists);
+  const tabLists = Array.from(groupedTabs).map(tab => tab?.parentNode);
 
   tabLists
-    .forEach(tabList => 
-      tabList.querySelector(`.sphinx-tabs-tab[name="${name}"]`)
-      .forEach(function(tab) {
-        if (tab.id !== notId) {
-          deselectTabset(tab);
-          selectTab(tab);
-        }})
-    )
+    .forEach(tabList => {
+      // Don't want to change the tabList containing the clicked tab
+      const clickedTab = tabList.querySelector(`[id="${clickedId}"]`);
+      if (clickedTab === null ) {
+        // Select first tab with matching name
+        const tab = tabList.querySelector(`.sphinx-tabs-tab[name="${name}"]`);
+        console.log(tab);
+        deselectTabset(tab);
+        selectTab(tab);
+      }
+    })
 }
 
 function deselectTabset(target) {
