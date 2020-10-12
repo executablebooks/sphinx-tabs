@@ -68,7 +68,11 @@ function selectTab(target) {
 }
 
 function selectGroupedTabs(name, notId=null) {
-  const tabLists = document.querySelectorAll(`.sphinx-tabs-tab[name="${name}"]`).parents();
+  const groupedTabs = document.querySelectorAll(`.sphinx-tabs-tab[name="${name}"]`);
+  console.log(groupedTabs);
+  const tabLists = groupedTabs.forEach(tab => tab.parentNode);
+  console.log(tabLists);
+
   tabLists
     .forEach(tabList => 
       tabList.querySelector(`.sphinx-tabs-tab[name="${name}"]`)
