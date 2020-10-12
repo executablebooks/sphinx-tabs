@@ -203,6 +203,7 @@ class TabDirective(SphinxDirective):
         text = "\n".join(self.content)
         node = nodes.container(text, type="panel")
         node.set_class("sphinx-tabs-panel")
+        node["classes"].extend(self.tab_classes)
         node.update_all_atts({
             "ids": [f"panel-{tabs_id}-{data_tab}"],
             "names": [data_tab],
