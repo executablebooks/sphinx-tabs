@@ -29,14 +29,6 @@ for lexer in get_all_lexers():
         LEXER_MAP[short_name] = lexer[0]
 
 
-if "getLogger" in dir(logging):
-    log = logging.getLogger(__name__).info  # pylint: disable=no-member
-    warn = logging.getLogger(__name__).warning  # pylint: disable=no-member
-else:
-    log = app.info
-    warn = app.warning
-
-
 def get_compatible_builders(app):
     builders = [
         "html",
@@ -52,18 +44,26 @@ def get_compatible_builders(app):
     return builders
 
 
+# pylint: disable=invalid-name
 class tablist_div(nodes.Element, nodes.General):
     pass
 
+
 class tab_button(nodes.Element, nodes.General):
     pass
+
 
 class panel_div(nodes.Element, nodes.General):
     pass
 
 
+# pylint: enable=invalid-name
+
+# pylint: disable=unused-argument
 def visit_tablist_div(self, node):
-    self.body.append(self.starttag(node, "div", role="tablist"))
+    self.body.append(
+        self.starttag(node, "div", role="tablist", **{"aria-label": "Tabbed content"})
+    )
 
 
 def depart_tablist_div(self, node):
@@ -78,9 +78,7 @@ def visit_tab_button(self, node):
     attrs["aria-controls"] = attrs["ids"][0].replace("tab-", "panel-")
     del attrs["ids"]
 
-    self.body.append(
-        self.starttag(node, "button", role="tab", **attrs)
-        )
+    self.body.append(self.starttag(node, "button", role="tab", **attrs))
 
 
 def depart_tab_button(self, node):
@@ -95,16 +93,20 @@ def visit_panel_div(self, node):
     if "first-panel" in node.get("classes", []):
         self.body.append(
             self.starttag(node, "div", role="tabpanel", tabindex=0, **attrs)
-            )
+        )
     else:
         self.body.append(
-        self.starttag(
-            node, "div", role="tabpanel", tabindex=0, hidden="true", **attrs)
+            self.starttag(
+                node, "div", role="tabpanel", tabindex=0, hidden="true", **attrs
+            )
         )
-        
+
 
 def depart_panel_div(self, node):
     self.body.append("</div>")
+
+
+# pylint: disable=unused-argument
 
 
 def clean_attrs(node):
@@ -147,11 +149,13 @@ class TabsDirective(SphinxDirective):
             tabs_node = nodes.container(type="tablist")
 
             tab_titles = self.env.temp_data[tabs_key]["tab_titles"]
-            for idx, [data_tab, tab_name] in enumerate(tab_titles):              
-                tab_name.update_basic_atts({
-                    "ids": [f"tab-{tabs_id}-{data_tab}"],
-                    "names": [data_tab],
-                    })
+            for data_tab, tab_name in tab_titles:
+                tab_name.update_basic_atts(
+                    {
+                        "ids": [f"tab-{tabs_id}-{data_tab}"],
+                        "names": [data_tab],
+                    }
+                )
                 tabs_node += tab_name
 
             node.insert(0, tabs_node)
@@ -204,10 +208,12 @@ class TabDirective(SphinxDirective):
         node = nodes.container(text, type="panel")
         node.set_class("sphinx-tabs-panel")
         node["classes"].extend(self.tab_classes)
-        node.update_all_atts({
-            "ids": [f"panel-{tabs_id}-{data_tab}"],
-            "names": [data_tab],
-            })
+        node.update_all_atts(
+            {
+                "ids": [f"panel-{tabs_id}-{data_tab}"],
+                "names": [data_tab],
+            }
+        )
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
             tab_name.set_class("first-tab")
@@ -239,7 +245,7 @@ class GroupTabDirective(TabDirective):
         group_name = self.content[0]
         if self.tab_id is None:
             self.tab_id = base64.b64encode(group_name.encode("utf-8")).decode("utf-8")
-        
+
         node = super().run()
         return node
 
@@ -277,7 +283,7 @@ class CodeTabDirective(GroupTabDirective):
                 tab_name = LEXER_MAP[self.arguments[0]]
             except:
                 raise ValueError("Lexer not implemented: {}".format(self.arguments[0]))
-        
+
         self.tab_classes.add("code-tab")
 
         # All content parsed as code
@@ -297,13 +303,13 @@ class TabsHtmlTransform(SphinxPostTransform):
     default_priority = 200
     builders = ("html", "dirhtml", "singlehtml", "readthedocs")
 
-    def run(self):
+    def run(self, **kwargs):
         node_types = {
-        "tablist": (nodes.container, tablist_div),
-        "tab": (nodes.paragraph, tab_button),
-        "panel": (nodes.container, panel_div)
+            "tablist": (nodes.container, tablist_div),
+            "tab": (nodes.paragraph, tab_button),
+            "panel": (nodes.container, panel_div),
         }
-        
+
         for node_type, [oldnode_cls, newnode_cls] in node_types.items():
             matcher = NodeMatcher(oldnode_cls, type=node_type)
             for node in self.document.traverse(matcher):
@@ -360,6 +366,13 @@ def update_context(app, pagename, templatename, context, doctree):
 
 def copy_assets(app, exception):
     """ Copy asset files to the output """
+    if "getLogger" in dir(logging):
+        log = logging.getLogger(__name__).info  # pylint: disable=no-member
+        warn = logging.getLogger(__name__).warning  # pylint: disable=no-member
+    else:
+        log = app.info
+        warn = app.warning
+
     builders = get_compatible_builders(app)
     if exception:
         return

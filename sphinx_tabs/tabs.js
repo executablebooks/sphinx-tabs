@@ -36,11 +36,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 function changeTabs(e) {
   const target = e.target;
-  const selected = target.getAttribute("aria-selected") === true;
+  const selected = target.getAttribute("aria-selected") === "true";
 
   deselectTabset(target);
 
   if (!selected) {
+    selectTab(target);
     const name = target.getAttribute("name");
     selectGroupedTabs(name, target.id);
 
@@ -48,8 +49,9 @@ function changeTabs(e) {
       // Persist during session
       sessionStorage.setItem('sphinx-tabs-last-selected', name);
     }
+
   }
-  selectTab(target);
+
 }
 
 function selectTab(target) {
@@ -72,7 +74,6 @@ function selectGroupedTabs(name, clickedId=null) {
       if (clickedTab === null ) {
         // Select first tab with matching name
         const tab = tabList.querySelector(`.sphinx-tabs-tab[name="${name}"]`);
-        console.log(tab);
         deselectTabset(tab);
         selectTab(tab);
       }
