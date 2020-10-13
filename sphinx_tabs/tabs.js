@@ -1,39 +1,54 @@
 window.addEventListener("DOMContentLoaded", () => {
-  const tabs = document.querySelectorAll('.sphinx-tabs-tab');
-  const tabLists = document.querySelector('[role="tablist"]');
+  const allTabs = document.querySelectorAll('.sphinx-tabs-tab');
+  const tabLists = document.querySelectorAll('[role="tablist"]');
 
-  // Add a click event handler to each tab
-  tabs.forEach(tab => {
+  allTabs.forEach(tab => {
     tab.addEventListener("click", changeTabs);
   });
 
-  // Enable arrow navigation between tabs in the tab list
-  let tabFocus = 0;
-  tabLists.addEventListener("keydown", e => {
-    if (e.keyCode === 39 || e.keyCode === 37) {
-      tabs[tabFocus].setAttribute("tabindex", -1);
-      // Move right
-      if (e.keyCode === 39) {
-        tabFocus++;
-        if (tabFocus >= tabs.length) {
-          tabFocus = 0;
-        }
-      // Move left
-      } else if (e.keyCode === 37) {
-        tabFocus--;
-        if (tabFocus < 0) {
-          tabFocus = tabs.length - 1;
-        }
-      }
-
-      tabs[tabFocus].setAttribute("tabindex", 0);
-      tabs[tabFocus].focus();
-    }
+  tabLists.forEach(tabList => {
+    tabList.addEventListener("keydown", keyTabs);
   });
+ 
   const lastSelected = sessionStorage.getItem('sphinx-tabs-last-selected');
   if (lastSelected != null) selectGroupedTabs(lastSelected);
 });
 
+/**
+ * Key focus left and right between sibling elements using arrows
+ * @param  {Node} e the element in focus when key was pressed
+ */
+function keyTabs(e) {
+    const tab = e.target;
+    let nextTab = null;
+    if (e.keyCode === 39 || e.keyCode === 37) {
+      tab.setAttribute("tabindex", -1);
+      // Move right
+      if (e.keyCode === 39) {
+        nextTab = tab.nextElementSibling;
+        if (nextTab === null) {
+          nextTab = tab.parentNode.firstElementChild;
+        }
+      // Move left
+      } else if (e.keyCode === 37) {
+        nextTab = tab.previousElementSibling;
+        if (nextTab === null) {
+          nextTab = tab.parentNode.lastElementChild;
+        }
+      }
+    }
+
+    if (nextTab !== null) {
+      nextTab.setAttribute("tabindex", 0);
+      nextTab.focus();
+    }
+}
+
+/**
+ * Select or deselect clicked tab. If a group tab
+ * is selected, also select tab in other tabLists.
+ * @param  {Node} e the element that was clicked
+ */
 function changeTabs(e) {
   const target = e.target;
   const selected = target.getAttribute("aria-selected") === "true";
@@ -49,7 +64,6 @@ function changeTabs(e) {
       // Persist during session
       sessionStorage.setItem('sphinx-tabs-last-selected', name);
     }
-
   }
 
 }
@@ -65,7 +79,7 @@ function selectTab(target) {
 
 function selectGroupedTabs(name, clickedId=null) {
   const groupedTabs = document.querySelectorAll(`.sphinx-tabs-tab[name="${name}"]`);
-  const tabLists = Array.from(groupedTabs).map(tab => tab?.parentNode);
+  const tabLists = Array.from(groupedTabs).map(tab => tab.parentNode);
 
   tabLists
     .forEach(tabList => {
@@ -84,14 +98,12 @@ function deselectTabset(target) {
   const parent = target.parentNode;
   const grandparent = parent.parentNode;
 
-  // Hide all tabs in tablist
-  parent
-  .querySelectorAll('[aria-selected="true"]')
+  // Hide all tabs in current tablist, but not nested
+  Array.from(parent.children)
   .forEach(t => t.setAttribute("aria-selected", false));
 
-
   // Hide all associated panels
-  grandparent
-    .querySelectorAll('[role="tabpanel"]')
+  Array.from(grandparent.children)
+    .slice(1)  // Skip tablist
     .forEach(p => p.setAttribute("hidden", true));
 }
