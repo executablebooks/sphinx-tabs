@@ -190,7 +190,7 @@ class TabDirective(SphinxDirective):
 
         tab_name = nodes.paragraph(text=self.content[0], type="tab")
         tab_name["classes"].append("sphinx-tabs-tab")
-        tab_name["classes"].extend(self.tab_classes)
+        tab_name["classes"].extend(sorted(self.tab_classes))
 
         i = 1
         while tab_id in self.env.temp_data[tabs_key]["tab_ids"]:
@@ -207,7 +207,7 @@ class TabDirective(SphinxDirective):
         text = "\n".join(self.content)
         node = nodes.container(text, type="panel")
         node["classes"].append("sphinx-tabs-panel")
-        node["classes"].extend(self.tab_classes)
+        node["classes"].extend(sorted(self.tab_classes))
         node.update_all_atts(
             {
                 "ids": [f"panel-{tabs_id}-{data_tab}"],
