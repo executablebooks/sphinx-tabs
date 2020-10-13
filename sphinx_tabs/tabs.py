@@ -126,7 +126,7 @@ class TabsDirective(SphinxDirective):
         self.assert_has_content()
 
         node = nodes.container()
-        node.set_class("sphinx-tabs")
+        node["classes"].append("sphinx-tabs")
 
         if "next_tabs_id" not in self.env.temp_data:
             self.env.temp_data["next_tabs_id"] = 0
@@ -189,7 +189,7 @@ class TabDirective(SphinxDirective):
             tab_id = self.tab_id
 
         tab_name = nodes.paragraph(text=self.content[0], type="tab")
-        tab_name.set_class("sphinx-tabs-tab")
+        tab_name["classes"].append("sphinx-tabs-tab")
         tab_name["classes"].extend(self.tab_classes)
 
         i = 1
@@ -206,7 +206,7 @@ class TabDirective(SphinxDirective):
 
         text = "\n".join(self.content)
         node = nodes.container(text, type="panel")
-        node.set_class("sphinx-tabs-panel")
+        node["classes"].append("sphinx-tabs-panel")
         node["classes"].extend(self.tab_classes)
         node.update_all_atts(
             {
@@ -216,8 +216,8 @@ class TabDirective(SphinxDirective):
         )
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
-            tab_name.set_class("first-tab")
-            node.set_class("first-panel")
+            tab_name["classes"].append("first-tab")
+            node["classes"].append("first-panel")
             self.env.temp_data[tabs_key]["is_first_tab"] = False
 
         self.state.nested_parse(self.content[2:], self.content_offset, node)
