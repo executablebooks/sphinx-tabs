@@ -1,18 +1,14 @@
 <document source="index.rst">
     <container classes="sphinx-tabs">
-        <div classes="ui top attached tabular menu sphinx-menu">
-            <a classes="active item sphinx-data-tab-QllP">
-                <container>
-                    <paragraph>
-                        BYO
-            <a classes="item sphinx-data-tab-QllP-1">
-                <container>
-                    <paragraph>
-                        BYO
-        <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-QllP active">
+        <container type="tablist">
+            <paragraph classes="sphinx-tabs-tab code-tab group-tab first-tab" ids="tab-0-QllP" names="QllP" type="tab">
+                BYO
+            <paragraph classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-QllP-1" names="QllP-1" type="tab">
+                BYO
+        <container classes="sphinx-tabs-panel code-tab group-tab first-panel" ids="panel-0-QllP" names="QllP" type="panel">
             <literal_block force="False" highlight_args="{}" language="byo" xml:space="preserve">
                 Test
                 This is just a test.
-        <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-QllP-1">
+        <container classes="sphinx-tabs-panel code-tab group-tab" ids="panel-0-QllP-1" names="QllP-1" type="panel">
             <literal_block force="False" highlight_args="{}" language="byo" xml:space="preserve">
                 Some other text.

@@ -1,17 +1,13 @@
 <document source="index.rst">
     <container classes="sphinx-tabs">
-        <div classes="ui top attached tabular menu sphinx-menu">
-            <a classes="active item sphinx-data-tab-Qysr">
-                <container>
-                    <paragraph>
-                        C++
-            <a classes="item sphinx-data-tab-UHl0aG9u">
-                <container>
-                    <paragraph>
-                        Python
-        <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-Qysr active">
+        <container type="tablist">
+            <paragraph classes="sphinx-tabs-tab code-tab group-tab first-tab" ids="tab-0-Qysr" names="Qysr" type="tab">
+                C++
+            <paragraph classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-UHl0aG9u" names="UHl0aG9u" type="tab">
+                Python
+        <container classes="sphinx-tabs-panel code-tab group-tab first-panel" ids="panel-0-Qysr" names="Qysr" type="panel">
             <literal_block force="False" highlight_args="{}" language="c++" linenos="True" xml:space="preserve">
                 std::cout << "hello world" << std::endl;
-        <container classes="ui bottom attached sphinx-tab tab segment code-tab sphinx-data-tab-UHl0aG9u">
+        <container classes="sphinx-tabs-panel code-tab group-tab" ids="panel-0-UHl0aG9u" names="UHl0aG9u" type="panel">
             <literal_block force="False" highlight_args="{}" language="python" xml:space="preserve">
                 print('hello world')

@@ -1,31 +1,23 @@
 <document source="index.rst">
     <container classes="sphinx-tabs">
-        <div classes="ui top attached tabular menu sphinx-menu">
-            <a classes="active item sphinx-data-tab-0-0">
-                <container>
-                    <paragraph>
-                        Apples
-            <a classes="item sphinx-data-tab-0-1">
-                <container>
-                    <paragraph>
-                        Pears
-            <a classes="item sphinx-data-tab-0-2">
-                <container>
-                    <paragraph>
-                        Oranges
-            <a classes="item sphinx-data-tab-0-3">
-                <container>
-                    <paragraph>
-                        404
-        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-0 active">
+        <container type="tablist">
+            <paragraph classes="sphinx-tabs-tab first-tab" ids="tab-0-0-0" names="0-0" type="tab">
+                Apples
+            <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-1" names="0-1" type="tab">
+                Pears
+            <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-2" names="0-2" type="tab">
+                Oranges
+            <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-3" names="0-3" type="tab">
+                404
+        <container classes="sphinx-tabs-panel first-panel" ids="panel-0-0-0" names="0-0" type="panel">
             <paragraph>
                 Apples are green, or sometimes red.
-        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1">
+        <container classes="sphinx-tabs-panel" ids="panel-0-0-1" names="0-1" type="panel">
             <paragraph>
                 Pears are green.
-        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-2">
+        <container classes="sphinx-tabs-panel" ids="panel-0-0-2" names="0-2" type="panel">
             <paragraph>
                 Oranges are orange.
-        <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-3">
+        <container classes="sphinx-tabs-panel" ids="panel-0-0-3" names="0-3" type="panel">
             <paragraph>
                 A number in the name.

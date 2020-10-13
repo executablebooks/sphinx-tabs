@@ -3,150 +3,102 @@
         <title>
             Markup in Tab Titles
         <container classes="sphinx-tabs">
-            <div classes="ui top attached tabular menu sphinx-menu">
-                <a classes="active item sphinx-data-tab-0-0">
-                    <container>
-                        <paragraph>
-                            <strong>
-                                bold
-                             tab
-                <a classes="item sphinx-data-tab-0-1">
-                    <container>
-                        <paragraph>
-                            <emphasis>
-                                italic
-                             tab
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-0 active">
+            <container type="tablist">
+                <paragraph classes="sphinx-tabs-tab first-tab" ids="tab-0-0-0" names="0-0" type="tab">
+                    **bold** tab
+                <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-1" names="0-1" type="tab">
+                    *italic* tab
+            <container classes="sphinx-tabs-panel first-panel" ids="panel-0-0-0" names="0-0" type="panel">
                 <paragraph>
                     <strong>
                         bold
                      text
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1">
+            <container classes="sphinx-tabs-panel" ids="panel-0-0-1" names="0-1" type="panel">
                 <paragraph>
                     <emphasis>
                         italic
                      text
         <container classes="sphinx-tabs">
-            <div classes="ui top attached tabular menu sphinx-menu">
-                <a classes="active item sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi">
-                    <container>
-                        <paragraph>
-                            <strong>
-                                bold
-                             group tab
-                <a classes="item sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
-                    <container>
-                        <paragraph>
-                            <emphasis>
-                                italic
-                             group tab
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi active">
+            <container type="tablist">
+                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-1-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="tab">
+                    **bold** group tab
+                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-1-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="tab">
+                    *italic* group tab
+            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-1-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="panel">
                 <paragraph>
                     <strong>
                         bold
                      text
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
+            <container classes="sphinx-tabs-panel group-tab" ids="panel-1-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="panel">
                 <paragraph>
                     <emphasis>
                         italic
                      text
         <container classes="sphinx-tabs">
-            <div classes="ui top attached tabular menu sphinx-menu">
-                <a classes="active item sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi">
-                    <container>
-                        <paragraph>
-                            <strong>
-                                bold
-                             group tab
-                <a classes="item sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
-                    <container>
-                        <paragraph>
-                            <emphasis>
-                                italic
-                             group tab
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kipib2xkKiogZ3JvdXAgdGFi active">
+            <container type="tablist">
+                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-2-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="tab">
+                    **bold** group tab
+                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-2-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="tab">
+                    *italic* group tab
+            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-2-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="panel">
                 <paragraph>
                     <strong>
                         bold
                      text
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Kml0YWxpYyogZ3JvdXAgdGFi">
+            <container classes="sphinx-tabs-panel group-tab" ids="panel-2-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="panel">
                 <paragraph>
                     <emphasis>
                         italic
                      text
         <container classes="sphinx-tabs">
-            <div classes="ui top attached tabular menu sphinx-menu">
-                <a classes="active item sphinx-data-tab-3-0">
-                    <container>
-                        <paragraph>
-                            <math>
-                                x = y
-                             tab
-                <a classes="item sphinx-data-tab-3-1">
-                    <container>
-                        <paragraph>
-                            <math>
-                                x \neq y
-                             tab
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-3-0 active">
+            <container type="tablist">
+                <paragraph classes="sphinx-tabs-tab first-tab" ids="tab-3-3-0" names="3-0" type="tab">
+                    :math:`x = y` tab
+                <paragraph classes="sphinx-tabs-tab" ids="tab-3-3-1" names="3-1" type="tab">
+                    :math:`x \neq y` tab
+            <container classes="sphinx-tabs-panel first-panel" ids="panel-3-3-0" names="3-0" type="panel">
                 <paragraph>
                     Variables are equal 
                     <math>
                         x = y
                     .
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-3-1">
+            <container classes="sphinx-tabs-panel" ids="panel-3-3-1" names="3-1" type="panel">
                 <paragraph>
                     Variables are not equal 
                     <math>
                         x \neq y
                     .
         <container classes="sphinx-tabs">
-            <div classes="ui top attached tabular menu sphinx-menu">
-                <a classes="active item sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=">
-                    <container>
-                        <paragraph>
-                            <math>
-                                x = y
-                             group tab
-                <a classes="item sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
-                    <container>
-                        <paragraph>
-                            <math>
-                                x \neq y
-                             group tab
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI= active">
+            <container type="tablist">
+                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="tab">
+                    :math:`x = y` group tab
+                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="tab">
+                    :math:`x \neq y` group tab
+            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="panel">
                 <paragraph>
                     Variables are equal 
                     <math>
                         x = y
                     .
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
+            <container classes="sphinx-tabs-panel group-tab" ids="panel-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="panel">
                 <paragraph>
                     Variables are not equal 
                     <math>
                         x \neq y
                     .
         <container classes="sphinx-tabs">
-            <div classes="ui top attached tabular menu sphinx-menu">
-                <a classes="active item sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=">
-                    <container>
-                        <paragraph>
-                            <math>
-                                x = y
-                             group tab
-                <a classes="item sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
-                    <container>
-                        <paragraph>
-                            <math>
-                                x \neq y
-                             group tab
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggPSB5YCBncm91cCB0YWI= active">
+            <container type="tablist">
+                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="tab">
+                    :math:`x = y` group tab
+                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="tab">
+                    :math:`x \neq y` group tab
+            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="panel">
                 <paragraph>
                     Variables are equal 
                     <math>
                         x = y
                     .
-            <container classes="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=">
+            <container classes="sphinx-tabs-panel group-tab" ids="panel-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="panel">
                 <paragraph>
                     Variables are not equal 
                     <math>
