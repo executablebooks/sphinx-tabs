@@ -1,3 +1,9 @@
+try {
+  var session = window.sessionStorage || {};
+} catch (e) {
+  var session = {};
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   const allTabs = document.querySelectorAll('.sphinx-tabs-tab');
   const tabLists = document.querySelectorAll('[role="tablist"]');
@@ -9,8 +15,8 @@ window.addEventListener("DOMContentLoaded", () => {
   tabLists.forEach(tabList => {
     tabList.addEventListener("keydown", keyTabs);
   });
- 
-  const lastSelected = sessionStorage.getItem('sphinx-tabs-last-selected');
+
+  const lastSelected = session.getItem('sphinx-tabs-last-selected');
   if (lastSelected != null) selectGroupedTabs(lastSelected);
 });
 
@@ -62,7 +68,7 @@ function changeTabs(e) {
 
     if (target.classList.contains("group-tab")) {
       // Persist during session
-      sessionStorage.setItem('sphinx-tabs-last-selected', name);
+      session.setItem('sphinx-tabs-last-selected', name);
     }
   }
 
