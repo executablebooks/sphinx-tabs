@@ -6,20 +6,16 @@ from functools import partial
 
 from docutils import nodes
 from docutils.parsers.rst import directives
-from pkg_resources import resource_filename
 from pygments.lexers import get_all_lexers
 from sphinx.highlighting import lexer_classes
-from sphinx.util.osutil import copyfile
-from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
-from sphinx.transforms.post_transforms import SphinxPostTransform
-from sphinx.util.nodes import NodeMatcher
 from sphinx.directives.code import CodeBlock
 
 
 FILES = [
     "tabs.js",
     "tabs.css",
+    "doctools.js",  # Overide for accessibility
 ]
 
 
@@ -44,76 +40,36 @@ def get_compatible_builders(app):
     return builders
 
 
-# pylint: disable=invalid-name
-class tablist_div(nodes.Element, nodes.General):
-    pass
+class SphinxTabsContainer(nodes.container):
+    tagname = "div"
 
 
-class tab_button(nodes.Element, nodes.General):
-    pass
+class SphinxTabsPanel(nodes.container):
+    tagname = "div"
 
 
-class panel_div(nodes.Element, nodes.General):
-    pass
+class SphinxTabsTab(nodes.paragraph):
+    tagname = "button"
 
 
-# pylint: enable=invalid-name
-
-# pylint: disable=unused-argument
-def visit_tablist_div(self, node):
-    self.body.append(
-        self.starttag(node, "div", role="tablist", **{"aria-label": "Tabbed content"})
-    )
+class SphinxTabsTablist(nodes.container):
+    tagname = "div"
 
 
-def depart_tablist_div(self, node):
-    self.body.append("</div>")
+def visit(translator, node):
+    # Borrowed from `sphinx-inline-tabs`
+    attrs = node.attributes.copy()
+    attrs.pop("classes")
+    attrs.pop("ids")
+    attrs.pop("names")
+    attrs.pop("dupnames")
+    attrs.pop("backrefs")
+    text = translator.starttag(node, node.tagname, **attrs)
+    translator.body.append(text.strip())
 
 
-def visit_tab_button(self, node):
-    attrs = clean_attrs(node)
-    first_tab = "first-tab" in node.get("classes", [])
-    attrs["tabindex"] = "0" if first_tab else "-1"
-    attrs["aria-selected"] = "true" if first_tab else "false"
-    attrs["aria-controls"] = attrs["ids"][0].replace("tab-", "panel-")
-    del attrs["ids"]
-
-    self.body.append(self.starttag(node, "button", role="tab", **attrs))
-
-
-def depart_tab_button(self, node):
-    self.body.append("</button>")
-
-
-def visit_panel_div(self, node):
-    attrs = clean_attrs(node)
-    attrs["aria-labelledby"] = attrs["ids"][0].replace("panel-", "tab-")
-    del attrs["ids"]
-
-    if "first-panel" in node.get("classes", []):
-        self.body.append(
-            self.starttag(node, "div", role="tabpanel", tabindex=0, **attrs)
-        )
-    else:
-        self.body.append(
-            self.starttag(
-                node, "div", role="tabpanel", tabindex=0, hidden="true", **attrs
-            )
-        )
-
-
-def depart_panel_div(self, node):
-    self.body.append("</div>")
-
-
-# pylint: disable=unused-argument
-
-
-def clean_attrs(node):
-    attrs = {key: val for key, val in node.attributes.items() if val}
-    del attrs["classes"]
-    attrs["name"] = attrs.pop("names")
-    return attrs
+def depart(translator, node):
+    translator.body.append(f"</{node.tagname}>")
 
 
 class TabsDirective(SphinxDirective):
@@ -125,7 +81,7 @@ class TabsDirective(SphinxDirective):
         """ Parse a tabs directive """
         self.assert_has_content()
 
-        node = nodes.container()
+        node = nodes.container(type="tab-element")
         node["classes"].append("sphinx-tabs")
 
         if "next_tabs_id" not in self.env.temp_data:
@@ -146,19 +102,22 @@ class TabsDirective(SphinxDirective):
         self.state.nested_parse(self.content, self.content_offset, node)
 
         if self.env.app.builder.name in get_compatible_builders(self.env.app):
-            tabs_node = nodes.container(type="tablist")
+            tablist = SphinxTabsTablist()
+            tablist["role"] = "tablist"
+            tablist["aria-label"] = "Tabbed content"
 
             tab_titles = self.env.temp_data[tabs_key]["tab_titles"]
-            for data_tab, tab_name in tab_titles:
-                tab_name.update_basic_atts(
-                    {
-                        "ids": [f"tab-{tabs_id}-{data_tab}"],
-                        "names": [data_tab],
-                    }
-                )
-                tabs_node += tab_name
+            for idx, [data_tab, tab_name] in enumerate(tab_titles):
+                tab_name.attributes["role"] = "tab"
+                tab_name["ids"] = [f"tab-{tabs_id}-{data_tab}"]
+                tab_name["name"] = data_tab
+                tab_name["tabindex"] = "0" if idx == 0 else "-1"
+                tab_name["aria-selected"] = "true" if idx == 0 else "false"
+                tab_name["aria-controls"] = tab_name["ids"][0].replace("tab-", "panel-")
 
-            node.insert(0, tabs_node)
+                tablist += tab_name
+
+            node.insert(0, tablist)
 
         self.env.temp_data["tabs_stack"].pop()
         return [node]
@@ -188,7 +147,7 @@ class TabDirective(SphinxDirective):
         else:
             tab_id = self.tab_id
 
-        tab_name = nodes.paragraph(text=self.content[0], type="tab")
+        tab_name = SphinxTabsTab(text=self.content[0])
         tab_name["classes"].append("sphinx-tabs-tab")
         tab_name["classes"].extend(sorted(self.tab_classes))
 
@@ -204,34 +163,32 @@ class TabDirective(SphinxDirective):
 
         self.env.temp_data[tabs_key]["tab_titles"].append((data_tab, tab_name))
 
-        text = "\n".join(self.content)
-        node = nodes.container(text, type="panel")
-        node["classes"].append("sphinx-tabs-panel")
-        node["classes"].extend(sorted(self.tab_classes))
-        node.update_all_atts(
-            {
-                "ids": [f"panel-{tabs_id}-{data_tab}"],
-                "names": [data_tab],
-            }
-        )
+        panel = SphinxTabsPanel()
+        panel["role"] = "tabpanel"
+        panel["ids"] = [f"panel-{tabs_id}-{data_tab}"]
+        panel["name"] = data_tab
+        panel["tabindex"] = 0
+        panel["aria-labelledby"] = panel["ids"][0].replace("panel-", "tab-")
+        panel["classes"].append("sphinx-tabs-panel")
+        panel["classes"].extend(sorted(self.tab_classes))
 
         if self.env.temp_data[tabs_key]["is_first_tab"]:
-            tab_name["classes"].append("first-tab")
-            node["classes"].append("first-panel")
             self.env.temp_data[tabs_key]["is_first_tab"] = False
+        else:
+            panel["hidden"] = "true"
 
-        self.state.nested_parse(self.content[2:], self.content_offset, node)
+        self.state.nested_parse(self.content[2:], self.content_offset, panel)
 
         if self.env.app.builder.name not in get_compatible_builders(self.env.app):
             outer_node = nodes.container()
-            panel = nodes.container()
-            panel += tab_name
-
+            tab = nodes.container()
+            tab += tab_name
+            outer_node += tab
             outer_node += panel
-            outer_node += node
+
             return [outer_node]
 
-        return [node]
+        return [panel]
 
 
 class GroupTabDirective(TabDirective):
@@ -299,24 +256,6 @@ class CodeTabDirective(GroupTabDirective):
         return node
 
 
-class TabsHtmlTransform(SphinxPostTransform):
-    default_priority = 200
-    builders = ("html", "dirhtml", "singlehtml", "readthedocs")
-
-    def run(self, **kwargs):
-        node_types = {
-            "tablist": (nodes.container, tablist_div),
-            "tab": (nodes.paragraph, tab_button),
-            "panel": (nodes.container, panel_div),
-        }
-
-        for node_type, [oldnode_cls, newnode_cls] in node_types.items():
-            matcher = NodeMatcher(oldnode_cls, type=node_type)
-            for node in self.document.traverse(matcher):
-                newnode = newnode_cls("", *node.children)
-                node.replace_self(newnode)
-
-
 class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
     """Visitor pattern than looks for a sphinx tabs
     directive in a document"""
@@ -348,7 +287,7 @@ def update_context(app, pagename, templatename, context, doctree):
     visitor = _FindTabsDirectiveVisitor(doctree)
     doctree.walk(visitor)
     if not visitor.found_tabs_directive:
-        paths = [Path("_static") / "sphinx_tabs" / f for f in FILES]
+        paths = [Path("_static") / f for f in FILES]
         if "css_files" in context:
             context["css_files"] = context["css_files"][:]
             for path in paths:
@@ -364,54 +303,24 @@ def update_context(app, pagename, templatename, context, doctree):
 # pylint: enable=unused-argument
 
 
-def copy_assets(app, exception):
-    """ Copy asset files to the output """
-    if "getLogger" in dir(logging):
-        log = logging.getLogger(__name__).info  # pylint: disable=no-member
-        warn = logging.getLogger(__name__).warning  # pylint: disable=no-member
-    else:
-        log = app.info
-        warn = app.warning
-
-    builders = get_compatible_builders(app)
-    if exception:
-        return
-    if app.builder.name not in builders:
-        if not app.config["sphinx_tabs_nowarn"]:
-            warn(
-                "Not copying tabs assets! Not compatible with %s builder"
-                % app.builder.name
-            )
-        return
-
-    log("Copying tabs assets")
-
-    installdir = Path(app.builder.outdir) / "_static" / "sphinx_tabs"
-
-    for path in FILES:
-        source = resource_filename("sphinx_tabs", path)
-        dest = installdir / path
-
-        destdir = dest.parent
-        if not destdir.exists():
-            destdir.mkdir(parents=True)
-
-        copyfile(source, dest)
-
-
 def setup(app):
     """ Set up the plugin """
     app.add_config_value("sphinx_tabs_nowarn", False, "")
     app.add_config_value("sphinx_tabs_valid_builders", [], "")
-    app.add_node(tablist_div, html=(visit_tablist_div, depart_tablist_div))
-    app.add_node(tab_button, html=(visit_tab_button, depart_tab_button))
-    app.add_node(panel_div, html=(visit_panel_div, depart_panel_div))
+    app.add_node(SphinxTabsContainer, html=(visit, depart))
+    app.add_node(SphinxTabsPanel, html=(visit, depart))
+    app.add_node(SphinxTabsTab, html=(visit, depart))
+    app.add_node(SphinxTabsTablist, html=(visit, depart))
     app.add_directive("tabs", TabsDirective)
     app.add_directive("tab", TabDirective)
     app.add_directive("group-tab", GroupTabDirective)
     app.add_directive("code-tab", CodeTabDirective)
-    app.add_post_transform(TabsHtmlTransform)
-    for path in [Path("sphinx_tabs") / f for f in FILES]:
+    static_dir = Path(__file__).parent / "static"
+    app.connect(
+        "builder-inited",
+        (lambda app: app.config.html_static_path.append(static_dir.as_posix())),
+    )
+    for path in [Path(path) for path in FILES]:
         if path.suffix == ".css":
             if "add_css_file" in dir(app):
                 app.add_css_file(path.as_posix())
@@ -423,7 +332,6 @@ def setup(app):
             else:
                 app.add_js_file(path.as_posix())
     app.connect("html-page-context", update_context)
-    app.connect("build-finished", copy_assets)
 
     return {
         "parallel_read_safe": True,
