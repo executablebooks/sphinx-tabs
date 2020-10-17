@@ -2,103 +2,103 @@
     <section ids="markup-in-tab-titles" names="markup\ in\ tab\ titles">
         <title>
             Markup in Tab Titles
-        <container classes="sphinx-tabs">
-            <container type="tablist">
-                <paragraph classes="sphinx-tabs-tab first-tab" ids="tab-0-0-0" names="0-0" type="tab">
+        <container classes="sphinx-tabs" type="tab-element">
+            <div aria-label="Tabbed content" role="tablist">
+                <button aria-controls="panel-0-0-0" aria-selected="true" classes="sphinx-tabs-tab" ids="tab-0-0-0" name="0-0" role="tab" tabindex="0">
                     **bold** tab
-                <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-1" names="0-1" type="tab">
+                <button aria-controls="panel-0-0-1" aria-selected="false" classes="sphinx-tabs-tab" ids="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
                     *italic* tab
-            <container classes="sphinx-tabs-panel first-panel" ids="panel-0-0-0" names="0-0" type="panel">
+            <div aria-labelledby="tab-0-0-0" classes="sphinx-tabs-panel" ids="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
                 <paragraph>
                     <strong>
                         bold
                      text
-            <container classes="sphinx-tabs-panel" ids="panel-0-0-1" names="0-1" type="panel">
+            <div aria-labelledby="tab-0-0-1" classes="sphinx-tabs-panel" hidden="true" ids="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
                 <paragraph>
                     <emphasis>
                         italic
                      text
-        <container classes="sphinx-tabs">
-            <container type="tablist">
-                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-1-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="tab">
+        <container classes="sphinx-tabs" type="tab-element">
+            <div aria-label="Tabbed content" role="tablist">
+                <button aria-controls="panel-1-Kipib2xkKiogZ3JvdXAgdGFi" aria-selected="true" classes="sphinx-tabs-tab group-tab" ids="tab-1-Kipib2xkKiogZ3JvdXAgdGFi" name="Kipib2xkKiogZ3JvdXAgdGFi" role="tab" tabindex="0">
                     **bold** group tab
-                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-1-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="tab">
+                <button aria-controls="panel-1-Kml0YWxpYyogZ3JvdXAgdGFi" aria-selected="false" classes="sphinx-tabs-tab group-tab" ids="tab-1-Kml0YWxpYyogZ3JvdXAgdGFi" name="Kml0YWxpYyogZ3JvdXAgdGFi" role="tab" tabindex="-1">
                     *italic* group tab
-            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-1-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="panel">
+            <div aria-labelledby="tab-1-Kipib2xkKiogZ3JvdXAgdGFi" classes="sphinx-tabs-panel group-tab" ids="panel-1-Kipib2xkKiogZ3JvdXAgdGFi" name="Kipib2xkKiogZ3JvdXAgdGFi" role="tabpanel" tabindex="0">
                 <paragraph>
                     <strong>
                         bold
                      text
-            <container classes="sphinx-tabs-panel group-tab" ids="panel-1-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="panel">
+            <div aria-labelledby="tab-1-Kml0YWxpYyogZ3JvdXAgdGFi" classes="sphinx-tabs-panel group-tab" hidden="true" ids="panel-1-Kml0YWxpYyogZ3JvdXAgdGFi" name="Kml0YWxpYyogZ3JvdXAgdGFi" role="tabpanel" tabindex="0">
                 <paragraph>
                     <emphasis>
                         italic
                      text
-        <container classes="sphinx-tabs">
-            <container type="tablist">
-                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-2-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="tab">
+        <container classes="sphinx-tabs" type="tab-element">
+            <div aria-label="Tabbed content" role="tablist">
+                <button aria-controls="panel-2-Kipib2xkKiogZ3JvdXAgdGFi" aria-selected="true" classes="sphinx-tabs-tab group-tab" ids="tab-2-Kipib2xkKiogZ3JvdXAgdGFi" name="Kipib2xkKiogZ3JvdXAgdGFi" role="tab" tabindex="0">
                     **bold** group tab
-                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-2-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="tab">
+                <button aria-controls="panel-2-Kml0YWxpYyogZ3JvdXAgdGFi" aria-selected="false" classes="sphinx-tabs-tab group-tab" ids="tab-2-Kml0YWxpYyogZ3JvdXAgdGFi" name="Kml0YWxpYyogZ3JvdXAgdGFi" role="tab" tabindex="-1">
                     *italic* group tab
-            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-2-Kipib2xkKiogZ3JvdXAgdGFi" names="Kipib2xkKiogZ3JvdXAgdGFi" type="panel">
+            <div aria-labelledby="tab-2-Kipib2xkKiogZ3JvdXAgdGFi" classes="sphinx-tabs-panel group-tab" ids="panel-2-Kipib2xkKiogZ3JvdXAgdGFi" name="Kipib2xkKiogZ3JvdXAgdGFi" role="tabpanel" tabindex="0">
                 <paragraph>
                     <strong>
                         bold
                      text
-            <container classes="sphinx-tabs-panel group-tab" ids="panel-2-Kml0YWxpYyogZ3JvdXAgdGFi" names="Kml0YWxpYyogZ3JvdXAgdGFi" type="panel">
+            <div aria-labelledby="tab-2-Kml0YWxpYyogZ3JvdXAgdGFi" classes="sphinx-tabs-panel group-tab" hidden="true" ids="panel-2-Kml0YWxpYyogZ3JvdXAgdGFi" name="Kml0YWxpYyogZ3JvdXAgdGFi" role="tabpanel" tabindex="0">
                 <paragraph>
                     <emphasis>
                         italic
                      text
-        <container classes="sphinx-tabs">
-            <container type="tablist">
-                <paragraph classes="sphinx-tabs-tab first-tab" ids="tab-3-3-0" names="3-0" type="tab">
+        <container classes="sphinx-tabs" type="tab-element">
+            <div aria-label="Tabbed content" role="tablist">
+                <button aria-controls="panel-3-3-0" aria-selected="true" classes="sphinx-tabs-tab" ids="tab-3-3-0" name="3-0" role="tab" tabindex="0">
                     :math:`x = y` tab
-                <paragraph classes="sphinx-tabs-tab" ids="tab-3-3-1" names="3-1" type="tab">
+                <button aria-controls="panel-3-3-1" aria-selected="false" classes="sphinx-tabs-tab" ids="tab-3-3-1" name="3-1" role="tab" tabindex="-1">
                     :math:`x \neq y` tab
-            <container classes="sphinx-tabs-panel first-panel" ids="panel-3-3-0" names="3-0" type="panel">
+            <div aria-labelledby="tab-3-3-0" classes="sphinx-tabs-panel" ids="panel-3-3-0" name="3-0" role="tabpanel" tabindex="0">
                 <paragraph>
                     Variables are equal 
                     <math>
                         x = y
                     .
-            <container classes="sphinx-tabs-panel" ids="panel-3-3-1" names="3-1" type="panel">
+            <div aria-labelledby="tab-3-3-1" classes="sphinx-tabs-panel" hidden="true" ids="panel-3-3-1" name="3-1" role="tabpanel" tabindex="0">
                 <paragraph>
                     Variables are not equal 
                     <math>
                         x \neq y
                     .
-        <container classes="sphinx-tabs">
-            <container type="tablist">
-                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="tab">
+        <container classes="sphinx-tabs" type="tab-element">
+            <div aria-label="Tabbed content" role="tablist">
+                <button aria-controls="panel-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" aria-selected="true" classes="sphinx-tabs-tab group-tab" ids="tab-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" role="tab" tabindex="0">
                     :math:`x = y` group tab
-                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="tab">
+                <button aria-controls="panel-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" aria-selected="false" classes="sphinx-tabs-tab group-tab" ids="tab-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" role="tab" tabindex="-1">
                     :math:`x \neq y` group tab
-            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="panel">
+            <div aria-labelledby="tab-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" classes="sphinx-tabs-panel group-tab" ids="panel-4-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" role="tabpanel" tabindex="0">
                 <paragraph>
                     Variables are equal 
                     <math>
                         x = y
                     .
-            <container classes="sphinx-tabs-panel group-tab" ids="panel-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="panel">
+            <div aria-labelledby="tab-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" classes="sphinx-tabs-panel group-tab" hidden="true" ids="panel-4-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" role="tabpanel" tabindex="0">
                 <paragraph>
                     Variables are not equal 
                     <math>
                         x \neq y
                     .
-        <container classes="sphinx-tabs">
-            <container type="tablist">
-                <paragraph classes="sphinx-tabs-tab group-tab first-tab" ids="tab-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="tab">
+        <container classes="sphinx-tabs" type="tab-element">
+            <div aria-label="Tabbed content" role="tablist">
+                <button aria-controls="panel-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" aria-selected="true" classes="sphinx-tabs-tab group-tab" ids="tab-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" role="tab" tabindex="0">
                     :math:`x = y` group tab
-                <paragraph classes="sphinx-tabs-tab group-tab" ids="tab-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="tab">
+                <button aria-controls="panel-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" aria-selected="false" classes="sphinx-tabs-tab group-tab" ids="tab-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" role="tab" tabindex="-1">
                     :math:`x \neq y` group tab
-            <container classes="sphinx-tabs-panel group-tab first-panel" ids="panel-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" type="panel">
+            <div aria-labelledby="tab-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" classes="sphinx-tabs-panel group-tab" ids="panel-5-Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggPSB5YCBncm91cCB0YWI=" role="tabpanel" tabindex="0">
                 <paragraph>
                     Variables are equal 
                     <math>
                         x = y
                     .
-            <container classes="sphinx-tabs-panel group-tab" ids="panel-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" names="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" type="panel">
+            <div aria-labelledby="tab-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" classes="sphinx-tabs-panel group-tab" hidden="true" ids="panel-5-Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" name="Om1hdGg6YHggXG5lcSB5YCBncm91cCB0YWI=" role="tabpanel" tabindex="0">
                 <paragraph>
                     Variables are not equal 
                     <math>

@@ -1,13 +1,13 @@
 <document source="index.rst">
-    <container classes="sphinx-tabs">
-        <container type="tablist">
-            <paragraph classes="sphinx-tabs-tab code-tab group-tab first-tab" ids="tab-0-Qysr" names="Qysr" type="tab">
+    <container classes="sphinx-tabs" type="tab-element">
+        <div aria-label="Tabbed content" role="tablist">
+            <button aria-controls="panel-0-Qysr" aria-selected="true" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-Qysr" name="Qysr" role="tab" tabindex="0">
                 C++
-            <paragraph classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-UHl0aG9u" names="UHl0aG9u" type="tab">
+            <button aria-controls="panel-0-UHl0aG9u" aria-selected="false" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-UHl0aG9u" name="UHl0aG9u" role="tab" tabindex="-1">
                 Python
-        <container classes="sphinx-tabs-panel code-tab group-tab first-panel" ids="panel-0-Qysr" names="Qysr" type="panel">
+        <div aria-labelledby="tab-0-Qysr" classes="sphinx-tabs-panel code-tab group-tab" ids="panel-0-Qysr" name="Qysr" role="tabpanel" tabindex="0">
             <literal_block force="False" highlight_args="{}" language="c++" linenos="True" xml:space="preserve">
                 std::cout << "hello world" << std::endl;
-        <container classes="sphinx-tabs-panel code-tab group-tab" ids="panel-0-UHl0aG9u" names="UHl0aG9u" type="panel">
+        <div aria-labelledby="tab-0-UHl0aG9u" classes="sphinx-tabs-panel code-tab group-tab" hidden="true" ids="panel-0-UHl0aG9u" name="UHl0aG9u" role="tabpanel" tabindex="0">
             <literal_block force="False" highlight_args="{}" language="python" xml:space="preserve">
                 print('hello world')

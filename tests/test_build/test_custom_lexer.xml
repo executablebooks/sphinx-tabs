@@ -1,14 +1,14 @@
 <document source="index.rst">
-    <container classes="sphinx-tabs">
-        <container type="tablist">
-            <paragraph classes="sphinx-tabs-tab code-tab group-tab first-tab" ids="tab-0-QllP" names="QllP" type="tab">
+    <container classes="sphinx-tabs" type="tab-element">
+        <div aria-label="Tabbed content" role="tablist">
+            <button aria-controls="panel-0-QllP" aria-selected="true" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-QllP" name="QllP" role="tab" tabindex="0">
                 BYO
-            <paragraph classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-QllP-1" names="QllP-1" type="tab">
+            <button aria-controls="panel-0-QllP-1" aria-selected="false" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-0-QllP-1" name="QllP-1" role="tab" tabindex="-1">
                 BYO
-        <container classes="sphinx-tabs-panel code-tab group-tab first-panel" ids="panel-0-QllP" names="QllP" type="panel">
+        <div aria-labelledby="tab-0-QllP" classes="sphinx-tabs-panel code-tab group-tab" ids="panel-0-QllP" name="QllP" role="tabpanel" tabindex="0">
             <literal_block force="False" highlight_args="{}" language="byo" xml:space="preserve">
                 Test
                 This is just a test.
-        <container classes="sphinx-tabs-panel code-tab group-tab" ids="panel-0-QllP-1" names="QllP-1" type="panel">
+        <div aria-labelledby="tab-0-QllP-1" classes="sphinx-tabs-panel code-tab group-tab" hidden="true" ids="panel-0-QllP-1" name="QllP-1" role="tabpanel" tabindex="0">
             <literal_block force="False" highlight_args="{}" language="byo" xml:space="preserve">
                 Some other text.

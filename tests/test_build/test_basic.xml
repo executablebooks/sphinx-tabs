@@ -1,23 +1,23 @@
 <document source="index.rst">
-    <container classes="sphinx-tabs">
-        <container type="tablist">
-            <paragraph classes="sphinx-tabs-tab first-tab" ids="tab-0-0-0" names="0-0" type="tab">
+    <container classes="sphinx-tabs" type="tab-element">
+        <div aria-label="Tabbed content" role="tablist">
+            <button aria-controls="panel-0-0-0" aria-selected="true" classes="sphinx-tabs-tab" ids="tab-0-0-0" name="0-0" role="tab" tabindex="0">
                 Apples
-            <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-1" names="0-1" type="tab">
+            <button aria-controls="panel-0-0-1" aria-selected="false" classes="sphinx-tabs-tab" ids="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
                 Pears
-            <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-2" names="0-2" type="tab">
+            <button aria-controls="panel-0-0-2" aria-selected="false" classes="sphinx-tabs-tab" ids="tab-0-0-2" name="0-2" role="tab" tabindex="-1">
                 Oranges
-            <paragraph classes="sphinx-tabs-tab" ids="tab-0-0-3" names="0-3" type="tab">
+            <button aria-controls="panel-0-0-3" aria-selected="false" classes="sphinx-tabs-tab" ids="tab-0-0-3" name="0-3" role="tab" tabindex="-1">
                 404
-        <container classes="sphinx-tabs-panel first-panel" ids="panel-0-0-0" names="0-0" type="panel">
+        <div aria-labelledby="tab-0-0-0" classes="sphinx-tabs-panel" ids="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
             <paragraph>
                 Apples are green, or sometimes red.
-        <container classes="sphinx-tabs-panel" ids="panel-0-0-1" names="0-1" type="panel">
+        <div aria-labelledby="tab-0-0-1" classes="sphinx-tabs-panel" hidden="true" ids="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
             <paragraph>
                 Pears are green.
-        <container classes="sphinx-tabs-panel" ids="panel-0-0-2" names="0-2" type="panel">
+        <div aria-labelledby="tab-0-0-2" classes="sphinx-tabs-panel" hidden="true" ids="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0">
             <paragraph>
                 Oranges are orange.
-        <container classes="sphinx-tabs-panel" ids="panel-0-0-3" names="0-3" type="panel">
+        <div aria-labelledby="tab-0-0-3" classes="sphinx-tabs-panel" hidden="true" ids="panel-0-0-3" name="0-3" role="tabpanel" tabindex="0">
             <paragraph>
                 A number in the name.
