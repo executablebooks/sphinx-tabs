@@ -14,7 +14,7 @@
   margin: 0;
   font-size: 16px;
   font-weight: 400;
-  background: white;
+  background-color: rgba(255, 255, 255, 0);
   border-radius: 5px 5px 0 0;
   border: 0;
   padding: 1rem 1.5rem;
@@ -26,6 +26,7 @@
   border: 1px solid #a0b3bf;
   border-bottom: 1px solid white;
   margin-bottom: -1px;
+  background-color: white;
 }
 
 .sphinx-tabs-tab:focus {
@@ -39,11 +40,6 @@
   border-radius: 0 0 5px 5px;
   border-top: 0;
   background: white;
-}
-
-.sphinx-tabs-panel:focus {
-
-  /* z-index: 1; */
 }
 
 .sphinx-tabs-panel.code-tab {
