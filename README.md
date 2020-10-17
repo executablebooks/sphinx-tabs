@@ -73,10 +73,16 @@ Basic tabs can be coded as follows:
 
 ![Tabs](/images/tabs.gif)
 
+Tabs are switched by clicking on the selected tab.
+Alternatively, the current tab can be focused using the Tab key, and left and right arrow keys can be used to navigate across a tabset.
+The Enter key can then be used to switch to the focused tab.
+
+Re-selecting the current tab, either by clicking or pressing Enter when focused, will close the tab.
+
 ## Grouped Tabs
 
-Tabs can be grouped, so that changing the current tab in one area changes the current tab in the
-another area. For example:
+Tabs can be grouped, so that changing the current tab in one tabset changes the current tab in all other tabsets containing a tab with a matching label.
+For example:
 
 ```rst
 .. tabs::
@@ -109,6 +115,10 @@ another area. For example:
 ```
 
 ![Group Tabs](/images/groupTabs.gif)
+
+If permitted by the user's browser, the last selected group tab will be remembered when changing page.
+As such, if any tabsets on the next page contain a tab with the same label it will be selected.
+
 
 ## Code Tabs
 
@@ -152,9 +162,12 @@ Grouped tabs containing code areas with syntax highlighting can be created as fo
          END PROGRAM main
 ```
 
-Code tabs also support custom lexers (added via sphinx `conf.py`).
+![Code Tabs](/images/codeTabs.gif)
 
-By default, code tabs are labelled with the language name, though can be provided with custom labels like so:
+Code tabs also support custom lexers (added via sphinx `conf.py`).
+Pass the lexers alias as the first argument of `code-tab`.
+
+By default, code tabs are labelled with the language name, though a custom label can be provided like so:
 
 ```rst
 .. tabs::
@@ -172,8 +185,8 @@ By default, code tabs are labelled with the language name, though can be provide
 
 ```
 
-
-![Code Tabs](/images/codeTabs.gif)
+The tab label is used to group tabs, including `code-tabs`.
+As such, the same custom label should be used to group related tabs.
 
 [github-ci]: https://github.com/executablebooks/sphinx-tabs/workflows/continuous-integration/badge.svg?branch=master
 [github-link]: https://github.com/executablebooks/sphinx-tabs
