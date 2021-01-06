@@ -58,6 +58,7 @@ function keyTabs(e) {
 function changeTabs(e) {
   const target = e.target;
   const selected = target.getAttribute("aria-selected") === "true";
+  const positionBefore = target.parentNode.getBoundingClientRect().top;
 
   deselectTabset(target);
 
@@ -72,6 +73,10 @@ function changeTabs(e) {
     }
   }
 
+  const positionAfter = target.parentNode.getBoundingClientRect().top;
+  const positionDelta = positionAfter - positionBefore;
+  // Scroll to offset content resizing
+  window.scrollTo(0, window.scrollY + positionDelta);
 }
 
 function selectTab(target) {
