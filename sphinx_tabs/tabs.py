@@ -304,7 +304,6 @@ def update_context(app, pagename, templatename, context, doctree):
 
 def setup(app):
     """ Set up the plugin """
-    app.add_config_value("sphinx_tabs_nowarn", False, "")
     app.add_config_value("sphinx_tabs_valid_builders", [], "")
     app.add_node(SphinxTabsContainer, html=(visit, depart))
     app.add_node(SphinxTabsPanel, html=(visit, depart))
