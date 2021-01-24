@@ -45,3 +45,7 @@
 .sphinx-tabs-panel.code-tab {
   padding: 0.4rem;
 }
+
+.sphinx-tab img {
+	margin-bottom: 24 px;
+}
