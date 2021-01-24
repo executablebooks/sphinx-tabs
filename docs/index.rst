@@ -6,30 +6,25 @@ Create tabbed content in `Sphinx documentation <http://www.sphinx-doc.org>`_ whe
 Installation
 ============
 
-```bash
-pip install sphinx-tabs
-```
+.. code-block:: bash
+
+   pip install sphinx-tabs
 
 To enable the extension in Sphinx, add the following to your conf.py:
 
-```python
-extensions = ['sphinx_tabs.tabs']
-```
+.. code-block:: python
+
+   extensions = ['sphinx_tabs.tabs']
 
 If needed, there is a configuration option to allow additional builders to be considered compatible. For example, to add the `linkcheck` builder, add the following to your conf.py:
 
-```python
-sphinx_tabs_valid_builders = ['linkcheck']
-```
+.. code-block:: python
+
+   sphinx_tabs_valid_builders = ['linkcheck']
 
 Custom lexers that have been loaded in the sphinx config can be used with `code-tabs`.
 
-
-If you are using `Read The Docs <https://readthedocs.org/>`_ for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
-
-```
-sphinx-tabs
-```
+If you are using `Read The Docs <https://readthedocs.org/>`_ for building your documentation, the extension must be added as a requirement. Please add `sphinx-tabs` to `requirements.txt` at the root of the project.
 
 Basic Tabs
 ===========
@@ -247,6 +242,10 @@ The first argument to a `code-tab` is the name of the language to use for code h
 
             Fortran Main Function
 
+      .. code-tab:: r R
+
+            R Main Function
+
    .. tabs::
 
       .. code-tab:: c
@@ -283,6 +282,12 @@ The first argument to a `code-tab` is the name of the language to use for code h
             PROGRAM main
             END PROGRAM main
 
+      .. code-tab:: r R
+
+            main <- function() {
+               return(0)
+            }
+
 
 .. tabs::
 
@@ -310,30 +315,34 @@ The first argument to a `code-tab` is the name of the language to use for code h
 
          Fortran Main Function
 
+   .. code-tab:: r R
+
+         R Main Function
+
 .. tabs::
 
    .. code-tab:: c
 
          int main(const int argc, const char **argv) {
-           return 0;
+         return 0;
          }
 
    .. code-tab:: c++
 
          int main(const int argc, const char **argv) {
-           return 0;
+         return 0;
          }
 
    .. code-tab:: py
 
          def main():
-             return
+            return
 
    .. code-tab:: java
 
          class Main {
-             public static void main(String[] args) {
-             }
+            public static void main(String[] args) {
+            }
          }
 
    .. code-tab:: julia
@@ -345,5 +354,11 @@ The first argument to a `code-tab` is the name of the language to use for code h
 
          PROGRAM main
          END PROGRAM main
+
+   .. code-tab:: r R
+
+         main <- function() {
+            return(0)
+         }
 
 Code tabs support highlighting using `custom syntax highlighters <https://pygments.org/docs/lexerdevelopment/>`_ that have been loaded in the sphinx configuration. To use custom lexers, pass the lexers alias as the first argument of `code-tab`.
