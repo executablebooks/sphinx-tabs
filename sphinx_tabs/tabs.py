@@ -15,7 +15,6 @@ from sphinx.directives.code import CodeBlock
 FILES = [
     "tabs.js",
     "tabs.css",
-    "doctools.js",  # Overide for accessibility
 ]
 
 
