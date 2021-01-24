@@ -1,5 +1,23 @@
 # Change Log
 
+## 2.0.0 - 2021-01-24
+
+♻️ Refactor to reduce JS/CSS payload size and improve accesibility:
+
+* Removed semantic-ui assets
+* Removed unused 'sphinx_tabs_nowarn' sphinx option
+* JS/CSS assets are now copied across by sphinx when builing, rather than being copied by the extension
+* Changed tab HTML to use tab roles
+* Changed tab label colour, to increase contrast with background
+* Added ARIA labels for tabs and panels
+* Added tabindex atributes to allow users to focus and switch tabs using a keyboard
+* Added a margin below images inside tab content
+
+✨ New features:
+
+* Selecting an open tab now closes the tabs panel
+* The last selected group tab persists between pages (if the browser supports session storage)
+
 ## 1.3.0 - 2020-09-08
 
 ♻️ Major refactor of tabs, group-tabs and code-tabs (thanks to [@foster999](https://github.com/foster999)):
