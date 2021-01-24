@@ -1,3 +1,8 @@
+Sphinx Tabs
+***********
+
+Create tabbed content in `Sphinx documentation <http://www.sphinx-doc.org>`_ when building HTML.
+
 Installation
 ============
 
@@ -17,39 +22,35 @@ If needed, there is a configuration option to allow additional builders to be co
 sphinx_tabs_valid_builders = ['linkcheck']
 ```
 
-If you are using [Read The Docs](https://readthedocs.org/) for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
+Custom lexers that have been loaded in the sphinx config can be used with `code-tabs`.
+
+
+If you are using `Read The Docs <https://readthedocs.org/>`_ for building your documentation, the extension must be added as a requirement. Please add the following to `requirements.txt` at the root of the project:
 
 ```
 sphinx-tabs
 ```
-
-Configuration
-=============
-
-The `sphinx_tabs_valid_builders` sphinx configuration option can be used to extend the list of builders that are compatible with `sphinx-tabs`, when using custom builders.
-
-Custom lexers that have been loaded in the sphinx config can be used with `code-tabs`.
 
 Basic Tabs
 ===========
 
 All `sphinx-tabs` use the `tabs` directive to define a tab set. Basic tabs are added using the `tab` directive, which takes the tab's label as an argument:
 
-```rst
-.. tabs::
+.. code-block:: RST
 
-   .. tab:: Apples
+   .. tabs::
 
-      Apples are green, or sometimes red.
+      .. tab:: Apples
 
-   .. tab:: Pears
+         Apples are green, or sometimes red.
 
-      Pears are green.
+      .. tab:: Pears
 
-   .. tab:: Oranges
+         Pears are green.
 
-      Oranges are orange.
-```
+      .. tab:: Oranges
+
+         Oranges are orange.
 
 These will appear as:
 
@@ -77,37 +78,38 @@ Nested Tabs
 
 Tabs can be nested inside one another:
 
-```rst
-.. tabs::
+.. code-block:: RST
 
-   .. tab:: Stars
+   .. tabs::
 
-      .. tabs::
+      .. tab:: Stars
 
-         .. tab:: The Sun
+         .. tabs::
 
-            The closest star to us.
+            .. tab:: The Sun
 
-         .. tab:: Proxima Centauri
+               The closest star to us.
 
-            The second closest star to us.
+            .. tab:: Proxima Centauri
 
-         .. tab:: Polaris
+               The second closest star to us.
 
-            The North Star.
+            .. tab:: Polaris
 
-   .. tab:: Moons
+               The North Star.
 
-      .. tabs::
+      .. tab:: Moons
 
-         .. tab:: The Moon
+         .. tabs::
 
-            Orbits the Earth
+            .. tab:: The Moon
 
-         .. tab:: Titan
+               Orbits the Earth
 
-            Orbits Jupiter
-```
+            .. tab:: Titan
+
+               Orbits Jupiter
+
 
 Nested tabs appear as:
 
@@ -146,35 +148,36 @@ Group Tabs
 
 When multiple tab sets contain related content, the `group-tab` directive can be used to create group tabs:
 
-```rst
-.. tabs::
+.. code-block:: RST
 
-   .. group-tab:: Linux
+   .. tabs::
 
-      Linux tab content - tab set 1
+      .. group-tab:: Linux
 
-   .. group-tab:: Mac OSX
+         Linux tab content - tab set 1
 
-      Mac OSX tab content - tab set 1
+      .. group-tab:: Mac OSX
 
-   .. group-tab:: Windows
+         Mac OSX tab content - tab set 1
 
-      Windows tab content - tab set 1
+      .. group-tab:: Windows
 
-.. tabs::
+         Windows tab content - tab set 1
 
-   .. group-tab:: Linux
+   .. tabs::
 
-      Linux tab content - tab set 2
+      .. group-tab:: Linux
 
-   .. group-tab:: Mac OSX
+         Linux tab content - tab set 2
 
-      Mac OSX tab content - tab set 2
+      .. group-tab:: Mac OSX
 
-   .. group-tab:: Windows
+         Mac OSX tab content - tab set 2
 
-      Windows tab content - tab set 2
-```
+      .. group-tab:: Windows
+
+         Windows tab content - tab set 2
+
 
 .. tabs::
 
@@ -216,7 +219,71 @@ A common use of group tabs is to show code examples in multiple programming lang
 
 The first argument to a `code-tab` is the name of the language to use for code highlighting, while the optional second argument is a custom label for the tab. By default, the tab is labelled using the lexer name. The tab label is used to group tabs, so the same custom label should be used to group related tabs.
 
-```rst
+.. code-block:: RST
+
+   .. tabs::
+
+      .. code-tab:: c
+
+            C Main Function
+
+      .. code-tab:: c++
+
+            C++ Main Function
+
+      .. code-tab:: py
+
+            Python Main Function
+
+      .. code-tab:: java
+
+            Java Main Function
+
+      .. code-tab:: julia
+
+            Julia Main Function
+
+      .. code-tab:: fortran
+
+            Fortran Main Function
+
+   .. tabs::
+
+      .. code-tab:: c
+
+            int main(const int argc, const char **argv) {
+            return 0;
+            }
+
+      .. code-tab:: c++
+
+            int main(const int argc, const char **argv) {
+            return 0;
+            }
+
+      .. code-tab:: py
+
+            def main():
+               return
+
+      .. code-tab:: java
+
+            class Main {
+               public static void main(String[] args) {
+               }
+            }
+
+      .. code-tab:: julia
+
+            function main()
+            end
+
+      .. code-tab:: fortran
+
+            PROGRAM main
+            END PROGRAM main
+
+
 .. tabs::
 
    .. code-tab:: c
@@ -278,68 +345,5 @@ The first argument to a `code-tab` is the name of the language to use for code h
 
          PROGRAM main
          END PROGRAM main
-```
 
-.. tabs::
-
-   .. code-tab:: c
-
-         C Main Function
-
-   .. code-tab:: c++
-
-         C++ Main Function
-
-   .. code-tab:: py
-
-         Python Main Function
-
-   .. code-tab:: java
-
-         Java Main Function
-
-   .. code-tab:: julia
-
-         Julia Main Function
-
-   .. code-tab:: fortran
-
-         Fortran Main Function
-
-.. tabs::
-
-   .. code-tab:: c
-
-         int main(const int argc, const char **argv) {
-           return 0;
-         }
-
-   .. code-tab:: c++
-
-         int main(const int argc, const char **argv) {
-           return 0;
-         }
-
-   .. code-tab:: py
-
-         def main():
-             return
-
-   .. code-tab:: java
-
-         class Main {
-             public static void main(String[] args) {
-             }
-         }
-
-   .. code-tab:: julia
-
-         function main()
-         end
-
-   .. code-tab:: fortran
-
-         PROGRAM main
-         END PROGRAM main
-
-Code tabs support highlighting using [custom syntax highlighters](https://pygments.org/docs/lexerdevelopment/) that have been loaded in the sphinx configuration. To use custom lexers, pass the lexers alias as the first argument of `code-tab`.
+Code tabs support highlighting using `custom syntax highlighters <https://pygments.org/docs/lexerdevelopment/>`_ that have been loaded in the sphinx configuration. To use custom lexers, pass the lexers alias as the first argument of `code-tab`.
