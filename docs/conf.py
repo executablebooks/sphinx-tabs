@@ -1,4 +1,4 @@
-project = "sphinx-tabs demo"
+project = "sphinx-tabs"
 master_doc = "index"
 source_suffix = ".rst"
 extensions = ["sphinx_tabs.tabs"]
