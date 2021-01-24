@@ -73,11 +73,9 @@ Basic tabs can be coded as follows:
 
 ![Tabs](/images/tabs.gif)
 
-Tabs are switched by clicking on the selected tab.
-Alternatively, the current tab can be focused using the Tab key, and left and right arrow keys can be used to navigate across a tabset.
-The Enter key can then be used to switch to the focused tab.
+The contents of each tab can be displayed by clicking on the tab that you wish to show. Clicking on the tab that is currently open will hide the tab's content, leaving only the tab set labels visible.
 
-Re-selecting the current tab, either by clicking or pressing Enter when focused, will close the tab.
+Alternatively, tab sets can be focused using :kbd:`Tab`. The :kbd:`Left Arrow` and :kbd:`Right Arrow` keys can then be used to navigate across the tab set and :kbd:`Enter` can be used to select a tab.
 
 ## Grouped Tabs
 
@@ -116,13 +114,12 @@ For example:
 
 ![Group Tabs](/images/groupTabs.gif)
 
-If permitted by the user's browser, the last selected group tab will be remembered when changing page.
-As such, if any tabsets on the next page contain a tab with the same label it will be selected.
+If permitted by the user's browser, the last selected group tab will be remembered when changing page. As such, if any tabsets on the next page contain a tab with the same label it will be selected.
 
 
 ## Code Tabs
 
-Grouped tabs containing code areas with syntax highlighting can be created as follows:
+Grouped tabs containing code with syntax highlighting can be created as follows:
 
 ```rst
 .. tabs::
@@ -164,10 +161,9 @@ Grouped tabs containing code areas with syntax highlighting can be created as fo
 
 ![Code Tabs](/images/codeTabs.gif)
 
-Code tabs also support custom lexers (added via sphinx `conf.py`).
-Pass the lexers alias as the first argument of `code-tab`.
+Code tabs also support custom lexers (added via sphinx `conf.py`). Pass the lexers alias as the first argument of `code-tab`.
 
-By default, code tabs are labelled with the language name, though a custom label can be provided like so:
+By default, code tabs are labelled with the language name, though a custom label can be provided as an optional second argument to the `code-tabs` directive:
 
 ```rst
 .. tabs::
@@ -185,8 +181,7 @@ By default, code tabs are labelled with the language name, though a custom label
 
 ```
 
-The tab label is used to group tabs, including `code-tabs`.
-As such, the same custom label should be used to group related tabs.
+The tab label is used to group tabs, including `code-tabs`. As such, the same custom label should be used to group related tabs.
 
 [github-ci]: https://github.com/executablebooks/sphinx-tabs/workflows/continuous-integration/badge.svg?branch=master
 [github-link]: https://github.com/executablebooks/sphinx-tabs
