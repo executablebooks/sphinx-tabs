@@ -35,6 +35,7 @@ setup(
             "pygments",
             "sphinx_testing",
             "bs4",
+            "rinohtype",
         ],
         "code_style": ["pre-commit==2.6"],
     },
