@@ -183,8 +183,15 @@ class TabDirective(SphinxDirective):
         self.state.nested_parse(self.content[2:], self.content_offset, panel)
 
         if self.env.app.builder.name not in get_compatible_builders(self.env.app):
+            # Use base docutils classes
             outer_node = nodes.container()
             tab = nodes.container()
+            tab_name = nodes.container()
+            panel = nodes.container()
+
+            self.state.nested_parse(self.content[0:1], 0, tab_name)
+            self.state.nested_parse(self.content[2:], self.content_offset, panel)
+
             tab += tab_name
             outer_node += tab
             outer_node += panel
