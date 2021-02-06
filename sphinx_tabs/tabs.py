@@ -146,7 +146,11 @@ class TabDirective(SphinxDirective):
         else:
             tab_id = self.tab_id
 
-        tab_name = SphinxTabsTab(text=self.content[0])
+        tab_name = SphinxTabsTab()
+        self.state.nested_parse(self.content[0:1], 0, tab_name)
+        # Remove the paragraph node that is created by nested_parse
+        tab_name.children[0].replace_self(tab_name.children[0].children)
+
         tab_name["classes"].append("sphinx-tabs-tab")
         tab_name["classes"].extend(sorted(self.tab_classes))
 
