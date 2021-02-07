@@ -26,7 +26,7 @@ def auto_build_and_check(
     request,
 ):
     """
-    Build and check build success and  output regressions.
+    Build and check build success and output regressions.
     Currently all tests start with this.
     Disable using a `noautobuild` mark.
     """
@@ -80,12 +80,17 @@ def regress_sphinx_app_output(file_regression, get_sphinx_app_output):
     ):
         content = get_sphinx_app_output(app, buildername, filename, encoding)
 
-        soup = BeautifulSoup(content, "html.parser")
-        doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
-        text = doc_div.prettify()
-        for find, rep in (replace or {}).items():
-            text = text.replace(find, rep)
-        file_regression.check(text, extension=".html", encoding="utf8")
+        if buildername == "html":
+            soup = BeautifulSoup(content, "html.parser")
+            doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
+            doc = doc_div.prettify()
+            for find, rep in (replace or {}).items():
+                doc = text.replace(find, rep)
+        else:
+            doc = content
+        file_regression.check(
+            doc, extension="." + filename.split(".")[-1], encoding="utf8"
+        )
 
     return read
 
