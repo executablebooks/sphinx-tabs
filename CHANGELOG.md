@@ -1,5 +1,17 @@
 # Change Log
 
+
+## 2.0.1 - 2021-02-07
+
+### Fixed
+
+* Nested parsing of tab labels, to support use of reST roles within label text
+* Parsing tabs with unsupported builders, including for pdf
+
+### Added
+
+* Test for successful pdf building using `rinohtype`
+
 ## 2.0.0 - 2021-01-24
 
 ♻️ Refactor to reduce JS/CSS payload size and improve accesibility:
