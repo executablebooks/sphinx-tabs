@@ -56,24 +56,24 @@ function keyTabs(e) {
  * @param  {Node} e the element that was clicked
  */
 function changeTabs(e) {
-  const target = e.target;
-  const selected = target.getAttribute("aria-selected") === "true";
-  const positionBefore = target.parentNode.getBoundingClientRect().top;
+  // Use this instead of the element that was clicked, in case it's a child
+  const selected = this.getAttribute("aria-selected") === "true";
+  const positionBefore = this.parentNode.getBoundingClientRect().top;
 
-  deselectTabset(target);
+  deselectTabset(this);
 
   if (!selected) {
-    selectTab(target);
-    const name = target.getAttribute("name");
-    selectGroupedTabs(name, target.id);
+    selectTab(this);
+    const name = this.getAttribute("name");
+    selectGroupedTabs(name, this.id);
 
-    if (target.classList.contains("group-tab")) {
+    if (this.classList.contains("group-tab")) {
       // Persist during session
       session.setItem('sphinx-tabs-last-selected', name);
     }
   }
 
-  const positionAfter = target.parentNode.getBoundingClientRect().top;
+  const positionAfter = this.parentNode.getBoundingClientRect().top;
   const positionDelta = positionAfter - positionBefore;
   // Scroll to offset content resizing
   window.scrollTo(0, window.scrollY + positionDelta);
