@@ -104,6 +104,8 @@ class TabsDirective(SphinxDirective):
             tablist = SphinxTabsTablist()
             tablist["role"] = "tablist"
             tablist["aria-label"] = "Tabbed content"
+            if not self.env.config["sphinx_tabs_disable_tab_closing"]:
+                tablist["classes"].append("closeable")
 
             tab_titles = self.env.temp_data[tabs_key]["tab_titles"]
             for idx, [data_tab, tab_name] in enumerate(tab_titles):
@@ -316,6 +318,7 @@ def update_context(app, pagename, templatename, context, doctree):
 def setup(app):
     """ Set up the plugin """
     app.add_config_value("sphinx_tabs_valid_builders", [], "")
+    app.add_config_value("sphinx_tabs_disable_tab_closing", False, "html", [bool])
     app.add_node(SphinxTabsContainer, html=(visit, depart))
     app.add_node(SphinxTabsPanel, html=(visit, depart))
     app.add_node(SphinxTabsTab, html=(visit, depart))
