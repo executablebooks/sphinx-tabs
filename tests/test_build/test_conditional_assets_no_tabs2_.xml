@@ -5,7 +5,7 @@
         <title>
             Fruits
         <container classes="sphinx-tabs" type="tab-element">
-            <div aria-label="Tabbed content" role="tablist">
+            <div aria-label="Tabbed content" classes="closeable" role="tablist">
                 <button aria-controls="panel-0-0-0" aria-selected="true" classes="sphinx-tabs-tab" ids="tab-0-0-0" name="0-0" role="tab" tabindex="0">
                     Apples
                 <button aria-controls="panel-0-0-1" aria-selected="false" classes="sphinx-tabs-tab" ids="tab-0-0-1" name="0-1" role="tab" tabindex="-1">
@@ -25,7 +25,7 @@
         <title>
             Luminaries
         <container classes="sphinx-tabs" type="tab-element">
-            <div aria-label="Tabbed content" role="tablist">
+            <div aria-label="Tabbed content" classes="closeable" role="tablist">
                 <button aria-controls="panel-1-1-0" aria-selected="true" classes="sphinx-tabs-tab" ids="tab-1-1-0" name="1-0" role="tab" tabindex="0">
                     Sun
                 <button aria-controls="panel-1-1-1" aria-selected="false" classes="sphinx-tabs-tab" ids="tab-1-1-1" name="1-1" role="tab" tabindex="-1">
@@ -40,7 +40,7 @@
         <title>
             Code Tabs
         <container classes="sphinx-tabs" type="tab-element">
-            <div aria-label="Tabbed content" role="tablist">
+            <div aria-label="Tabbed content" classes="closeable" role="tablist">
                 <button aria-controls="panel-2-Qw==" aria-selected="true" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-2-Qw==" name="Qw==" role="tab" tabindex="0">
                     C
                 <button aria-controls="panel-2-Qysr" aria-selected="false" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-2-Qysr" name="Qysr" role="tab" tabindex="-1">
@@ -72,7 +72,7 @@
                 <literal_block force="False" highlight_args="{}" language="fortran" xml:space="preserve">
                     Fortran Main Function
         <container classes="sphinx-tabs" type="tab-element">
-            <div aria-label="Tabbed content" role="tablist">
+            <div aria-label="Tabbed content" classes="closeable" role="tablist">
                 <button aria-controls="panel-3-Qw==" aria-selected="true" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-3-Qw==" name="Qw==" role="tab" tabindex="0">
                     C
                 <button aria-controls="panel-3-Qysr" aria-selected="false" classes="sphinx-tabs-tab code-tab group-tab" ids="tab-3-Qysr" name="Qysr" role="tab" tabindex="-1">
@@ -117,7 +117,7 @@
         <title>
             Group Tabs
         <container classes="sphinx-tabs" type="tab-element">
-            <div aria-label="Tabbed content" role="tablist">
+            <div aria-label="Tabbed content" classes="closeable" role="tablist">
                 <button aria-controls="panel-4-TGludXg=" aria-selected="true" classes="sphinx-tabs-tab group-tab" ids="tab-4-TGludXg=" name="TGludXg=" role="tab" tabindex="0">
                     Linux
                 <button aria-controls="panel-4-TWFjIE9TWA==" aria-selected="false" classes="sphinx-tabs-tab group-tab" ids="tab-4-TWFjIE9TWA==" name="TWFjIE9TWA==" role="tab" tabindex="-1">
@@ -134,7 +134,7 @@
                 <paragraph>
                     Windows Line 1
         <container classes="sphinx-tabs" type="tab-element">
-            <div aria-label="Tabbed content" role="tablist">
+            <div aria-label="Tabbed content" classes="closeable" role="tablist">
                 <button aria-controls="panel-5-TGludXg=" aria-selected="true" classes="sphinx-tabs-tab group-tab" ids="tab-5-TGludXg=" name="TGludXg=" role="tab" tabindex="0">
                     Linux
                 <button aria-controls="panel-5-TWFjIE9TWA==" aria-selected="false" classes="sphinx-tabs-tab group-tab" ids="tab-5-TWFjIE9TWA==" name="TWFjIE9TWA==" role="tab" tabindex="-1">

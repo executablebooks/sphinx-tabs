@@ -16,15 +16,32 @@ To enable the extension in Sphinx, add the following to your conf.py:
 
    extensions = ['sphinx_tabs.tabs']
 
-If needed, there is a configuration option to allow additional builders to be considered compatible. For example, to add the `linkcheck` builder, add the following to your conf.py:
+If you are using `Read The Docs <https://readthedocs.org/>`_ for building your documentation, the extension must be added as a requirement. Please add `sphinx-tabs` to `requirements.txt` at the root of the project or in your docs folder.
+
+Sphinx Configuration
+====================
+
+If needed, there is a configuration option to allow additional builders to be considered compatible. For example, to add the `linkcheck` builder, add the following to your `conf.py`:
 
 .. code-block:: python
 
    sphinx_tabs_valid_builders = ['linkcheck']
 
-Custom lexers that have been loaded in the sphinx config can be used with `code-tabs`.
 
-If you are using `Read The Docs <https://readthedocs.org/>`_ for building your documentation, the extension must be added as a requirement. Please add `sphinx-tabs` to `requirements.txt` at the root of the project.
+By default, tabs can be closed by selecting the open tab. This functionality can be disabled using the `sphinx_tabs_disable_tab_closing` configuration option:
+
+.. code-block:: python
+
+   sphinx_tabs_disable_tab_closing = True
+
+
+Custom lexers that have been loaded in the sphinx `conf.py` can be used with `code-tabs`:
+
+.. code-block:: python
+
+   def setup(app):
+      app.add_lexer('alias', MyCustomLexer())
+
 
 Basic Tabs
 ===========

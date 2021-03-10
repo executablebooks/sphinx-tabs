@@ -45,3 +45,8 @@ def test_rinohtype_pdf(
     check_build_success(status, warning)
     get_sphinx_app_doctree(app, regress=True)
     # Doesn't currently regression pdf test output
+
+
+@pytest.mark.sphinx(testroot="disable-closing")
+def test_disable_closing(app, check_asset_links):
+    check_asset_links(app)
