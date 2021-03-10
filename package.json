@@ -1,0 +1,7 @@
+{
+  "name": "sphinx-tabs",
+  "main": "sphinx-tabs/static/tabs.js",
+  "scripts": {
+    "test": "jest"
+  }
+}
