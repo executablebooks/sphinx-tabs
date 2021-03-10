@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.1.0 - 2021-03-10
+
+### Fixed
+
+*  🐛 Tabs with nested content becoming hidden on click
+
+### Improved
+
+* 👌 Added new sphinx config option `sphinx_tabs_disable_tab_closing` to allow new tab closing functionality to be disabled globally (better backwards compatibility with sphinx-tabs<2)
+
 
 ## 2.0.1 - 2021-02-07
 
