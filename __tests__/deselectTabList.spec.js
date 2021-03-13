@@ -1,6 +1,6 @@
-const { deselectTabList } = require("../tabs");
+const { deselectTabList } = require("../sphinx_tabs/static/tabs");
 
-describe("Deselect tab list", () => {
+describe("deselectTabList", () => {
   it("deselects all tabs in tablist when one tab is clicked", () => {
     document.body.innerHTML =
     '<div>' +

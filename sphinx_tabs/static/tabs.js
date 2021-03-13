@@ -137,4 +137,4 @@ exports.keyTabs = keyTabs;
 exports.changeTabs = changeTabs;
 exports.selectTab = selectTab;
 exports.deselectTabList = deselectTabList;
-exports.selectGroupedTabs = selectNamedTabs;
+exports.selectNamedTabs = selectNamedTabs;

@@ -1,6 +1,6 @@
-const { selectTab } = require("../tabs");
+const { selectTab } = require("../sphinx_tabs/static/tabs");
 
-describe("Selecting a tab", () => {
+describe("selectTab", () => {
     test("unselected tab become selected", () => {
         document.body.innerHTML =
         '<div>' +
