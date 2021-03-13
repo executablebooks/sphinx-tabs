@@ -112,7 +112,8 @@ function deselectTabList(tab) {
 }
 
 /**
- * Select all other grouped tabs via tab name.
+ * Select grouped tabs with the same name, but no the tab
+ * with the given id.
  * @param  {Node} name name of grouped tab to be selected
  * @param  {Node} clickedId id of clicked tab
  */

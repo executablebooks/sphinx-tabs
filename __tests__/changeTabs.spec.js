@@ -64,7 +64,7 @@ describe("changeTabs", () => {
         expect(panel.getAttribute('hidden')).toEqual('true');
 
         // Re-open
-        tab.click()
+        tab.click();
 
         expect(tab.getAttribute('aria-selected')).toEqual('true');
         expect(panel.getAttribute('hidden')).toEqual(null);
