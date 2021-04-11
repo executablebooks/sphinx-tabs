@@ -25,7 +25,7 @@ setup(
     url="https://github.com/executablebooks/sphinx-tabs",
     license="MIT",
     python_requires="~=3.6",
-    install_requires=["sphinx>=2,<4", "pygments"],
+    install_requires=["sphinx>=2,<5", "pygments"],
     extras_require={
         "testing": [
             "coverage",
