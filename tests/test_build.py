@@ -23,13 +23,17 @@ def test_conditional_assets(app, docname, check_asset_links):
 
 
 @pytest.mark.sphinx(testroot="linenos")
-@pytest.mark.skipif(sphinx.version_info[:2] >= (4,0), reason="Test uses Sphinx 3 code blocks")
+@pytest.mark.skipif(
+    sphinx.version_info[:2] >= (4, 0), reason="Test uses Sphinx 3 code blocks"
+)
 def test_other_with_assets(app, check_asset_links):
     check_asset_links(app)
 
 
 @pytest.mark.sphinx(testroot="linenos")
-@pytest.mark.skipif(sphinx.version_info[:2] <= (4,0), reason="Test uses Sphinx 4 code blocks")
+@pytest.mark.skipif(
+    sphinx.version_info[:2] <= (4, 0), reason="Test uses Sphinx 4 code blocks"
+)
 def test_other_With_assets_new_style(app, check_asset_links):
     check_asset_links(app)
 
