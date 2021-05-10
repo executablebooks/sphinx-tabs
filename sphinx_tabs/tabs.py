@@ -72,12 +72,12 @@ def depart(translator, node):
 
 
 class TabsDirective(SphinxDirective):
-    """ Top-level tabs directive """
+    """Top-level tabs directive"""
 
     has_content = True
 
     def run(self):
-        """ Parse a tabs directive """
+        """Parse a tabs directive"""
         self.assert_has_content()
 
         node = nodes.container(type="tab-element")
@@ -125,7 +125,7 @@ class TabsDirective(SphinxDirective):
 
 
 class TabDirective(SphinxDirective):
-    """ Tab directive, for adding a tab to a collection of tabs """
+    """Tab directive, for adding a tab to a collection of tabs"""
 
     has_content = True
 
@@ -135,7 +135,7 @@ class TabDirective(SphinxDirective):
         super().__init__(*args, **kwargs)
 
     def run(self):
-        """ Parse a tab directive """
+        """Parse a tab directive"""
         self.assert_has_content()
 
         tabs_id = self.env.temp_data["tabs_stack"][-1]
@@ -204,7 +204,7 @@ class TabDirective(SphinxDirective):
 
 
 class GroupTabDirective(TabDirective):
-    """ Tab directive that toggles with same tab names across page"""
+    """Tab directive that toggles with same tab names across page"""
 
     has_content = True
 
@@ -220,7 +220,7 @@ class GroupTabDirective(TabDirective):
 
 
 class CodeTabDirective(GroupTabDirective):
-    """ Tab directive with a codeblock as its content"""
+    """Tab directive with a codeblock as its content"""
 
     has_content = True
     required_arguments = 1  # Lexer name
@@ -238,7 +238,7 @@ class CodeTabDirective(GroupTabDirective):
     }
 
     def run(self):
-        """ Parse a code-tab directive"""
+        """Parse a code-tab directive"""
         self.assert_has_content()
 
         if len(self.arguments) > 1:
@@ -287,13 +287,13 @@ class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
 
     @property
     def found_tabs_directive(self):
-        """ Return whether a sphinx tabs directive was found """
+        """Return whether a sphinx tabs directive was found"""
         return self._found
 
 
 # pylint: disable=unused-argument
 def update_context(app, pagename, templatename, context, doctree):
-    """ Remove sphinx-tabs CSS and JS asset files if not used in a page """
+    """Remove sphinx-tabs CSS and JS asset files if not used in a page"""
     if doctree is None:
         return
     visitor = _FindTabsDirectiveVisitor(doctree)
@@ -316,7 +316,7 @@ def update_context(app, pagename, templatename, context, doctree):
 
 
 def setup(app):
-    """ Set up the plugin """
+    """Set up the plugin"""
     app.add_config_value("sphinx_tabs_valid_builders", [], "")
     app.add_config_value("sphinx_tabs_disable_tab_closing", False, "html", [bool])
     app.add_node(SphinxTabsContainer, html=(visit, depart))
