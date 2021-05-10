@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.0.0 - 2021-05-10
+
+### Fixed
+
+* 🐛 Update for compatibility with Sphinx 4
+
 ## 2.1.0 - 2021-03-10
 
 ### Fixed
