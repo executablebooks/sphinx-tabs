@@ -24,7 +24,7 @@ jobs:
         python-version: 3.8
     - uses: pre-commit/action@v2.0.0
 
-  tests:
+  py-tests:
 
     runs-on: ubuntu-latest
     strategy:
@@ -55,10 +55,24 @@ jobs:
         file: ./coverage.xml
         fail_ci_if_error: true
 
+  js-tests:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 15
+      uses: actions/setup-node@v1
+      with:
+        node-version: '15'
+    - name: Install jest
+      run: npm install jest
+    - name: Run JS tests
+      run: npm test
+
   publish:
 
     name: Publish to PyPi
-    needs: [pre-commit, tests]
+    needs: [pre-commit, py-tests, js-tests]
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     runs-on: ubuntu-latest
     steps:
