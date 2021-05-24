@@ -42,6 +42,12 @@ Custom lexers that have been loaded in the sphinx `conf.py` can be used with `co
    def setup(app):
       app.add_lexer('alias', MyCustomLexer())
 
+By default, the extension loads predefined CSS styles for tabs. To disable the CSS from loading, add the following to your `conf.py`:
+
+.. code-block:: python
+
+   sphinx_tabs_disable_css_loading = True
+
 
 Basic Tabs
 ===========
