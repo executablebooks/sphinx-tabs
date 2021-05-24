@@ -291,6 +291,20 @@ class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
         return self._found
 
 
+def update_config(app, config):
+    """Adds sphinx-tabs CSS and JS asset files"""
+    for path in [Path(path) for path in FILES]:
+        if not config.sphinx_tabs_disable_css_loading and path.suffix == ".css":
+            if "add_css_file" in dir(app):
+                app.add_css_file(path.as_posix())
+            else:
+                app.add_stylesheet(path.as_posix())
+        if  path.suffix == ".js":
+            if "add_script_file" in dir(app):
+                app.add_script_file(path.as_posix())
+            else:
+                app.add_js_file(path.as_posix())
+
 # pylint: disable=unused-argument
 def update_context(app, pagename, templatename, context, doctree):
     """Remove sphinx-tabs CSS and JS asset files if not used in a page"""
@@ -318,6 +332,7 @@ def update_context(app, pagename, templatename, context, doctree):
 def setup(app):
     """Set up the plugin"""
     app.add_config_value("sphinx_tabs_valid_builders", [], "")
+    app.add_config_value("sphinx_tabs_disable_css_loading", False, "html", [bool])
     app.add_config_value("sphinx_tabs_disable_tab_closing", False, "html", [bool])
     app.add_node(SphinxTabsContainer, html=(visit, depart))
     app.add_node(SphinxTabsPanel, html=(visit, depart))
@@ -332,17 +347,7 @@ def setup(app):
         "builder-inited",
         (lambda app: app.config.html_static_path.append(static_dir.as_posix())),
     )
-    for path in [Path(path) for path in FILES]:
-        if path.suffix == ".css":
-            if "add_css_file" in dir(app):
-                app.add_css_file(path.as_posix())
-            else:
-                app.add_stylesheet(path.as_posix())
-        if path.suffix == ".js":
-            if "add_script_file" in dir(app):
-                app.add_script_file(path.as_posix())
-            else:
-                app.add_js_file(path.as_posix())
+    app.connect("config-inited", update_config)
     app.connect("html-page-context", update_context)
 
     return {
