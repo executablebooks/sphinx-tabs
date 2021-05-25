@@ -10,6 +10,8 @@ For example, see the [Raw] code of [docs/index.rst](docs/index.rst) which genera
 
 A live demo can be found here: <https://sphinx-tabs.readthedocs.io>
 
+Pointless change.
+
 ![Tabs](/images/tabs.gif)
 
 ## Installation
