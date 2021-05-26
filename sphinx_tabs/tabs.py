@@ -299,11 +299,12 @@ def update_config(app, config):
                 app.add_css_file(path.as_posix())
             else:
                 app.add_stylesheet(path.as_posix())
-        if  path.suffix == ".js":
+        if path.suffix == ".js":
             if "add_script_file" in dir(app):
                 app.add_script_file(path.as_posix())
             else:
                 app.add_js_file(path.as_posix())
+
 
 # pylint: disable=unused-argument
 def update_context(app, pagename, templatename, context, doctree):

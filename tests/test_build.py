@@ -10,7 +10,7 @@ def test_basic():
 
 @pytest.mark.sphinx(testroot="notabs")
 def test_no_tabs(app, check_asset_links):
-    check_asset_links(app, present=False)
+    check_asset_links(app, cssPresent=False, jsPresent=False)
 
 
 @pytest.mark.parametrize("docname", ["index", "no_tabs1", "no_tabs2"])
@@ -19,7 +19,9 @@ def test_conditional_assets(app, docname, check_asset_links):
     if docname == "index":
         check_asset_links(app)
     else:
-        check_asset_links(app, filename=docname + ".html", present=False)
+        check_asset_links(
+            app, filename=docname + ".html", cssPresent=False, jsPresent=False
+        )
 
 
 @pytest.mark.sphinx(testroot="linenos")
@@ -62,3 +64,8 @@ def test_rinohtype_pdf(
 @pytest.mark.sphinx(testroot="disable-closing")
 def test_disable_closing(app, check_asset_links):
     check_asset_links(app)
+
+
+@pytest.mark.sphinx(testroot="disable-css-loading")
+def test_disable_css_loading(app, check_asset_links):
+    check_asset_links(app, cssPresent=False)

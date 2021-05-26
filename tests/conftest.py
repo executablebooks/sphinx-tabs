@@ -130,7 +130,12 @@ def check_asset_links(get_sphinx_app_output):
     """
 
     def check(
-        app, buildername="html", filename="index.html", encoding="utf-8", present=True
+        app,
+        buildername="html",
+        filename="index.html",
+        encoding="utf-8",
+        cssPresent=True,
+        jsPresent=True,
     ):
         content = get_sphinx_app_output(app, buildername, filename, encoding)
 
@@ -146,13 +151,16 @@ def check_asset_links(get_sphinx_app_output):
 
         all_refs = css_refs + js_refs
 
-        if present:
+        if cssPresent:
             css_present = all(any(a in ref for ref in all_refs) for a in css_assets)
-            js_present = all(any(a in ref for ref in js_refs) for a in js_assets)
             assert css_present
+        else:
+            assert not "sphinx_tabs" in css_refs
+        if jsPresent:
+            js_present = all(any(a in ref for ref in js_refs) for a in js_assets)
             assert js_present
         else:
-            assert not "sphinx_tabs" in css_refs + js_refs
+            assert not "sphinx_tabs" in js_refs
 
     return check
 
