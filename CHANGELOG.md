@@ -4,7 +4,7 @@
 
 ### Added
 
-* 👌 Added mew sphinx config `sphinx_tabs_disable_css_loading` option to disable css from loading 
+* 👌 Added mew sphinx config `sphinx_tabs_disable_css_loading` option to disable css from loading
 
 ## 3.0.0 - 2021-05-10
 
