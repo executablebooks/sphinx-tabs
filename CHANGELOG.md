@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.1.0 - 2021-06-11
+
+### Added
+
+* 👌 Added mew sphinx config `sphinx_tabs_disable_css_loading` option to disable css from loading 
+
 ## 3.0.0 - 2021-05-10
 
 ### Fixed
