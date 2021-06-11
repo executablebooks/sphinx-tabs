@@ -51,7 +51,6 @@ def test_custom_lexer(app, check_asset_links):
     check_asset_links(app)
 
 
-
 @pytest.mark.noautobuild
 @pytest.mark.sphinx("rinoh", testroot="rinohtype-pdf")
 @pytest.mark.skipif(
