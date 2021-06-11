@@ -1,3 +1,4 @@
+import sys
 import pytest
 import sphinx
 from sphinx.application import Sphinx
@@ -50,15 +51,19 @@ def test_custom_lexer(app, check_asset_links):
     check_asset_links(app)
 
 
+
 @pytest.mark.noautobuild
 @pytest.mark.sphinx("rinoh", testroot="rinohtype-pdf")
+@pytest.mark.skipif(
+    sys.version_info < (3, 8), reason="Unknown dependency conflict in lower versions"
+)
 def test_rinohtype_pdf(
     app, status, warning, check_build_success, get_sphinx_app_doctree
 ):
     app.build()
     check_build_success(status, warning)
     get_sphinx_app_doctree(app, regress=True)
-    # Doesn't currently regression pdf test output
+    # Doesn't currently regression test pdf output
 
 
 @pytest.mark.sphinx(testroot="disable-closing")
