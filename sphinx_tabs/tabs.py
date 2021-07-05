@@ -1,6 +1,7 @@
 """ Tabbed views for Sphinx, with HTML builder """
 
 import base64
+import sphinx
 from pathlib import Path
 from functools import partial
 
@@ -313,7 +314,12 @@ def update_context(app, pagename, templatename, context, doctree):
         return
     visitor = _FindTabsDirectiveVisitor(doctree)
     doctree.walk(visitor)
-    if not visitor.found_tabs_directive:
+
+    include_assets_in_all_pages = False
+    if sphinx.version_info >= (4, 1, 0):
+        include_assets_in_all_pages = app.registry.html_assets_policy == 'always'
+
+    if not visitor.found_tabs_directive and not include_assets_in_all_pages:
         paths = [Path("_static") / f for f in FILES]
         if "css_files" in context:
             context["css_files"] = context["css_files"][:]
