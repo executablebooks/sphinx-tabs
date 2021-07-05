@@ -25,6 +25,15 @@ def test_conditional_assets(app, docname, check_asset_links):
         )
 
 
+@pytest.mark.parametrize("docname", ["index", "no_tabs1", "no_tabs2"])
+@pytest.mark.sphinx(testroot="conditionalassets")
+@pytest.mark.skipif(
+    sphinx.version_info[:2] >= (4, 1), reason="Test uses Sphinx 4.1 config"
+)
+def test_conditional_assets(app, docname, check_asset_links):
+    check_asset_links(app, filename=docname + ".html")
+
+
 @pytest.mark.sphinx(testroot="linenos")
 @pytest.mark.skipif(
     sphinx.version_info[:2] >= (4, 0), reason="Test uses Sphinx 3 code blocks"
