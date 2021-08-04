@@ -12,18 +12,6 @@ on:
 
 jobs:
 
-  pre-commit:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    - uses: pre-commit/action@v2.0.0
-
   py-tests:
 
     runs-on: ubuntu-latest
@@ -72,7 +60,7 @@ jobs:
   publish:
 
     name: Publish to PyPi
-    needs: [pre-commit, py-tests, js-tests]
+    needs: [py-tests, js-tests]
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     runs-on: ubuntu-latest
     steps:
