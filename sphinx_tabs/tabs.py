@@ -250,8 +250,8 @@ class CodeTabDirective(GroupTabDirective):
         else:
             try:
                 tab_name = LEXER_MAP[self.arguments[0]]
-            except:
-                raise ValueError("Lexer not implemented: {}".format(self.arguments[0]))
+            except KeyError as e:
+                raise ValueError("Lexer not implemented: {}".format(self.arguments[0])) from e
 
         self.tab_classes.add("code-tab")
 
