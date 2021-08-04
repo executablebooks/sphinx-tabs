@@ -37,7 +37,7 @@ setup(
             "bs4",
             "rinohtype",
         ],
-        "code_style": ["pre-commit==2.6"],
+        "code_style": ["pre-commit==2.13.0"],
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
