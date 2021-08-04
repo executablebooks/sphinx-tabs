@@ -25,6 +25,35 @@ def test_conditional_assets(app, docname, check_asset_links):
         )
 
 
+@pytest.mark.noautobuild
+@pytest.mark.parametrize("docname", ["index", "no_tabs1", "no_tabs2"])
+@pytest.mark.sphinx(testroot="conditionalassets")
+@pytest.mark.skipif(
+    sphinx.version_info[:2] < (4, 1), reason="Test uses Sphinx 4.1 config"
+)
+def test_conditional_assets_html_assets_policy(
+    app,
+    docname,
+    status,
+    warning,
+    check_build_success,
+    get_sphinx_app_doctree,
+    regress_sphinx_app_output,
+    check_asset_links,
+):
+    app.set_html_assets_policy("always")
+
+    # Following lines are copied from ``auto_build_and_check`` since we need to
+    # set a config in the build object before auto build. Because of this, we
+    # need to use ``noautobuild``.
+    app.build()
+    check_build_success(status, warning)
+    get_sphinx_app_doctree(app, regress=True)
+    regress_sphinx_app_output(app)
+
+    check_asset_links(app, filename=docname + ".html")
+
+
 @pytest.mark.sphinx(testroot="linenos")
 @pytest.mark.skipif(
     sphinx.version_info[:2] >= (4, 0), reason="Test uses Sphinx 3 code blocks"
