@@ -60,7 +60,7 @@ jobs:
   publish:
 
     name: Publish to PyPi
-    needs: [pre-commit, py-tests, js-tests]
+    needs: [py-tests, js-tests]
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     runs-on: ubuntu-latest
     steps:
