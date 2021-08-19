@@ -75,17 +75,19 @@ def regress_sphinx_app_output(file_regression, get_sphinx_app_output):
     non-deterministic).
     """
 
-    def read(
-        app, buildername="html", filename="index.html", encoding="utf-8", replace=None
-    ):
+    def read(app, buildername="html", filename="index.html", encoding="utf-8"):
         content = get_sphinx_app_output(app, buildername, filename, encoding)
 
         if buildername == "html":
             soup = BeautifulSoup(content, "html.parser")
+
+            # Remove output from ``pygments``, so that test only compares HTML of surrounding tabs
+            for div in soup.find_all("div", {"class": "highlight"}):
+                div.decompose()
+
             doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
             doc = doc_div.prettify()
-            for find, rep in (replace or {}).items():
-                doc = text.replace(find, rep)
+
         else:
             doc = content
         file_regression.check(
