@@ -27,7 +27,7 @@ def test_conditional_assets(app, docname, check_asset_links):
 
 @pytest.mark.noautobuild
 @pytest.mark.parametrize("docname", ["index", "no_tabs1", "no_tabs2"])
-@pytest.mark.sphinx(testroot="conditionalassets")
+@pytest.mark.sphinx(testroot="conditionalassets-policy")
 @pytest.mark.skipif(
     sphinx.version_info[:2] < (4, 1), reason="Test uses Sphinx 4.1 config"
 )
