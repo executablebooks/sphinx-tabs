@@ -12,6 +12,7 @@ from pygments.lexers import get_all_lexers
 from sphinx.highlighting import lexer_classes
 from sphinx.util.docutils import SphinxDirective
 from sphinx.directives.code import CodeBlock
+from sphinx.addnodes import translatable
 
 
 FILES = [
@@ -49,8 +50,21 @@ class SphinxTabsPanel(nodes.container):
     tagname = "div"
 
 
-class SphinxTabsTab(nodes.paragraph):
+class SphinxTabsTab(nodes.paragraph, translatable):
     tagname = "button"
+
+    def preserve_original_messages(self):
+        if self.children[0].rawsource:
+            self["raw_text"] = self.children[0].rawsource
+
+    def apply_translated_message(self, original_message, translated_message):
+        if self.get("raw_text") == original_message:
+            self.children[0].rawsource = translated_message
+
+    def extract_original_messages(self):
+        if "raw_text" in self:
+            return [self["raw_text"]]
+        return []
 
 
 class SphinxTabsTablist(nodes.container):
