@@ -48,6 +48,10 @@
   padding: 0.4rem;
 }
 
+.sphinx-tabs-panel p {
+  margin-bottom: 0;
+}
+
 .sphinx-tab img {
 	margin-bottom: 24 px;
 }
