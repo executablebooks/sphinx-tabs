@@ -91,7 +91,7 @@ class TabsDirective(SphinxDirective):
             self.env.temp_data["tabs_stack"] = []
 
         tabs_id = self.env.temp_data["next_tabs_id"]
-        tabs_key = "tabs_%d" % tabs_id
+        tabs_key = f"tabs_{tabs_id}"
         self.env.temp_data["next_tabs_id"] += 1
         self.env.temp_data["tabs_stack"].append(tabs_id)
 
@@ -141,7 +141,7 @@ class TabDirective(SphinxDirective):
         self.assert_has_content()
 
         tabs_id = self.env.temp_data["tabs_stack"][-1]
-        tabs_key = "tabs_%d" % tabs_id
+        tabs_key = f"tabs_{tabs_id}"
 
         include_tabs_id_in_data_tab = False
         if self.tab_id is None:
@@ -160,13 +160,13 @@ class TabDirective(SphinxDirective):
 
         i = 1
         while tab_id in self.env.temp_data[tabs_key]["tab_ids"]:
-            tab_id = "%s-%d" % (tab_id, i)
+            tab_id = f"{tab_id}-{i}"
             i += 1
         self.env.temp_data[tabs_key]["tab_ids"].append(tab_id)
 
         data_tab = str(tab_id)
         if include_tabs_id_in_data_tab:
-            data_tab = "%d-%s" % (tabs_id, data_tab)
+            data_tab = f"{tabs_id}-{data_tab}"
 
         self.env.temp_data[tabs_key]["tab_titles"].append((data_tab, tab_name))
 
@@ -254,7 +254,7 @@ class CodeTabDirective(GroupTabDirective):
                 tab_name = LEXER_MAP[self.arguments[0]]
             except KeyError as invalid_lexer_error:
                 raise ValueError(
-                    "Lexer not implemented: {}".format(self.arguments[0])
+                    f"Lexer not implemented: {self.arguments[0]}"
                 ) from invalid_lexer_error
 
         self.tab_classes.add("code-tab")
