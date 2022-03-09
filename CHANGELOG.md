@@ -1,5 +1,17 @@
 # Change Log
 
+## 3.3.0 - 2022-03-09
+
+### Added
+
+* Testing for Python 3.9 and a few pygments versions
+* Dark theme selectors
+
+### Changed
+
+* Bumped docutils dependency to 0.17
+* Remaining string formatting to use f-strings
+
 ## 3.2.0 - 2021-06-11
 
 ### Fixed
