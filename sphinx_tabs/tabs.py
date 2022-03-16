@@ -355,7 +355,7 @@ def setup(app):
     static_dir = Path(__file__).parent / "static"
     app.connect(
         "builder-inited",
-        (lambda app: app.config.html_static_path.append(static_dir.as_posix())),
+        (lambda app: app.config.html_static_path.insert(0, static_dir.as_posix())),
     )
     app.connect("config-inited", update_config)
     app.connect("html-page-context", update_context)
