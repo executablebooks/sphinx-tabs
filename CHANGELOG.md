@@ -1,5 +1,12 @@
 # Change Log
 
+## 3.3.1 - 2022-03-17
+
+### Fixed
+
+* Inserting CSS at the start of the static path list, so that it can be overwritten
+* Assume light theme is the default, even when browser setting prefers dark. Necessary when most sphinx themes don't set `data-theme`.
+
 ## 3.3.0 - 2022-03-09
 
 ### Added
