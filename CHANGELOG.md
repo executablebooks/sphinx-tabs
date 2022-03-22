@@ -65,7 +65,7 @@
 
 ## 2.0.0 - 2021-01-24
 
-♻️ Refactor to reduce JS/CSS payload size and improve accesibility:
+♻️ Refactor to reduce JS/CSS payload size and improve accessibility:
 
 * Removed semantic-ui assets
 * Removed unused 'sphinx_tabs_nowarn' sphinx option
@@ -73,7 +73,7 @@
 * Changed tab HTML to use tab roles
 * Changed tab label colour, to increase contrast with background
 * Added ARIA labels for tabs and panels
-* Added tabindex atributes to allow users to focus and switch tabs using a keyboard
+* Added tabindex attributes to allow users to focus and switch tabs using a keyboard
 * Added a margin below images inside tab content
 
 ✨ New features:
