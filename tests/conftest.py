@@ -9,6 +9,12 @@ from sphinx_tabs.tabs import FILES
 pytest_plugins = "sphinx.testing.fixtures"
 
 
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "noautobuild: mark test to prevent autouse fixtures from running"
+    )
+
+
 @pytest.fixture(scope="session")
 def rootdir():
     """Pytest uses this to find test documents."""
