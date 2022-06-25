@@ -1,5 +1,28 @@
 # Change Log
 
+## 3.4.0 - 2022-06-26
+
+### Added
+
+* Testing for sphinx 5
+* Tesing for python 3.10
+
+### Fixed
+
+* Fixed parsing of MyST content, where first line was being stripped
+* Typos in documentation
+* Failing regression tests
+
+
+### Changed
+
+* Testing to use an up-to-date pytest version
+
+### Removed
+
+* Testing for python 3.6 and sphinx versions 2 and 4 (see [#164](https://github.com/executablebooks/sphinx-tabs/pull/164)). Note that the package will likely continue to work fine with these, but this won't be assured by tests
+
+
 ## 3.3.1 - 2022-03-17
 
 ### Fixed
