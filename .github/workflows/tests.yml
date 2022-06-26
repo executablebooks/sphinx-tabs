@@ -18,7 +18,6 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
-        sphinx: [">=3,<4", ">=5,<6"]
         pygments: ["==2.8.0", "==2.9.0", "==2.12.0",]
 
     steps:
@@ -30,17 +29,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install "sphinx${{ matrix.sphinx }}"
         pip install "pygments${{ matrix.pygments }}"
         pip install .[testing]
     - name: Run pytest
       run: |
         pytest --cov=sphinx_tabs --cov-report=xml --cov-report=term-missing
     - name: Upload to Codecov
-      if: matrix.python-version == 3.7 && matrix.sphinx == '>=3,<4' && github.repository == 'executablebooks/sphinx-tabs'
+      if: matrix.python-version == "3.10" && matrix.pygments == "==2.12.0" && github.repository == "executablebooks/sphinx-tabs"
       uses: codecov/codecov-action@v1
       with:
-        name: sphinx-tabs-pytests-py3.7
+        name: sphinx-tabs-pytests-py3.10
         flags: pytests
         file: ./coverage.xml
         fail_ci_if_error: true

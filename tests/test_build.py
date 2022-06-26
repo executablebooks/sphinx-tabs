@@ -28,10 +28,6 @@ def test_conditional_assets(app, docname, check_asset_links):
 @pytest.mark.noautobuild
 @pytest.mark.parametrize("docname", ["index", "no_tabs1", "no_tabs2"])
 @pytest.mark.sphinx(testroot="conditionalassets-policy")
-@pytest.mark.skipif(
-    sphinx.version_info[:2] < (4, 1),
-    reason="Test uses option that was introduced in Sphinx 4.1 ",
-)
 def test_conditional_assets_html_assets_policy(
     app,
     docname,
@@ -56,18 +52,7 @@ def test_conditional_assets_html_assets_policy(
 
 
 @pytest.mark.sphinx(testroot="linenos")
-@pytest.mark.skipif(
-    sphinx.version_info[:2] >= (4, 0), reason="Test uses Sphinx 3 code blocks"
-)
 def test_other_with_assets(app, check_asset_links):
-    check_asset_links(app)
-
-
-@pytest.mark.sphinx(testroot="linenos")
-@pytest.mark.skipif(
-    sphinx.version_info[:2] < (4, 0), reason="Test uses Sphinx 4 code blocks"
-)
-def test_other_with_assets_new_style(app, check_asset_links):
     check_asset_links(app)
 
 
