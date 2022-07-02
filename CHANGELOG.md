@@ -1,5 +1,22 @@
 # Change Log
 
+## 3.4.1 - 2022-97-02
+
+### Added
+
+* Weekly scheduled testing, to catch breaking changes in unpinned dependencies
+
+### Changed
+
+*  docutils version pin to allow use of verison 0.18.x
+
+### Removed
+
+* sphinx version pinning - only the latest version of sphinx will now be fully supported, but previous versions will work if sphinx dependencies (i.e. jinja2) are managed correctly. This is inline with the approach at sphinx
+*  tests that were specific to older versions of sphinx and pygments
+*  jinja2 version pinning, as this is now pinned in latest version of sphinx
+
+
 ## 3.4.0 - 2022-06-26
 
 ### Added
@@ -12,7 +29,6 @@
 * Fixed parsing of MyST content, where first line was being stripped
 * Typos in documentation
 * Failing regression tests
-
 
 ### Changed
 
