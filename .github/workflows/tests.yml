@@ -9,6 +9,9 @@ on:
     tags:
       - 'v*'
   pull_request:
+  # Run weekly to check for breaking changes in unpinned dependencies
+  schedule:
+    - cron: '0 18 * * 5'
 
 jobs:
 
