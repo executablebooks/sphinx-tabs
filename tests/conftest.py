@@ -129,6 +129,11 @@ def get_sphinx_app_doctree(file_regression):
                     '<document source="index.rst">',
                     "<document source=\"index.rst\" translation_progress=\"{'total': 0, 'translated': 0}\">",
                 )
+            if sphinx.version_info < (7, 2):
+                text = text.replace(
+                    'title="Permalink to this heading"',
+                    'title="Link to this heading"',
+                )
             file_regression.check(text, extension=extension)
 
         return doctree
