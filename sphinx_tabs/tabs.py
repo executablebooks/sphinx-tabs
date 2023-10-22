@@ -325,12 +325,12 @@ def update_context(app, pagename, templatename, context, doctree):
     if not visitor.found_tabs_directive and not include_assets_in_all_pages:
         paths = [Path("_static") / f for f in FILES]
         if "css_files" in context:
-            context["css_files"] = context["css_files"][:]
+            context["css_files"][:] = context["css_files"]
             for path in paths:
                 if path.suffix == ".css" and path in context["css_files"]:
                     context["css_files"].remove(path.as_posix())
         if "script_files" in context:
-            context["script_files"] = context["script_files"][:]
+            context["script_files"][:] = context["script_files"]
             for path in paths:
                 if path.suffix == ".js" and path.as_posix() in context["script_files"]:
                     context["script_files"].remove(path.as_posix())
