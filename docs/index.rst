@@ -385,3 +385,6 @@ The first argument to a `code-tab` is the name of the language to use for code h
          }
 
 Code tabs support highlighting using `custom syntax highlighters <https://pygments.org/docs/lexerdevelopment/>`_ that have been loaded in the sphinx configuration. To use custom lexers, pass the lexers alias as the first argument of `code-tab`.
+
+.. note::
+   Sphinx's `include` directive does not work inside `code-tab`. Use `tab` or `group-tab` instead.
