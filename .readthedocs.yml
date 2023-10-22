@@ -2,10 +2,10 @@ version: 2
 
 build:
   os: ubuntu-22.04
-  tools: python
+  tools:
+    python: 3
 
 python:
-  version: 3
   install:
       - method: pip
         path: .
