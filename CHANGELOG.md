@@ -2,6 +2,14 @@
 
 ## 3.4.2 - 2023-19-22
 
+### Added
+* Testing for Python 3.11 and 3.12
+
+### Removed
+* Dependency on unsupported sphinx_testing package
+
+## 3.4.2 - 2023-19-22
+
 ### Fixed
 
 * tests for sphinx 7.2
