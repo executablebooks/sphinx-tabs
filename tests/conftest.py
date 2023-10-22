@@ -6,7 +6,8 @@ import sphinx
 
 from sphinx_tabs.tabs import FILES
 
-pytest_plugins = 'sphinx.testing.fixtures'
+pytest_plugins = "sphinx.testing.fixtures"
+
 
 def pytest_configure(config):
     config.addinivalue_line(
