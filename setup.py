@@ -33,7 +33,6 @@ setup(
             "pytest-cov",
             "pytest-regressions",
             "pygments",
-            "sphinx_testing",
             "bs4",
             "rinohtype",
         ],

@@ -3,7 +3,6 @@ import pytest
 from pathlib import Path
 from bs4 import BeautifulSoup
 import sphinx
-from sphinx.testing.path import path
 
 from sphinx_tabs.tabs import FILES
 
@@ -19,7 +18,7 @@ def pytest_configure(config):
 @pytest.fixture(scope="session")
 def rootdir():
     """Pytest uses this to find test documents."""
-    return path(__file__).parent.abspath() / "roots"
+    return Path(__file__).parent.absolute() / "roots"
 
 
 @pytest.fixture(autouse=True)
@@ -117,7 +116,7 @@ def get_sphinx_app_doctree(file_regression):
             extension = ".xml"
 
         # convert absolute filenames
-        for node in doctree.traverse(lambda n: "source" in n):
+        for node in doctree.findall(lambda n: "source" in n):
             node["source"] = Path(node["source"]).name
 
         if regress:
