@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.4.3 - 2024-01-21
+## 3.4.5 - 2024-01-21
 
 ### Removed
 * docutils version pin
