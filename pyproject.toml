@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sphinx-tabs"
+dynamic = ["version"]
+description = "Tabbed views for Sphinx"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.7"
+authors = [
+    { name = "djungelorm", email = "djungelorm@users.noreply.github.com" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Plugins",
+    "Environment :: Web Environment",
+    "Framework :: Sphinx :: Extension",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Documentation",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Text Processing",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "docutils",
+    "pygments",
+    "sphinx",
+]
+
+[project.optional-dependencies]
+code_style = [
+    "pre-commit==2.13.0",
+]
+testing = [
+    "bs4",
+    "coverage",
+    "pygments",
+    "pytest-cov",
+    "pytest-regressions",
+    "pytest>=7.1,<8",
+    "rinohtype",
+]
+
+[project.urls]
+Homepage = "https://github.com/executablebooks/sphinx-tabs"
+
+[tool.hatch.version]
+path = "sphinx_tabs/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/sphinx_tabs",
+    "/__tests__",
+    "/CHANGELOG.md",
+    "/*.js",
+    "/*.json"
+]
