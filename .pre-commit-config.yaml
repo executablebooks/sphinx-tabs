@@ -10,10 +10,10 @@ repos:
       exclude:
         ".xml"
 
-  - repo: https://github.com/mgedmin/check-manifest
-    rev: "0.48"
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: v0.15
     hooks:
-    - id: check-manifest
+      - id: validate-pyproject
 
   - repo: https://github.com/psf/black
     rev: 22.3.0
