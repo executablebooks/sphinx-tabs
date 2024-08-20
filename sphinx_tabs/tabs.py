@@ -14,11 +14,13 @@ from sphinx.util.docutils import SphinxDirective
 from sphinx.directives.code import CodeBlock
 
 
-FILES = [
+JS_FILES = [
     "tabs.js",
-    "tabs.css",
 ]
 
+CSS_FILES = [
+    "tabs.css",
+]
 
 LEXER_MAP = {}
 for lexer in get_all_lexers():
@@ -295,21 +297,6 @@ class _FindTabsDirectiveVisitor(nodes.NodeVisitor):
         return self._found
 
 
-def update_config(app, config):
-    """Adds sphinx-tabs CSS and JS asset files"""
-    for path in [Path(path) for path in FILES]:
-        if not config.sphinx_tabs_disable_css_loading and path.suffix == ".css":
-            if "add_css_file" in dir(app):
-                app.add_css_file(path.as_posix())
-            else:
-                app.add_stylesheet(path.as_posix())
-        if path.suffix == ".js":
-            if "add_script_file" in dir(app):
-                app.add_script_file(path.as_posix())
-            else:
-                app.add_js_file(path.as_posix())
-
-
 # pylint: disable=unused-argument
 def update_context(app, pagename, templatename, context, doctree):
     """Remove sphinx-tabs CSS and JS asset files if not used in a page"""
@@ -322,18 +309,21 @@ def update_context(app, pagename, templatename, context, doctree):
     if sphinx.version_info >= (4, 1, 0):
         include_assets_in_all_pages = app.registry.html_assets_policy == "always"
 
-    if not visitor.found_tabs_directive and not include_assets_in_all_pages:
-        paths = [Path("_static") / f for f in FILES]
-        if "css_files" in context:
-            context["css_files"][:] = context["css_files"]
-            for path in paths:
-                if path.suffix == ".css" and path in context["css_files"]:
-                    context["css_files"].remove(path.as_posix())
-        if "script_files" in context:
-            context["script_files"][:] = context["script_files"]
-            for path in paths:
-                if path.suffix == ".js" and path.as_posix() in context["script_files"]:
-                    context["script_files"].remove(path.as_posix())
+    if visitor.found_tabs_directive or include_assets_in_all_pages:
+        if not app.config.sphinx_tabs_disable_css_loading:
+            for css in CSS_FILES:
+                if "add_css_file" in dir(app):
+                    app.add_css_file(css)
+                else:
+                    # support old Sphinx versions
+                    app.add_stylesheet(css)
+
+        for js in JS_FILES:
+            if "add_js_file" in dir(app):
+                app.add_js_file(js)
+            else:
+                # support old Sphinx versions
+                app.add_script_file(js)
 
 
 # pylint: enable=unused-argument
@@ -357,7 +347,6 @@ def setup(app):
         "builder-inited",
         (lambda app: app.config.html_static_path.insert(0, static_dir.as_posix())),
     )
-    app.connect("config-inited", update_config)
     app.connect("html-page-context", update_context)
 
     return {
