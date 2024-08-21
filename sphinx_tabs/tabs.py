@@ -312,18 +312,9 @@ def update_context(app, pagename, templatename, context, doctree):
     if visitor.found_tabs_directive or include_assets_in_all_pages:
         if not app.config.sphinx_tabs_disable_css_loading:
             for css in CSS_FILES:
-                if "add_css_file" in dir(app):
-                    app.add_css_file(css)
-                else:
-                    # support old Sphinx versions
-                    app.add_stylesheet(css)
-
+                app.add_css_file(css)
         for js in JS_FILES:
-            if "add_js_file" in dir(app):
-                app.add_js_file(js)
-            else:
-                # support old Sphinx versions
-                app.add_script_file(js)
+            app.add_js_file(js)
 
 
 # pylint: enable=unused-argument
