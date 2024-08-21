@@ -38,7 +38,7 @@ jobs:
         pytest --cov=sphinx_tabs --cov-report=xml --cov-report=term-missing
     - name: Upload to Codecov
       if: matrix.python-version == '3.10' && github.repository == 'executablebooks/sphinx-tabs'
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v4
       with:
         name: sphinx-tabs-pytests-py3.10
         flags: pytests
