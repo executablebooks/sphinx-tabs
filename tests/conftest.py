@@ -4,7 +4,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 import sphinx
 
-from sphinx_tabs.tabs import FILES
+from sphinx_tabs.tabs import JS_FILES, CSS_FILES
 
 pytest_plugins = "sphinx.testing.fixtures"
 
@@ -152,9 +152,6 @@ def check_asset_links(get_sphinx_app_output):
     ):
         content = get_sphinx_app_output(app, buildername, filename, encoding)
 
-        css_assets = [f for f in FILES if f.endswith(".css")]
-        js_assets = [f for f in FILES if f.endswith(".js")]
-
         soup = BeautifulSoup(content, "html.parser")
         stylesheets = soup.find_all("link", {"rel": "stylesheet"}, href=True)
         css_refs = [s["href"] for s in stylesheets]
@@ -165,12 +162,12 @@ def check_asset_links(get_sphinx_app_output):
         all_refs = css_refs + js_refs
 
         if cssPresent:
-            css_present = all(any(a in ref for ref in all_refs) for a in css_assets)
+            css_present = all(any(a in ref for ref in all_refs) for a in CSS_FILES)
             assert css_present
         else:
             assert not "sphinx_tabs" in css_refs
         if jsPresent:
-            js_present = all(any(a in ref for ref in js_refs) for a in js_assets)
+            js_present = all(any(a in ref for ref in js_refs) for a in JS_FILES)
             assert js_present
         else:
             assert not "sphinx_tabs" in js_refs
