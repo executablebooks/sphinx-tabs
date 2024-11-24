@@ -91,6 +91,10 @@ def regress_sphinx_app_output(file_regression, get_sphinx_app_output):
             for div in soup.find_all("div", {"class": "highlight"}):
                 div.decompose()
 
+            if sphinx.version_info < (8, 1):
+                body = soup.select("div.body")[0]
+                body.append(soup.new_tag("div", **{"class": "clearer"}))
+
             doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
             doc = doc_div.prettify()
 
