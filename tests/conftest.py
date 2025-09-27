@@ -2,6 +2,7 @@ import os
 import pytest
 from pathlib import Path
 from bs4 import BeautifulSoup
+import docutils
 import sphinx
 
 from sphinx_tabs.tabs import JS_FILES, CSS_FILES
@@ -132,6 +133,9 @@ def get_sphinx_app_doctree(file_regression):
                     '<document source="index.rst">',
                     "<document source=\"index.rst\" translation_progress=\"{'total': 0, 'translated': 0}\">",
                 )
+            if docutils.__version_info__ < (0, 22):
+                text = text.replace('="False"', '="0"')
+                text = text.replace('linenos="True"', 'linenos="1"')
             file_regression.check(text, extension=extension)
 
         return doctree
