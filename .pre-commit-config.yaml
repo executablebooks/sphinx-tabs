@@ -1,7 +1,7 @@
 repos:
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
     - id: check-json
     - id: check-yaml
@@ -11,17 +11,17 @@ repos:
         ".xml"
 
   - repo: https://github.com/mgedmin/check-manifest
-    rev: "0.49"
+    rev: "0.51"
     hooks:
     - id: check-manifest
 
-  - repo: https://github.com/psf/black
-    rev: 24.8.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 25.12.0
     hooks:
     - id: black
 
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.2.6
+    rev: v4.0.4
     hooks:
     - id: pylint
       args:
