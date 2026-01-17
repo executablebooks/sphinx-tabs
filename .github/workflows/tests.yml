@@ -69,7 +69,7 @@ jobs:
         pip install wheel
         python setup.py sdist bdist_wheel
     - name: Publish
-      uses: pypa/gh-action-pypi-publish@v1.1.0
+      uses: pypa/gh-action-pypi-publish@v1.13.0
       with:
         user: __token__
         password: ${{ secrets.PYPI_KEY }}
