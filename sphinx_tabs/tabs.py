@@ -66,7 +66,7 @@ def visit(translator, node):
     attrs.pop("ids")
     attrs.pop("names")
     attrs.pop("dupnames")
-    attrs.pop("backrefs")
+    attrs.pop("backrefs", None)
     text = translator.starttag(node, node.tagname, **attrs)
     translator.body.append(text.strip())
 

@@ -3,4 +3,4 @@
         <title>
             TESTING PDF
         <compound classes="toctree-wrapper">
-            <toctree caption="Contents:" entries="(None,\ 'tabs')" glob="False" hidden="False" includefiles="tabs" includehidden="False" maxdepth="2" numbered="0" parent="index" rawcaption="Contents:" rawentries="" titlesonly="False">
+            <toctree caption="Contents:" entries="(None,\ 'tabs')" glob="0" hidden="0" includefiles="tabs" includehidden="0" maxdepth="2" numbered="0" parent="index" rawcaption="Contents:" rawentries="" titlesonly="0">
