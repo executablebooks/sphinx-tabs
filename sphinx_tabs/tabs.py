@@ -13,7 +13,6 @@ from sphinx.highlighting import lexer_classes
 from sphinx.util.docutils import SphinxDirective
 from sphinx.directives.code import CodeBlock
 
-
 JS_FILES = [
     "tabs.js",
 ]
