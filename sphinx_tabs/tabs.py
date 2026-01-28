@@ -134,7 +134,7 @@ class TabDirective(SphinxDirective):
 
     def __init__(self, *args, **kwargs):
         self.tab_id = None
-        self.tab_classes = set()
+        self.tab_classes = set(self.options.get("class", []))
         super().__init__(*args, **kwargs)
 
     def run(self):
