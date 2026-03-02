@@ -2,6 +2,7 @@ import sys
 import pytest
 import sphinx
 from sphinx.application import Sphinx
+from rinoh.resource import ResourceNotFound
 
 
 @pytest.mark.sphinx(testroot="basic")
@@ -74,7 +75,12 @@ def test_custom_lexer(app, check_asset_links):
 def test_rinohtype_pdf(
     app, status, warning, check_build_success, get_sphinx_app_doctree
 ):
-    app.build()
+    try:
+        app.build()
+    except ResourceNotFound as err:
+        if "Tex Gyre Heros" in str(err):
+            pytest.skip("Tex Gyre Heros typeface is not available in this environment")
+        raise
     check_build_success(status, warning)
     get_sphinx_app_doctree(app, regress=True)
     # Doesn't currently regression test pdf output
