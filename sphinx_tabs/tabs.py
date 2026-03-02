@@ -27,6 +27,11 @@ for lexer in get_all_lexers():
         LEXER_MAP[short_name] = lexer[0]
 
 
+def _get_env_app(env):
+    """Return Sphinx app without triggering deprecated BuildEnvironment.app."""
+    return getattr(env, "_app", None) or env.app
+
+
 def get_compatible_builders(app):
     builders = [
         "html",
@@ -103,7 +108,8 @@ class TabsDirective(SphinxDirective):
 
         self.state.nested_parse(self.content, self.content_offset, node)
 
-        if self.env.app.builder.name in get_compatible_builders(self.env.app):
+        app = _get_env_app(self.env)
+        if app.builder.name in get_compatible_builders(app):
             tablist = SphinxTabsTablist()
             tablist["role"] = "tablist"
             tablist["aria-label"] = "Tabbed content"
@@ -187,7 +193,8 @@ class TabDirective(SphinxDirective):
 
         self.state.nested_parse(self.content[1:], self.content_offset, panel)
 
-        if self.env.app.builder.name not in get_compatible_builders(self.env.app):
+        app = _get_env_app(self.env)
+        if app.builder.name not in get_compatible_builders(app):
             # Use base docutils classes
             outer_node = nodes.container()
             tab = nodes.container()
