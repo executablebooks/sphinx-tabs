@@ -55,17 +55,20 @@
 /* Dark theme preference styling */
 
 @media (prefers-color-scheme: dark) {
-  body[data-theme="auto"] .sphinx-tabs-panel {
+  body[data-theme="auto"] .sphinx-tabs-panel,
+  html[data-mode="auto"] .sphinx-tabs-panel {
     color: white;
     background-color: rgb(50, 50, 50);
   }
 
-  body[data-theme="auto"] .sphinx-tabs-tab {
+  body[data-theme="auto"] .sphinx-tabs-tab,
+  html[data-mode="auto"] .sphinx-tabs-tab {
     color: white;
     background-color: rgba(255, 255, 255, 0.05);
   }
 
-  body[data-theme="auto"] .sphinx-tabs-tab[aria-selected="true"] {
+  body[data-theme="auto"] .sphinx-tabs-tab[aria-selected="true"],
+  html[data-mode="auto"] .sphinx-tabs-tab[aria-selected="true"] {
     border-bottom: 1px solid rgb(50, 50, 50);
     background-color: rgb(50, 50, 50);
   }
@@ -73,17 +76,26 @@
 
 /* Explicit dark theme styling */
 
-body[data-theme="dark"] .sphinx-tabs-panel {
+body[data-theme="dark"] .sphinx-tabs-panel,
+html[data-mode="auto"] .sphinx-tabs-panel,
+body.theme-dark .sphinx-tabs-panel,
+html.dark .sphinx-tabs-panel {
   color: white;
   background-color: rgb(50, 50, 50);
 }
 
-body[data-theme="dark"] .sphinx-tabs-tab {
+body[data-theme="dark"] .sphinx-tabs-tab,
+html[data-mode="auto"] .sphinx-tabs-tab,
+body.theme-dark .sphinx-tabs-tab,
+html.dark .sphinx-tabs-tab {
   color: white;
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-body[data-theme="dark"] .sphinx-tabs-tab[aria-selected="true"] {
+body[data-theme="dark"] .sphinx-tabs-tab[aria-selected="true"],
+html[data-mode="auto"] .sphinx-tabs-tab[aria-selected="true"],
+body.theme-dark .sphinx-tabs-tab[aria-selected="true"],
+html.dark .sphinx-tabs-tab[aria-selected="true"] {
   border-bottom: 2px solid rgb(50, 50, 50);
   background-color: rgb(50, 50, 50);
 }
