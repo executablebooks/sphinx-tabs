@@ -304,9 +304,7 @@ def update_context(app, pagename, templatename, context, doctree):
     visitor = _FindTabsDirectiveVisitor(doctree)
     doctree.walk(visitor)
 
-    include_assets_in_all_pages = False
-    if sphinx.version_info >= (4, 1, 0):
-        include_assets_in_all_pages = app.registry.html_assets_policy == "always"
+    include_assets_in_all_pages = app.registry.html_assets_policy == "always"
 
     if visitor.found_tabs_directive or include_assets_in_all_pages:
         if not app.config.sphinx_tabs_disable_css_loading:

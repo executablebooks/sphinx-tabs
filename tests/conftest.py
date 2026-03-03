@@ -190,7 +190,7 @@ def get_sphinx_app_output():
     def get(app, buildername="html", filename="index.html", encoding="utf-8"):
         outpath = Path(app.srcdir) / "_build" / buildername / filename
         if not outpath.exists():
-            raise IOError("No output file exists: {}".format(outpath.as_posix()))
+            raise OSError(f"No output file exists: {outpath.as_posix()}")
 
         return outpath.read_text(encoding=encoding)
 
