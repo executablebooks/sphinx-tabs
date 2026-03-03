@@ -1,7 +1,4 @@
-import sys
 import pytest
-import sphinx
-from sphinx.application import Sphinx
 from rinoh.resource import ResourceNotFound
 
 
@@ -69,9 +66,6 @@ def test_custom_lexer(app, check_asset_links):
 
 @pytest.mark.noautobuild
 @pytest.mark.sphinx("rinoh", testroot="rinohtype-pdf")
-@pytest.mark.skipif(
-    sys.version_info < (3, 8), reason="Unknown dependency conflict in lower versions"
-)
 def test_rinohtype_pdf(
     app, status, warning, check_build_success, get_sphinx_app_doctree
 ):
