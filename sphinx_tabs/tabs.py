@@ -3,8 +3,6 @@
 import base64
 from pathlib import Path
 from functools import partial
-import sphinx
-
 
 from docutils import nodes
 from docutils.parsers.rst import directives
