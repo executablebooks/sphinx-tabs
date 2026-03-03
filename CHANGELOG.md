@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.5.0 - 2026-03-02
+
+* Adding support for up to Sphinx 9.1 and dropped support for versions <7.
+* Adding support for docutils 0.22.
+* Adding support for up to Python 3.14 and dropped support for versions <3.10.
+
 ## 3.4.5 - 2024-01-21
 
 ### Removed
