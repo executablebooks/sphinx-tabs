@@ -14,6 +14,8 @@ exclude codecov.yml
 include LICENSE
 include README.md
 include CHANGELOG.md
+include pyproject.toml
+include setup.cfg
 
 recursive-include sphinx_tabs *.css
 recursive-include sphinx_tabs *.js
