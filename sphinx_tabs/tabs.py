@@ -3,8 +3,6 @@
 import base64
 from pathlib import Path
 from functools import partial
-import sphinx
-
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -25,6 +23,11 @@ LEXER_MAP = {}
 for lexer in get_all_lexers():
     for short_name in lexer[1]:
         LEXER_MAP[short_name] = lexer[0]
+
+
+def _get_env_app(env):
+    """Return Sphinx app without triggering deprecated BuildEnvironment.app."""
+    return getattr(env, "_app", None) or env.app
 
 
 def get_compatible_builders(app):
@@ -103,7 +106,8 @@ class TabsDirective(SphinxDirective):
 
         self.state.nested_parse(self.content, self.content_offset, node)
 
-        if self.env.app.builder.name in get_compatible_builders(self.env.app):
+        app = _get_env_app(self.env)
+        if app.builder.name in get_compatible_builders(app):
             tablist = SphinxTabsTablist()
             tablist["role"] = "tablist"
             tablist["aria-label"] = "Tabbed content"
@@ -187,7 +191,8 @@ class TabDirective(SphinxDirective):
 
         self.state.nested_parse(self.content[1:], self.content_offset, panel)
 
-        if self.env.app.builder.name not in get_compatible_builders(self.env.app):
+        app = _get_env_app(self.env)
+        if app.builder.name not in get_compatible_builders(app):
             # Use base docutils classes
             outer_node = nodes.container()
             tab = nodes.container()
@@ -304,9 +309,7 @@ def update_context(app, pagename, templatename, context, doctree):
     visitor = _FindTabsDirectiveVisitor(doctree)
     doctree.walk(visitor)
 
-    include_assets_in_all_pages = False
-    if sphinx.version_info >= (4, 1, 0):
-        include_assets_in_all_pages = app.registry.html_assets_policy == "always"
+    include_assets_in_all_pages = app.registry.html_assets_policy == "always"
 
     if visitor.found_tabs_directive or include_assets_in_all_pages:
         if not app.config.sphinx_tabs_disable_css_loading:

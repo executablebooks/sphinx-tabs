@@ -1,4 +1,3 @@
-import os
 import pytest
 from pathlib import Path
 from bs4 import BeautifulSoup
@@ -96,7 +95,7 @@ def regress_sphinx_app_output(file_regression, get_sphinx_app_output):
                 body = soup.select("div.body")[0]
                 body.append(soup.new_tag("div", **{"class": "clearer"}))
 
-            doc_div = soup.findAll("div", {"class": "documentwrapper"})[0]
+            doc_div = soup.find_all("div", {"class": "documentwrapper"})[0]
             doc = doc_div.prettify()
 
         else:
@@ -190,7 +189,7 @@ def get_sphinx_app_output():
     def get(app, buildername="html", filename="index.html", encoding="utf-8"):
         outpath = Path(app.srcdir) / "_build" / buildername / filename
         if not outpath.exists():
-            raise IOError("No output file exists: {}".format(outpath.as_posix()))
+            raise OSError(f"No output file exists: {outpath.as_posix()}")
 
         return outpath.read_text(encoding=encoding)
 
