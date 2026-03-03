@@ -183,9 +183,9 @@ By default, code tabs are labelled with the language name, though a custom label
 
 The tab label is used to group tabs, including `code-tabs`. As such, the same custom label should be used to group related tabs.
 
-[github-ci]: https://github.com/executablebooks/sphinx-tabs/workflows/continuous-integration/badge.svg?branch=master
+[github-ci]: https://github.com/executablebooks/sphinx-tabs/workflows/continuous-integration/badge.svg?branch=main
 [github-link]: https://github.com/executablebooks/sphinx-tabs
 [pypi-badge]: https://img.shields.io/pypi/v/sphinx-tabs.svg
 [pypi-link]: https://pypi.org/project/sphinx-tabs
-[codecov-badge]: https://codecov.io/gh/executablebooks/sphinx-tabs/branch/master/graph/badge.svg
+[codecov-badge]: https://codecov.io/gh/executablebooks/sphinx-tabs/branch/main/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/executablebooks/sphinx-tabs
