@@ -66,8 +66,8 @@ jobs:
         python-version: 3.12
     - name: Build package
       run: |
-        pip install wheel
-        python setup.py sdist bdist_wheel
+        python -m pip install -U pip build
+        python -m build --sdist --wheel .
     - name: Publish
       uses: pypa/gh-action-pypi-publish@v1.13.0
       with:
