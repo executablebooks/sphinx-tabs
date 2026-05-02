@@ -43,7 +43,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Use Node.js 15
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v6.3.0
       with:
         node-version: '15'
     - name: Install jest
@@ -69,7 +69,7 @@ jobs:
         python -m pip install -U pip build
         python -m build --sdist --wheel .
     - name: Publish
-      uses: pypa/gh-action-pypi-publish@v1.13.0
+      uses: pypa/gh-action-pypi-publish@v1.14.0
       with:
         user: __token__
         password: ${{ secrets.PYPI_KEY }}
