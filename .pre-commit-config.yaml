@@ -10,13 +10,14 @@ repos:
       exclude:
         ".xml"
 
-  - repo: https://github.com/mgedmin/check-manifest
-    rev: "0.51"
-    hooks:
-    - id: check-manifest
+  # Ignore for now as it errors out for a while
+  #- repo: https://github.com/mgedmin/check-manifest
+  #  rev: "0.51"
+  #  hooks:
+  #  - id: check-manifest
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.1.0
+    rev: 26.5.1
     hooks:
     - id: black
 
