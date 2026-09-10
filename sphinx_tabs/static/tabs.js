@@ -91,6 +91,9 @@ function selectTab(tab) {
   // Show the associated panel
   document
     .getElementById(tab.getAttribute("aria-controls"))
+    .parentNode.removeAttribute("hidden");
+  document
+    .getElementById(tab.getAttribute("aria-controls"))
     .removeAttribute("hidden");
 }
 
